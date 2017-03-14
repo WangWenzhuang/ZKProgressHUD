@@ -8,65 +8,89 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UITableViewController {
 
     var screenWidth: CGFloat {
         get {
             return UIScreen.main.bounds.size.width
         }
     }
+    
+    let cellIdentifier = "cell"
+    
+    lazy var actionTexts = ["loading", "loading and status", "message", "image", "image and status", "info", "success", "error"]
+    lazy var headerTexts = ["MaskStyle", "AnimationStyle", "actions"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.view.backgroundColor = .white
-        
-        let loadingButton = UIButton(frame: CGRect(x: 0, y: 40, width: screenWidth, height: 25))
-        loadingButton.setTitle("loading", for: .normal)
-        loadingButton.setTitleColor(.blue, for: .normal)
-        loadingButton.autoresizingMask = [.flexibleWidth]
-        loadingButton.addTarget(self, action: #selector(ViewController.loadingAction(_:)), for: .touchUpInside)
-        
-        let messageButton = UIButton(frame: CGRect(x: 0, y: loadingButton.frame.origin.y + 45, width: screenWidth, height: 25))
-        messageButton.setTitle("message", for: .normal)
-        messageButton.setTitleColor(.blue, for: .normal)
-        messageButton.autoresizingMask = [.flexibleWidth]
-        messageButton.addTarget(self, action: #selector(ViewController.messageAction(_:)), for: .touchUpInside)
-        
-        let imageButton = UIButton(frame: CGRect(x: 0, y: messageButton.frame.origin.y + 45, width: screenWidth, height: 25))
-        imageButton.setTitle("image", for: .normal)
-        imageButton.setTitleColor(.blue, for: .normal)
-        imageButton.autoresizingMask = [.flexibleWidth]
-        imageButton.addTarget(self, action: #selector(ViewController.imageAction(_:)), for: .touchUpInside)
-        
-        let hideButton = UIButton(frame: CGRect(x: 0, y: imageButton.frame.origin.y + 45, width: screenWidth, height: 25))
-        hideButton.setTitle("hide", for: .normal)
-        hideButton.setTitleColor(.blue, for: .normal)
-        hideButton.autoresizingMask = [.flexibleWidth]
-        hideButton.addTarget(self, action: #selector(ViewController.hideAction(_:)), for: .touchUpInside)
-        
-        self.view.addSubview(loadingButton)
-        self.view.addSubview(messageButton)
-        self.view.addSubview(imageButton)
-        self.view.addSubview(hideButton)
-    }
-
-    @IBAction func loadingAction(_ sender: UIButton) {
-        ZKProgressHUD.loading("loading...")
-        ZKProgressHUD.hide(delay: 2)
-    }
-
-    @IBAction func messageAction(_ sender: UIButton) {
-        ZKProgressHUD.message("Hello World")
+        self.title = "ZKProgressHUD"
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: self.cellIdentifier)
     }
     
-    @IBAction func imageAction(_ sender: UIButton) {
-        ZKProgressHUD.image(UIImage(named: "image")!)
-        ZKProgressHUD.hide(delay: 2)
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
     }
-
-    @IBAction func hideAction(_ sender: UIButton) {
-        ZKProgressHUD.hide()
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        } else if section == 1 {
+            return 1
+        }
+        return self.actionTexts.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier)
+        if indexPath.section == 0 {
+            cell?.textLabel?.text = "visible"
+        } else if indexPath.section == 1 {
+            cell?.textLabel?.text = "circle"
+        } else {
+            cell?.textLabel?.text = self.actionTexts[indexPath.row]
+        }
+        return cell!
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        
+        if indexPath.section == 0 {
+            
+        } else if indexPath.section == 1 {
+            
+        } else if indexPath.section == 2 {
+            if indexPath.row == 0 {
+                ZKProgressHUD.loading()
+                ZKProgressHUD.hide(delay: 3)
+            } else if indexPath.row == 1 {
+                ZKProgressHUD.loading("loading...")
+                ZKProgressHUD.hide(delay: 3)
+            } else if indexPath.row == 2 {
+                ZKProgressHUD.message("Hello World")
+            } else if indexPath.row == 3 {
+                ZKProgressHUD.image(UIImage(named: "image")!)
+            } else if indexPath.row == 4 {
+                ZKProgressHUD.image(UIImage(named: "image")!, status: "Hello World")
+            } else if indexPath.row == 5 {
+                ZKProgressHUD.showInfo("Hello World")
+            } else if indexPath.row == 6 {
+                ZKProgressHUD.image(UIImage(named: "image")!, status: "Hello World")
+                ZKProgressHUD.showSuccess("Hello World")
+            } else if indexPath.row == 7 {
+                ZKProgressHUD.image(UIImage(named: "image")!, status: "Hello World")
+                ZKProgressHUD.showError("Hello World")
+            }
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.headerTexts[section]
     }
 }
 

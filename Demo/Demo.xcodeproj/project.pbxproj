@@ -7,20 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A0371FCF1E75B009001DFFD0 /* image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0371FCD1E75B009001DFFD0 /* image@2x.png */; };
-		A0371FD01E75B009001DFFD0 /* image.png in Resources */ = {isa = PBXBuildFile; fileRef = A0371FCE1E75B009001DFFD0 /* image.png */; };
 		A0ADABAE1E72B245006C3BD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADABAD1E72B245006C3BD7 /* AppDelegate.swift */; };
 		A0ADABB01E72B245006C3BD7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADABAF1E72B245006C3BD7 /* ViewController.swift */; };
 		A0ADABB51E72B245006C3BD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0ADABB41E72B245006C3BD7 /* Assets.xcassets */; };
 		A0ADABB81E72B245006C3BD7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0ADABB61E72B245006C3BD7 /* LaunchScreen.storyboard */; };
 		A0ADABC51E72B49F006C3BD7 /* ZKProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADABC41E72B49F006C3BD7 /* ZKProgressHUD.swift */; };
-		A0F5A09C1E75850100E618C3 /* loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F5A09A1E75850100E618C3 /* loading@2x.png */; };
-		A0F5A09D1E75850100E618C3 /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F5A09B1E75850100E618C3 /* loading.png */; };
+		A0DF4DD61E773D3800D67231 /* ZKProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A0DF4DD51E773D3800D67231 /* ZKProgressHUD.bundle */; };
+		A0DF4DD81E77B85200D67231 /* image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0DF4DD71E77B85200D67231 /* image@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A0371FCD1E75B009001DFFD0 /* image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "image@2x.png"; sourceTree = "<group>"; };
-		A0371FCE1E75B009001DFFD0 /* image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image.png; sourceTree = "<group>"; };
 		A0ADABAA1E72B245006C3BD7 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0ADABAD1E72B245006C3BD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A0ADABAF1E72B245006C3BD7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -28,8 +24,8 @@
 		A0ADABB71E72B245006C3BD7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A0ADABB91E72B245006C3BD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0ADABC41E72B49F006C3BD7 /* ZKProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKProgressHUD.swift; sourceTree = "<group>"; };
-		A0F5A09A1E75850100E618C3 /* loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading@2x.png"; sourceTree = "<group>"; };
-		A0F5A09B1E75850100E618C3 /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading.png; sourceTree = "<group>"; };
+		A0DF4DD51E773D3800D67231 /* ZKProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZKProgressHUD.bundle; sourceTree = "<group>"; };
+		A0DF4DD71E77B85200D67231 /* image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "image@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,10 +42,7 @@
 		A0ADABA11E72B245006C3BD7 = {
 			isa = PBXGroup;
 			children = (
-				A0371FCD1E75B009001DFFD0 /* image@2x.png */,
-				A0371FCE1E75B009001DFFD0 /* image.png */,
-				A0F5A09A1E75850100E618C3 /* loading@2x.png */,
-				A0F5A09B1E75850100E618C3 /* loading.png */,
+				A0DF4DD71E77B85200D67231 /* image@2x.png */,
 				A0ADABC31E72B49F006C3BD7 /* ZKProgressHUD */,
 				A0ADABAC1E72B245006C3BD7 /* Demo */,
 				A0ADABAB1E72B245006C3BD7 /* Products */,
@@ -80,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				A0ADABC41E72B49F006C3BD7 /* ZKProgressHUD.swift */,
+				A0DF4DD51E773D3800D67231 /* ZKProgressHUD.bundle */,
 			);
 			name = ZKProgressHUD;
 			path = ../ZKProgressHUD;
@@ -117,6 +111,7 @@
 				TargetAttributes = {
 					A0ADABA91E72B245006C3BD7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 6JC6FUR8YE;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -144,12 +139,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0371FCF1E75B009001DFFD0 /* image@2x.png in Resources */,
-				A0F5A09D1E75850100E618C3 /* loading.png in Resources */,
+				A0DF4DD81E77B85200D67231 /* image@2x.png in Resources */,
 				A0ADABB81E72B245006C3BD7 /* LaunchScreen.storyboard in Resources */,
-				A0F5A09C1E75850100E618C3 /* loading@2x.png in Resources */,
 				A0ADABB51E72B245006C3BD7 /* Assets.xcassets in Resources */,
-				A0371FD01E75B009001DFFD0 /* image.png in Resources */,
+				A0DF4DD61E773D3800D67231 /* ZKProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,9 +268,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 6JC6FUR8YE;
 				INFOPLIST_FILE = Demo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wangwenzhuang.Demo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wangwenzhuang.ZKProgressHUDDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -287,9 +281,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 6JC6FUR8YE;
 				INFOPLIST_FILE = Demo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wangwenzhuang.Demo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wangwenzhuang.ZKProgressHUDDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
