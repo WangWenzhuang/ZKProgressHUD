@@ -18,7 +18,7 @@ class ViewController: UITableViewController {
     
     let cellIdentifier = "cell"
     
-    lazy var actionTexts = ["loading", "loading and status", "message", "image", "image and status", "info", "success", "error"]
+    lazy var actionTexts = ["show", "show and status", "message", "image", "image and status", "info", "success", "error"]
     lazy var headerTexts = ["MaskStyle", "AnimationStyle", "actions"]
     
     override func viewDidLoad() {
@@ -66,25 +66,23 @@ class ViewController: UITableViewController {
             
         } else if indexPath.section == 2 {
             if indexPath.row == 0 {
-                ZKProgressHUD.loading()
-                ZKProgressHUD.hide(delay: 3)
+                ZKProgressHUD.show()
+                ZKProgressHUD.hide(3)
             } else if indexPath.row == 1 {
-                ZKProgressHUD.loading("loading...")
-                ZKProgressHUD.hide(delay: 3)
+                ZKProgressHUD.show("loading...")
+                ZKProgressHUD.hide(3)
             } else if indexPath.row == 2 {
-                ZKProgressHUD.message("Hello World")
+                ZKProgressHUD.showMessage(nil)
             } else if indexPath.row == 3 {
-                ZKProgressHUD.image(UIImage(named: "image")!)
+                ZKProgressHUD.showImage(nil)
             } else if indexPath.row == 4 {
-                ZKProgressHUD.image(UIImage(named: "image")!, status: "Hello World")
+                ZKProgressHUD.showImage(UIImage(named: "image"), "Hello world")
             } else if indexPath.row == 5 {
-                ZKProgressHUD.showInfo("Hello World")
+                ZKProgressHUD.showInfo(nil)
             } else if indexPath.row == 6 {
-                ZKProgressHUD.image(UIImage(named: "image")!, status: "Hello World")
-                ZKProgressHUD.showSuccess("Hello World")
+                ZKProgressHUD.showSuccess(nil)
             } else if indexPath.row == 7 {
-                ZKProgressHUD.image(UIImage(named: "image")!, status: "Hello World")
-                ZKProgressHUD.showError("Hello World")
+                ZKProgressHUD.showError(nil)
             }
         }
     }

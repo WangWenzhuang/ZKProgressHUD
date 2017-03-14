@@ -53,10 +53,10 @@ public enum ZKProgressHUDMaskStyle {
 
 // 显示类型
 fileprivate enum ShowType {
-    case loading
+    case activityIndicator
     case message
     case image
-    case process
+    case progress
 }
 
 public final class ZKProgressHUD {
@@ -122,7 +122,7 @@ public final class ZKProgressHUD {
         }
     }
     
-    private var _backgroundColor: UIColor = .black
+    private var _backgroundColor: UIColor = UIColor(red: 0 / 255.0, green: 0 / 255.0, blue: 0 / 255.0, alpha: 0.5)
     fileprivate var backgroundColor: UIColor {
         get {
             return self._backgroundColor
@@ -219,11 +219,11 @@ public final class ZKProgressHUD {
         }
     }
     
-    private var _contentView: UIVisualEffectView!
-    fileprivate var contentView: UIVisualEffectView {
+    private var _contentView: UIView!
+    fileprivate var contentView: UIView {
         get {
             if self._contentView == nil {
-                self._contentView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+                self._contentView = UIView()
                 self._contentView.layer.masksToBounds = true
                 self._contentView.autoresizingMask = [.flexibleBottomMargin, .flexibleTopMargin, .flexibleLeftMargin, .flexibleRightMargin]
                 self._contentView.layer.cornerRadius = self.cornerRadius
@@ -297,14 +297,14 @@ public final class ZKProgressHUD {
         }
     }
     
-    private var _processView: UIView!
-    fileprivate var processView: UIView {
+    private var _progressView: UIView!
+    fileprivate var progressView: UIView {
         get {
-            if self._processView == nil {
-                self._processView = UIView()
-                self._processView.backgroundColor = .black
+            if self._progressView == nil {
+                self._progressView = UIView()
+                self._progressView.backgroundColor = .black
             }
-            return self._processView
+            return self._progressView
         }
     }
     
@@ -334,14 +334,14 @@ public final class ZKProgressHUD {
     fileprivate static let shared = ZKProgressHUD()
 }
 extension ZKProgressHUD {
-    fileprivate func show(_ showType: ShowType, status: String? = nil, image: UIImage? = nil, isHide: Bool? = nil) {
+    fileprivate func show(_ showType: ShowType, status: String? = nil, image: UIImage? = nil, isHide: Bool? = nil, maskStyle: MaskStyle? = nil) {
         DispatchQueue.main.async {
             self.showType = showType
             self.status = status
             self.image = image
             self.updateView()
             self.updateFrame()
-            if showType == .loading {
+            if showType == .activityIndicator {
                 self.beginLoadingAnimation()
             }
             if let hide = isHide {
@@ -380,20 +380,20 @@ extension ZKProgressHUD {
         if self.imageView.superview != nil {
             self.imageView.removeFromSuperview()
         }
-        if self.processView.superview != nil {
-            self.processView.removeFromSuperview()
+        if self.progressView.superview != nil {
+            self.progressView.removeFromSuperview()
         }
         if self.statusLabel.superview != nil {
             self.statusLabel.removeFromSuperview()
         }
         
         switch self.showType! {
-        case .loading:
+        case .activityIndicator:
             self.contentView.addSubview(self.hudView)
         case .image:
             self.contentView.addSubview(self.imageView)
-        case .process:
-            self.contentView.addSubview(self.processView)
+        case .progress:
+            self.contentView.addSubview(self.progressView)
         default: break
         }
         self.contentView.addSubview(self.statusLabel)
@@ -408,8 +408,8 @@ extension ZKProgressHUD {
             if self.imageView.width > self.maxContentViewChildWidth {
                 self.imageView.frame.size = CGSize(width: self.maxContentViewChildWidth, height: self.maxContentViewChildWidth)
             }
-        case .process:
-            self.processView.frame.size = CGSize(width: 100, height: 100)
+        case .progress:
+            self.progressView.frame.size = CGSize(width: 100, height: 100)
         default: break
         }
         
@@ -419,39 +419,40 @@ extension ZKProgressHUD {
             self.statusLabel.frame.size = text.size(font: self.font, size: CGSize(width: self.maxContentViewChildWidth, height: 400))
             self.statusLabel.sizeToFit()
         } else {
+            self.statusLabel.frame.size = CGSize.zero
             self.statusLabel.isHidden = true
         }
         
         self.contentView.frame.size = {
             var width: CGFloat = 0
             switch self.showType! {
-            case .loading:
+            case .activityIndicator:
                 width = (self.statusLabel.isHidden ? self.hudView.width : (self.hudView.width > self.statusLabel.width ? self.hudView.width : self.statusLabel.width)) + self.margin * 2
             case .message:
                 width = self.statusLabel.width + self.margin * 2
             case .image:
                 width = (self.statusLabel.isHidden ? self.imageView.width : (self.imageView.width > self.statusLabel.width ? self.imageView.width : self.statusLabel.width)) + self.margin * 2
-            case .process:
-                width = (self.statusLabel.isHidden ? self.processView.width : (self.processView.width > self.statusLabel.width ? self.processView.width : self.statusLabel.width)) + self.margin * 2
+            case .progress:
+                width = (self.statusLabel.isHidden ? self.progressView.width : (self.progressView.width > self.statusLabel.width ? self.progressView.width : self.statusLabel.width)) + self.margin * 2
             }
             
             var height: CGFloat = 0
             switch self.showType! {
-            case .loading:
+            case .activityIndicator:
                 height = (self.statusLabel.isHidden ? self.hudView.height : (self.hudView.height + self.margin + self.statusLabel.height)) + self.margin * 2
             case .message:
                 height = self.statusLabel.height + self.margin * 2
             case .image:
                 height = (self.statusLabel.isHidden ? self.imageView.height : (self.imageView.height + self.margin + self.statusLabel.height)) + self.margin * 2
-            case .process:
-                height = (self.statusLabel.isHidden ? self.processView.height : (self.processView.height + self.margin + self.statusLabel.height)) + self.margin * 2
+            case .progress:
+                height = (self.statusLabel.isHidden ? self.progressView.height : (self.progressView.height + self.margin + self.statusLabel.height)) + self.margin * 2
             }
             
             return CGSize(width: width, height: height)
         }()
         
         switch self.showType! {
-        case .loading:
+        case .activityIndicator:
             self.hudView.frame.origin = {
                 let x = (self.contentView.width - self.hudView.width) / 2
                 let y = self.margin
@@ -479,15 +480,15 @@ extension ZKProgressHUD {
                 let y = self.imageView.y + self.imageView.height + self.margin
                 return CGPoint(x: x, y: y)
             }()
-        case .process:
-            self.processView.frame.origin = {
-                let x = (self.contentView.width - self.processView.width) / 2
+        case .progress:
+            self.progressView.frame.origin = {
+                let x = (self.contentView.width - self.progressView.width) / 2
                 let y = self.margin
                 return CGPoint(x: x, y: y)
             }()
             self.statusLabel.frame.origin = {
                 let x = (self.contentView.width - self.statusLabel.width) / 2
-                let y = self.processView.y + self.processView.height + self.margin
+                let y = self.progressView.y + self.progressView.height + self.margin
                 return CGPoint(x: x, y: y)
             }()
         }
@@ -524,7 +525,7 @@ extension ZKProgressHUD {
                 if self.maskView.superview != nil {
                     self.maskView.removeFromSuperview()
                 }
-                if self.showType == .loading {
+                if self.showType == .activityIndicator {
                     self.stoploadingAnimation()
                 }
             }
@@ -569,32 +570,46 @@ extension ZKProgressHUD {
 }
 extension ZKProgressHUD {
     // 显示加载
-    public static func loading(_ status: String? = nil) {
-        shared.show(.loading, status: status, image: nil)
+    public static func show() {
+        ZKProgressHUD.show(nil)
+    }
+    public static func show(_ status: String?) {
+        ZKProgressHUD.show(status, nil)
+    }
+    public static func show(_ status: String?, _ maskStyle: ZKProgressHUDMaskStyle?) {
+        shared.show(.activityIndicator, status: status, image: nil, isHide: nil, maskStyle: maskStyle)
     }
     // 显示消息
-    public static func message(_ message: String) {
-        shared.show(.message, status: message, image: nil, isHide: true)
-        
+    public static func showMessage(_ message: String?) {
+        ZKProgressHUD.showMessage(message, nil)
+    }
+    public static func showMessage(_ message: String?, _ maskStyle: ZKProgressHUDMaskStyle?) {
+        shared.show(.message, status: message, image: nil, isHide: true, maskStyle: maskStyle)
     }
     // 显示图片
-    public static func image(_ image: UIImage, status: String? = nil) {
-        shared.show(.image, status: status, image: image, isHide: true)
+    public static func showImage(_ image: UIImage?) {
+        ZKProgressHUD.showImage(image, nil)
+    }
+    public static func showImage(_ image: UIImage?, _ status: String?) {
+        ZKProgressHUD.showImage(image, nil, nil)
+    }
+    public static func showImage(_ image: UIImage?, _ status: String?, _ maskStyle: ZKProgressHUDMaskStyle?) {
+        shared.show(.image, status: status, image: image, isHide: true, maskStyle: maskStyle)
     }
     // 显示普通信息
-    public static func showInfo(_ status: String) {
+    public static func showInfo(_ status: String?) {
         shared.show(.image, status: status, image: shared.infoImage, isHide: true)
     }
     // 显示成功信息
-    public static func showSuccess(_ status: String) {
+    public static func showSuccess(_ status: String?) {
         shared.show(.image, status: status, image: shared.successImage, isHide: true)
     }
     // 显示失败信息
-    public static func showError(_ status: String) {
+    public static func showError(_ status: String?) {
         shared.show(.image, status: status, image: shared.errorImage, isHide: true)
     }
     // 隐藏
-    public static func hide(delay: Int? = nil) {
+    public static func hide(_ delay: Int? = nil) {
         shared.hideView(delay: delay ?? 0)
     }
     
