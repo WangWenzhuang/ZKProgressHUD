@@ -596,35 +596,35 @@ extension ZKProgressHUD {
     }
     
     // 设置遮罩样式
-    public static func setMaskStyle (maskStyle : ZKProgressHUDMaskStyle ) {
+    public static func setMaskStyle (_ maskStyle : ZKProgressHUDMaskStyle ) {
         shared.maskStyle  = maskStyle
     }
     // 设置遮罩背景色
-    public static func setMaskBackgroundColor(color: UIColor) {
+    public static func setMaskBackgroundColor(_ color: UIColor) {
         shared.maskBackgroundColor = color
     }
     // 设置前景色
-    public static func setForegroundColor(color: UIColor) {
+    public static func setForegroundColor(_ color: UIColor) {
         shared.foregroundColor = color
     }
     // 设置背景色
-    public static func setBackgroundColor(color: UIColor) {
+    public static func setBackgroundColor(_ color: UIColor) {
         shared.backgroundColor = color
     }
     // 设置字体
-    public static func setFont(font: UIFont) {
+    public static func setFont(_ font: UIFont) {
         shared.font = font
     }
     // 设置圆角
-    public static func setCornerRadius(cornerRadius: CGFloat) {
+    public static func setCornerRadius(_ cornerRadius: CGFloat) {
         shared.cornerRadius = cornerRadius
     }
     // 设置 HUD 动画样式
-    public static func setAnimationStyle (animationStyle : ZKProgressHUDAnimationStyle ) {
+    public static func setAnimationStyle(_ animationStyle : ZKProgressHUDAnimationStyle ) {
         shared.animationStyle  = animationStyle
     }
     // 设置隐藏延时秒数
-    public static func setHideDelay(hideDelay: Int) {
+    public static func setHideDelay(_ hideDelay: Int) {
         shared.hideDelay = hideDelay
     }
 }
