@@ -27,3 +27,7 @@ target 'MyApp' do
     pod 'ZKProgressHUD'
 end
 ```
+### Manually
+
+* Drag the `ZKProgressHUD` folder into your project.
+* Take care that `ZKProgressHUD.bundle` is added to `Targets->Build Phases->Copy Bundle Resources`.
