@@ -113,14 +113,16 @@ public final class ZKProgressHUD {
             self.statusLabel.textColor = self._foregroundColor
             self.imageView.tintColor = self._foregroundColor
             self.hudChrysanthemumView.color = self._foregroundColor
-            if self._hudCircleView.superview != nil {
-                self._hudCircleView.removeFromSuperview()
+            if self._hudCircleView != nil {
+                if self._hudCircleView.superview != nil {
+                    self._hudCircleView.removeFromSuperview()
+                }
+                self._hudCircleView = nil
             }
-            self._hudCircleView = nil
         }
     }
     
-    private var _backgroundColor: UIColor = UIColor(red: 0 / 255.0, green: 0 / 255.0, blue: 0 / 255.0, alpha: 0.7)
+    private var _backgroundColor: UIColor = .black
     fileprivate var backgroundColor: UIColor {
         get {
             return self._backgroundColor
@@ -321,7 +323,8 @@ public final class ZKProgressHUD {
     }
     
     private init() {
-        let url = Bundle.main.url(forResource: "ZKProgressHUD", withExtension: "bundle")
+        let bundle = Bundle(for: ZKProgressHUD.self)
+        let url = bundle.url(forResource: "ZKProgressHUD", withExtension: "bundle")
         let imageBundle = Bundle(url: url!)
         self.infoImage = UIImage(contentsOfFile: (imageBundle?.path(forResource: "info", ofType: "png"))!)!
         self.successImage = UIImage(contentsOfFile: (imageBundle?.path(forResource: "success", ofType: "png"))!)!
@@ -592,7 +595,7 @@ extension ZKProgressHUD {
     }
     // 隐藏
     public static func hide(delay: Int? = nil) {
-        shared.hideView(delay: delay ?? shared.hideDelay)
+        shared.hideView(delay: delay ?? 0)
     }
     
     // 设置遮罩样式
