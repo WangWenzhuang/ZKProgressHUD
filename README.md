@@ -17,13 +17,13 @@ A easy-to-use HUD for your iOS app.
 
 ### CocoaPods
 
-You can use [CocoaPods](http://cocoapods.org/) to install `ZKProgressHUD`by adding it to your `Podfile`:
+You can use [CocoaPods](http://cocoapods.org/) to install `ZKProgressHUD` by adding it to your `Podfile`:
 
 ```ogdl
 platform :ios, '8.0'
 use_frameworks!
 
 target 'MyApp' do
-pod 'ZKProgressHUD'
+    pod 'ZKProgressHUD'
 end
 ```
