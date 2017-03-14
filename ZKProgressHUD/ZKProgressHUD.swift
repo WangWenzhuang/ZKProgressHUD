@@ -571,7 +571,7 @@ extension ZKProgressHUD {
     }
     // 显示消息
     public static func message(_ message: String) {
-        shared.show(.message, status: message, image: nil)
+        shared.show(.message, status: message, image: nil, isHide: true)
         
     }
     // 显示图片
