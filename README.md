@@ -40,7 +40,7 @@ end
 import ZKProgressHUD
 ```
 
-### loading
+### Loading
 
 ```swift
 ZKProgressHUD.loading()
@@ -52,7 +52,7 @@ DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(3), ex
 })
 ```
 
-### loading and message
+### Loading and message
 
 ```swift
 ZKProgressHUD.loading()
@@ -64,37 +64,37 @@ DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(3), ex
 })
 ```
 
-### message
+### Message
 
 ```swift
 ZKProgressHUD.message("Hello world")
 ```
 
-### image
+### Image
 
 ```swift
 ZKProgressHUD.image(UIImage(named: "image")!)
 ```
 
-### image and message
+### Image and message
 
 ```swift
 ZKProgressHUD.image(UIImage(named: "image")!, status: "Hello world")
 ```
 
-### info
+### Info
 
 ```swift
 ZKProgressHUD.showInfo("Hello world")
 ```
 
-### success
+### Success
 
 ```swift
 ZKProgressHUD.showSuccess("Hello world")
 ```
 
-### error
+### Error
 
 ```swift
 ZKProgressHUD.showError("Hello world")
