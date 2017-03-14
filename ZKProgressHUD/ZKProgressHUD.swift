@@ -80,6 +80,7 @@ public final class ZKProgressHUD {
             }
         }
     }
+    fileprivate var progress: CGFloat?
     
     // 配置
     private var _maskStyle : MaskStyle = .visible
@@ -112,6 +113,7 @@ public final class ZKProgressHUD {
             self._foregroundColor = newValue
             self.statusLabel.textColor = self._foregroundColor
             self.imageView.tintColor = self._foregroundColor
+            self.progressView.progressColor = self._foregroundColor
             self.hudChrysanthemumView.color = self._foregroundColor
             if self._hudCircleView != nil {
                 if self._hudCircleView.superview != nil {
@@ -298,12 +300,13 @@ public final class ZKProgressHUD {
         }
     }
     
-    private var _progressView: UIView!
-    fileprivate var progressView: UIView {
+    private var _progressView: ZKProgressView!
+    fileprivate var progressView: ZKProgressView {
         get {
             if self._progressView == nil {
-                self._progressView = UIView()
-                self._progressView.backgroundColor = .black
+                self._progressView = ZKProgressView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+                self._progressView.progressColor = self.foregroundColor
+                self._progressView.backgroundColor = .clear
             }
             return self._progressView
         }
@@ -399,101 +402,104 @@ extension ZKProgressHUD {
             self.contentView.addSubview(self.progressView)
         default: break
         }
-        self.contentView.addSubview(self.statusLabel)
+        
+        if self.showType! != .progress {
+            self.contentView.addSubview(self.statusLabel)
+        }
     }
     
     fileprivate func updateFrame() {
-        switch self.showType! {
-        case .image:
-            self.imageView.image = self.image
-            self.imageView.sizeToFit()
-            // 如果图片尺寸超过限定最大尺寸，将图片尺寸修改为限定最大尺寸
-            if self.imageView.width > self.maxContentViewChildWidth {
-                self.imageView.frame.size = CGSize(width: self.maxContentViewChildWidth, height: self.maxContentViewChildWidth)
-            }
-        case .progress:
-            self.progressView.frame.size = CGSize(width: 100, height: 100)
-        default: break
-        }
-        
-        if let text = self.status {
-            self.statusLabel.isHidden = false
-            self.statusLabel.text = text
-            self.statusLabel.frame.size = text.size(font: self.font, size: CGSize(width: self.maxContentViewChildWidth, height: 400))
-            self.statusLabel.sizeToFit()
-        } else {
-            self.statusLabel.frame.size = CGSize.zero
-            self.statusLabel.isHidden = true
-        }
-        
-        self.contentView.frame.size = {
-            var width: CGFloat = 0
-            switch self.showType! {
-            case .activityIndicator:
-                width = (self.statusLabel.isHidden ? self.hudView.width : (self.hudView.width > self.statusLabel.width ? self.hudView.width : self.statusLabel.width)) + self.margin * 2
-            case .message:
-                width = self.statusLabel.width + self.margin * 2
-            case .image:
-                width = (self.statusLabel.isHidden ? self.imageView.width : (self.imageView.width > self.statusLabel.width ? self.imageView.width : self.statusLabel.width)) + self.margin * 2
-            case .progress:
-                width = (self.statusLabel.isHidden ? self.progressView.width : (self.progressView.width > self.statusLabel.width ? self.progressView.width : self.statusLabel.width)) + self.margin * 2
-            }
-            
-            var height: CGFloat = 0
-            switch self.showType! {
-            case .activityIndicator:
-                height = (self.statusLabel.isHidden ? self.hudView.height : (self.hudView.height + self.margin + self.statusLabel.height)) + self.margin * 2
-            case .message:
-                height = self.statusLabel.height + self.margin * 2
-            case .image:
-                height = (self.statusLabel.isHidden ? self.imageView.height : (self.imageView.height + self.margin + self.statusLabel.height)) + self.margin * 2
-            case .progress:
-                height = (self.statusLabel.isHidden ? self.progressView.height : (self.progressView.height + self.margin + self.statusLabel.height)) + self.margin * 2
-            }
-            
-            return CGSize(width: width, height: height)
-        }()
-        
-        switch self.showType! {
-        case .activityIndicator:
-            self.hudView.frame.origin = {
-                let x = (self.contentView.width - self.hudView.width) / 2
-                let y = self.margin
-                return CGPoint(x: x, y: y)
+        if self.showType! == .progress {
+            self.contentView.frame.size = {
+                let width = self.progressView.width + self.margin * 2
+                let height = self.progressView.height + self.margin * 2
+                return CGSize(width: width, height: height)
             }()
-            self.statusLabel.frame.origin = {
-                let x = (self.contentView.width - self.statusLabel.width) / 2
-                let y = self.hudView.y + self.hudView.height + self.margin
-                return CGPoint(x: x, y: y)
-            }()
-        case .message:
-            self.statusLabel.frame.origin = {
-                let x = (self.contentView.width - self.statusLabel.width) / 2
-                let y = self.margin
-                return CGPoint(x: x, y: y)
-            }()
-        case .image:
-            self.imageView.frame.origin = {
-                let x = (self.contentView.width - self.imageView.width) / 2
-                let y = self.margin
-                return CGPoint(x: x, y: y)
-            }()
-            self.statusLabel.frame.origin = {
-                let x = (self.contentView.width - self.statusLabel.width) / 2
-                let y = self.imageView.y + self.imageView.height + self.margin
-                return CGPoint(x: x, y: y)
-            }()
-        case .progress:
             self.progressView.frame.origin = {
                 let x = (self.contentView.width - self.progressView.width) / 2
                 let y = self.margin
                 return CGPoint(x: x, y: y)
             }()
-            self.statusLabel.frame.origin = {
-                let x = (self.contentView.width - self.statusLabel.width) / 2
-                let y = self.progressView.y + self.progressView.height + self.margin
-                return CGPoint(x: x, y: y)
+            if let progressValue = self.progress {
+                self.progressView.progress = Double(progressValue)
+            }
+        } else {
+            if self.showType! == .image {
+                self.imageView.image = self.image
+                self.imageView.sizeToFit()
+                // 如果图片尺寸超过限定最大尺寸，将图片尺寸修改为限定最大尺寸
+                if self.imageView.width > self.maxContentViewChildWidth {
+                    self.imageView.frame.size = CGSize(width: self.maxContentViewChildWidth, height: self.maxContentViewChildWidth)
+                }
+            }
+            
+            if let text = self.status {
+                self.statusLabel.isHidden = false
+                self.statusLabel.text = text
+                self.statusLabel.frame.size = text.size(font: self.font, size: CGSize(width: self.maxContentViewChildWidth, height: 400))
+                self.statusLabel.sizeToFit()
+            } else {
+                self.statusLabel.frame.size = CGSize.zero
+                self.statusLabel.isHidden = true
+            }
+            
+            self.contentView.frame.size = {
+                var width: CGFloat = 0
+                switch self.showType! {
+                case .activityIndicator:
+                    width = (self.statusLabel.isHidden ? self.hudView.width : (self.hudView.width > self.statusLabel.width ? self.hudView.width : self.statusLabel.width)) + self.margin * 2
+                case .message:
+                    width = self.statusLabel.width + self.margin * 2
+                case .image:
+                    width = (self.statusLabel.isHidden ? self.imageView.width : (self.imageView.width > self.statusLabel.width ? self.imageView.width : self.statusLabel.width)) + self.margin * 2
+                default: break
+                }
+                
+                var height: CGFloat = 0
+                switch self.showType! {
+                case .activityIndicator:
+                    height = (self.statusLabel.isHidden ? self.hudView.height : (self.hudView.height + self.margin + self.statusLabel.height)) + self.margin * 2
+                case .message:
+                    height = self.statusLabel.height + self.margin * 2
+                case .image:
+                    height = (self.statusLabel.isHidden ? self.imageView.height : (self.imageView.height + self.margin + self.statusLabel.height)) + self.margin * 2
+                default: break
+                }
+                
+                return CGSize(width: width, height: height)
             }()
+            
+            switch self.showType! {
+            case .activityIndicator:
+                self.hudView.frame.origin = {
+                    let x = (self.contentView.width - self.hudView.width) / 2
+                    let y = self.margin
+                    return CGPoint(x: x, y: y)
+                }()
+                self.statusLabel.frame.origin = {
+                    let x = (self.contentView.width - self.statusLabel.width) / 2
+                    let y = self.hudView.y + self.hudView.height + self.margin
+                    return CGPoint(x: x, y: y)
+                }()
+            case .message:
+                self.statusLabel.frame.origin = {
+                    let x = (self.contentView.width - self.statusLabel.width) / 2
+                    let y = self.margin
+                    return CGPoint(x: x, y: y)
+                }()
+            case .image:
+                self.imageView.frame.origin = {
+                    let x = (self.contentView.width - self.imageView.width) / 2
+                    let y = self.margin
+                    return CGPoint(x: x, y: y)
+                }()
+                self.statusLabel.frame.origin = {
+                    let x = (self.contentView.width - self.statusLabel.width) / 2
+                    let y = self.imageView.y + self.imageView.height + self.margin
+                    return CGPoint(x: x, y: y)
+                }()
+            default: break
+            }
         }
         
         self.contentView.frame.origin = {
@@ -592,12 +598,13 @@ extension ZKProgressHUD {
     public static func show(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
         shared.show(showType: .activityIndicator, status: status, image: nil, isHide: nil, maskStyle: maskStyle)
     }
-    // 显示消息
-    public static func showMessage(_ message: String?) {
-        ZKProgressHUD.showMessage(message: message, maskStyle: nil)
+    // 显示进度
+    public static func showProgress(_ progress: CGFloat?) {
+        ZKProgressHUD.showProgress(progress: progress, maskStyle: nil)
     }
-    public static func showMessage(message: String?, maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.show(showType: .message, status: message, image: nil, isHide: true, maskStyle: maskStyle)
+    public static func showProgress(progress: CGFloat?, maskStyle: ZKProgressHUDMaskStyle?) {
+        shared.progress = progress
+        shared.show(showType: .progress, status: nil, image: nil, isHide: nil, maskStyle: maskStyle)
     }
     // 显示图片
     public static func showImage(_ image: UIImage?) {
@@ -629,6 +636,13 @@ extension ZKProgressHUD {
     }
     public static func showError(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
         shared.show(showType: .image, status: status, image: shared.errorImage, isHide: true, maskStyle: maskStyle)
+    }
+    // 显示消息
+    public static func showMessage(_ message: String?) {
+        ZKProgressHUD.showMessage(message: message, maskStyle: nil)
+    }
+    public static func showMessage(message: String?, maskStyle: ZKProgressHUDMaskStyle?) {
+        shared.show(showType: .message, status: message, image: nil, isHide: true, maskStyle: maskStyle)
     }
     // 隐藏
     public static func hide(delay: Int? = nil) {

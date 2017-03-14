@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A095A8BB1E784EE500261A9B /* ZKProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095A8BA1E784EE500261A9B /* ZKProgressView.swift */; };
 		A0ADABAE1E72B245006C3BD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADABAD1E72B245006C3BD7 /* AppDelegate.swift */; };
 		A0ADABB01E72B245006C3BD7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADABAF1E72B245006C3BD7 /* ViewController.swift */; };
 		A0ADABB51E72B245006C3BD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0ADABB41E72B245006C3BD7 /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A095A8BA1E784EE500261A9B /* ZKProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKProgressView.swift; sourceTree = "<group>"; };
 		A0ADABAA1E72B245006C3BD7 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0ADABAD1E72B245006C3BD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A0ADABAF1E72B245006C3BD7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 			children = (
 				A0ADABC41E72B49F006C3BD7 /* ZKProgressHUD.swift */,
 				A0DF4DD51E773D3800D67231 /* ZKProgressHUD.bundle */,
+				A095A8BA1E784EE500261A9B /* ZKProgressView.swift */,
 			);
 			name = ZKProgressHUD;
 			path = ../ZKProgressHUD;
@@ -153,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A095A8BB1E784EE500261A9B /* ZKProgressView.swift in Sources */,
 				A0ADABC51E72B49F006C3BD7 /* ZKProgressHUD.swift in Sources */,
 				A0ADABB01E72B245006C3BD7 /* ViewController.swift in Sources */,
 				A0ADABAE1E72B245006C3BD7 /* AppDelegate.swift in Sources */,

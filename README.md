@@ -69,10 +69,10 @@ DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(3), ex
 })
 ```
 
-### showMessage
+### showProgress
 
 ```swift
-ZKProgressHUD.showMessage("Hello world")
+ZKProgressHUD.showProgress(1 / 10)
 ```
 
 ### showImage
@@ -103,6 +103,12 @@ ZKProgressHUD.showSuccess("Hello world")
 
 ```swift
 ZKProgressHUD.showError("Hello world")
+```
+
+### showMessage
+
+```swift
+ZKProgressHUD.showMessage("Hello world")
 ```
 
 ### hide

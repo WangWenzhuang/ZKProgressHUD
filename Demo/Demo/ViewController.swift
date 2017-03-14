@@ -18,8 +18,10 @@ class ViewController: UITableViewController {
     
     let cellIdentifier = "cell"
     
-    lazy var actionTexts = ["show", "show with status", "showMessage", "shwoImage", "showImage with status", "showInfo", "showSuccess", "showError"]
+    lazy var actionTexts = ["show", "show with status", "showProgress", "shwoImage", "showImage with status", "showInfo", "showSuccess", "showError", "showMessage"]
     lazy var headerTexts = ["MaskStyle", "AnimationStyle", "actions"]
+    
+    var progressValue: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +74,7 @@ class ViewController: UITableViewController {
                 ZKProgressHUD.show("loading...")
                 ZKProgressHUD.hide(delay: 3)
             } else if indexPath.row == 2 {
-                ZKProgressHUD.showMessage("Hello world")
+                Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(ViewController.timerHandler(timer:)), userInfo: nil, repeats: true)
             } else if indexPath.row == 3 {
                 ZKProgressHUD.showImage(UIImage(named: "image"))
             } else if indexPath.row == 4 {
@@ -83,6 +85,8 @@ class ViewController: UITableViewController {
                 ZKProgressHUD.showSuccess("Hello world")
             } else if indexPath.row == 7 {
                 ZKProgressHUD.showError("Hello world")
+            } else if indexPath.row == 8 {
+                ZKProgressHUD.showMessage("Hello world")
             }
         }
     }
@@ -90,5 +94,19 @@ class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.headerTexts[section]
     }
+    
+    func timerHandler(timer: Timer) {
+        if self.progressValue > 100 {
+            if timer.isValid {
+                timer.invalidate()
+            }
+            ZKProgressHUD.hide()
+            self.progressValue = 0
+        } else {
+            self.progressValue += 1
+            ZKProgressHUD.showProgress(self.progressValue / 100)
+        }
+    }
+
 }
 
