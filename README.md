@@ -1,3 +1,5 @@
+![(logo)](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/Demo/image%402x.png)
+
 # ZKProgressHUD
 
 [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/WangWenzhuang/ZKProgressHUD)
