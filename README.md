@@ -9,9 +9,11 @@ A easy-to-use HUD for your iOS app.
 
 ## Requirements
 
-- iOS 8.0 +
-- Xcode 8 +
-- Swift 3.0 +
+* iOS 8.0 +
+
+* Xcode 8 +
+
+* Swift 3.0 +
 
 ## Installation
 
@@ -30,6 +32,7 @@ end
 ### Manually
 
 * Drag the `ZKProgressHUD` folder into your project.
+
 * Take care that `ZKProgressHUD.bundle` is added to `Targets->Build Phases->Copy Bundle Resources`.
 
 ## Usage
@@ -111,3 +114,31 @@ ZKProgressHUD.hide()
 ```swift
 ZKProgressHUD.hide(delay: 3)
 ```
+
+## Customization
+
+`ZKProgressHUD` can be customized via the following methods:
+
+```swift
+    setMaskStyle (_ maskStyle : ZKProgressHUDMaskStyle )
+
+    setMaskBackgroundColor(_ color: UIColor)
+
+    setForegroundColor(_ color: UIColor)
+
+    setBackgroundColor(_ color: UIColor)
+
+    setFont(_ font: UIFont)
+
+    setCornerRadius(_ cornerRadius: CGFloat)
+
+    setAnimationStyle(_ animationStyle : ZKProgressHUDAnimationStyle )
+
+    setHideDelay(hideDelay: Int)
+```
+
+## TODO
+
+* Progress
+
+* GIF image display
