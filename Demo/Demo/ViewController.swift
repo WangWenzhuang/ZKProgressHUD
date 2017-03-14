@@ -69,20 +69,20 @@ class ViewController: UITableViewController {
                 ZKProgressHUD.show()
                 ZKProgressHUD.hide(delay: 3)
             } else if indexPath.row == 1 {
-                ZKProgressHUD.show(status: "loading...", maskStyle: .hide)
+                ZKProgressHUD.show("loading...")
                 ZKProgressHUD.hide(delay: 3)
             } else if indexPath.row == 2 {
-                ZKProgressHUD.showMessage(nil)
+                ZKProgressHUD.showMessage("Hello world")
             } else if indexPath.row == 3 {
-                ZKProgressHUD.showImage(nil)
+                ZKProgressHUD.showImage(UIImage(named: "image"))
             } else if indexPath.row == 4 {
                 ZKProgressHUD.showImage(image: UIImage(named: "image"), status: "Hello world")
             } else if indexPath.row == 5 {
-                ZKProgressHUD.showInfo(nil)
+                ZKProgressHUD.showInfo("Hello world")
             } else if indexPath.row == 6 {
-                ZKProgressHUD.showSuccess(nil)
+                ZKProgressHUD.showSuccess("Hello world")
             } else if indexPath.row == 7 {
-                ZKProgressHUD.showError(nil)
+                ZKProgressHUD.showError("Hello world")
             }
         }
     }

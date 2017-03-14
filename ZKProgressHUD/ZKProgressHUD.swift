@@ -122,7 +122,7 @@ public final class ZKProgressHUD {
         }
     }
     
-    private var _backgroundColor: UIColor = UIColor(red: 0 / 255.0, green: 0 / 255.0, blue: 0 / 255.0, alpha: 0.5)
+    private var _backgroundColor: UIColor = UIColor(red: 0 / 255.0, green: 0 / 255.0, blue: 0 / 255.0, alpha: 0.6)
     fileprivate var backgroundColor: UIColor {
         get {
             return self._backgroundColor
@@ -228,6 +228,7 @@ public final class ZKProgressHUD {
                 self._contentView.autoresizingMask = [.flexibleBottomMargin, .flexibleTopMargin, .flexibleLeftMargin, .flexibleRightMargin]
                 self._contentView.layer.cornerRadius = self.cornerRadius
                 self._contentView.backgroundColor = self.backgroundColor
+                self._contentView.alpha = 0
             }
             return self._contentView
         }
@@ -500,6 +501,11 @@ extension ZKProgressHUD {
             let y = (self.screenHeight - self.contentView.height) / 2
             return CGPoint(x: x, y: y)
         }()
+        if self.contentView.alpha == 0 {
+            UIView.animate(withDuration: 0.4, animations: {
+                self.contentView.alpha = 1
+            })
+        }
     }
     
     fileprivate func beginLoadingAnimation() {
@@ -521,15 +527,20 @@ extension ZKProgressHUD {
     fileprivate func hideView(delay: Int? = nil) {
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(delay ?? 0), execute: {
             DispatchQueue.main.async {
-                if self.contentView.superview != nil {
-                    self.contentView.removeFromSuperview()
-                }
-                if self.maskView.superview != nil {
-                    self.maskView.removeFromSuperview()
-                }
-                if self.showType == .activityIndicator {
-                    self.stoploadingAnimation()
-                }
+                UIView.animate(withDuration: 0.4, animations: {
+                    self.contentView.alpha = 0
+                }, completion: { (finished) in
+                    if self.contentView.superview != nil {
+                        self.contentView.removeFromSuperview()
+                    }
+                    if self.maskView.superview != nil {
+                        self.maskView.removeFromSuperview()
+                    }
+                    if self.showType == .activityIndicator {
+                        self.stoploadingAnimation()
+                    }
+                })
+                
             }
         })
     }
@@ -593,7 +604,7 @@ extension ZKProgressHUD {
         ZKProgressHUD.showImage(image: image, status: nil)
     }
     public static func showImage(image: UIImage?, status: String?) {
-        ZKProgressHUD.showImage(image: image, status: nil, maskStyle: nil)
+        ZKProgressHUD.showImage(image: image, status: status, maskStyle: nil)
     }
     public static func showImage(image: UIImage?, status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
         shared.show(showType: .image, status: status, image: image, isHide: true, maskStyle: maskStyle)
