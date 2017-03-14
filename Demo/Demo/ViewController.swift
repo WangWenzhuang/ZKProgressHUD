@@ -18,7 +18,7 @@ class ViewController: UITableViewController {
     
     let cellIdentifier = "cell"
     
-    lazy var actionTexts = ["show", "show and status", "message", "image", "image and status", "info", "success", "error"]
+    lazy var actionTexts = ["show", "show with status", "showMessage", "shwoImage", "showImage with status", "showInfo", "showSuccess", "showError"]
     lazy var headerTexts = ["MaskStyle", "AnimationStyle", "actions"]
     
     override func viewDidLoad() {
@@ -67,16 +67,16 @@ class ViewController: UITableViewController {
         } else if indexPath.section == 2 {
             if indexPath.row == 0 {
                 ZKProgressHUD.show()
-                ZKProgressHUD.hide(3)
+                ZKProgressHUD.hide(delay: 3)
             } else if indexPath.row == 1 {
-                ZKProgressHUD.show("loading...")
-                ZKProgressHUD.hide(3)
+                ZKProgressHUD.show(status: "loading...", maskStyle: .hide)
+                ZKProgressHUD.hide(delay: 3)
             } else if indexPath.row == 2 {
                 ZKProgressHUD.showMessage(nil)
             } else if indexPath.row == 3 {
                 ZKProgressHUD.showImage(nil)
             } else if indexPath.row == 4 {
-                ZKProgressHUD.showImage(UIImage(named: "image"), "Hello world")
+                ZKProgressHUD.showImage(image: UIImage(named: "image"), status: "Hello world")
             } else if indexPath.row == 5 {
                 ZKProgressHUD.showInfo(nil)
             } else if indexPath.row == 6 {

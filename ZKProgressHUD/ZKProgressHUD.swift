@@ -47,7 +47,7 @@ public enum ZKProgressHUDAnimationStyle {
 
 // 遮罩样式
 public enum ZKProgressHUDMaskStyle {
-    case none
+    case hide
     case visible
 }
 
@@ -334,12 +334,12 @@ public final class ZKProgressHUD {
     fileprivate static let shared = ZKProgressHUD()
 }
 extension ZKProgressHUD {
-    fileprivate func show(_ showType: ShowType, status: String? = nil, image: UIImage? = nil, isHide: Bool? = nil, maskStyle: MaskStyle? = nil) {
+    fileprivate func show(showType: ShowType, status: String? = nil, image: UIImage? = nil, isHide: Bool? = nil, maskStyle: MaskStyle? = nil) {
         DispatchQueue.main.async {
             self.showType = showType
             self.status = status
             self.image = image
-            self.updateView()
+            self.updateView(maskStyle: maskStyle)
             self.updateFrame()
             if showType == .activityIndicator {
                 self.beginLoadingAnimation()
@@ -352,8 +352,10 @@ extension ZKProgressHUD {
         }
     }
     
-    fileprivate func updateView() {
-        if self.maskStyle == .none {
+    fileprivate func updateView(maskStyle: MaskStyle?) {
+        let _maskStyle = maskStyle ?? self.maskStyle
+ 
+        if _maskStyle == .hide {
             if self.maskView.superview != nil {
                 self.maskView.removeFromSuperview()
             }
@@ -574,42 +576,51 @@ extension ZKProgressHUD {
         ZKProgressHUD.show(nil)
     }
     public static func show(_ status: String?) {
-        ZKProgressHUD.show(status, nil)
+        ZKProgressHUD.show(status: status, maskStyle: nil)
     }
-    public static func show(_ status: String?, _ maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.show(.activityIndicator, status: status, image: nil, isHide: nil, maskStyle: maskStyle)
+    public static func show(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
+        shared.show(showType: .activityIndicator, status: status, image: nil, isHide: nil, maskStyle: maskStyle)
     }
     // 显示消息
     public static func showMessage(_ message: String?) {
-        ZKProgressHUD.showMessage(message, nil)
+        ZKProgressHUD.showMessage(message: message, maskStyle: nil)
     }
-    public static func showMessage(_ message: String?, _ maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.show(.message, status: message, image: nil, isHide: true, maskStyle: maskStyle)
+    public static func showMessage(message: String?, maskStyle: ZKProgressHUDMaskStyle?) {
+        shared.show(showType: .message, status: message, image: nil, isHide: true, maskStyle: maskStyle)
     }
     // 显示图片
     public static func showImage(_ image: UIImage?) {
-        ZKProgressHUD.showImage(image, nil)
+        ZKProgressHUD.showImage(image: image, status: nil)
     }
-    public static func showImage(_ image: UIImage?, _ status: String?) {
-        ZKProgressHUD.showImage(image, nil, nil)
+    public static func showImage(image: UIImage?, status: String?) {
+        ZKProgressHUD.showImage(image: image, status: nil, maskStyle: nil)
     }
-    public static func showImage(_ image: UIImage?, _ status: String?, _ maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.show(.image, status: status, image: image, isHide: true, maskStyle: maskStyle)
+    public static func showImage(image: UIImage?, status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
+        shared.show(showType: .image, status: status, image: image, isHide: true, maskStyle: maskStyle)
     }
     // 显示普通信息
     public static func showInfo(_ status: String?) {
-        shared.show(.image, status: status, image: shared.infoImage, isHide: true)
+        ZKProgressHUD.showInfo(status: status, maskStyle: nil)
+    }
+    public static func showInfo(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
+        shared.show(showType: .image, status: status, image: shared.infoImage, isHide: true, maskStyle: maskStyle)
     }
     // 显示成功信息
     public static func showSuccess(_ status: String?) {
-        shared.show(.image, status: status, image: shared.successImage, isHide: true)
+        ZKProgressHUD.showSuccess(status: status, maskStyle: nil)
+    }
+    public static func showSuccess(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
+        shared.show(showType: .image, status: status, image: shared.successImage, isHide: true, maskStyle: maskStyle)
     }
     // 显示失败信息
     public static func showError(_ status: String?) {
-        shared.show(.image, status: status, image: shared.errorImage, isHide: true)
+        ZKProgressHUD.showError(status: status, maskStyle: nil)
+    }
+    public static func showError(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
+        shared.show(showType: .image, status: status, image: shared.errorImage, isHide: true, maskStyle: maskStyle)
     }
     // 隐藏
-    public static func hide(_ delay: Int? = nil) {
+    public static func hide(delay: Int? = nil) {
         shared.hideView(delay: delay ?? 0)
     }
     
