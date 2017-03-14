@@ -99,3 +99,15 @@ ZKProgressHUD.showSuccess("Hello world")
 ```swift
 ZKProgressHUD.showError("Hello world")
 ```
+
+### Hide
+
+```swift
+ZKProgressHUD.hide()
+```
+
+### Delay hide
+
+```swift
+ZKProgressHUD.hide(delay: 3)
+```
