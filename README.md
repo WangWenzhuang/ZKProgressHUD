@@ -147,6 +147,4 @@ ZKProgressHUD.hide(delay: 3)
 
 ## TODO
 
-* Progress
-
 * GIF image display
