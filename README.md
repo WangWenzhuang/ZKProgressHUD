@@ -128,21 +128,21 @@ ZKProgressHUD.hide(delay: 3)
 `ZKProgressHUD` can be customized via the following methods:
 
 ```swift
-    setMaskStyle (_ maskStyle : ZKProgressHUDMaskStyle )
+setMaskStyle (_ maskStyle : ZKProgressHUDMaskStyle )
 
-    setMaskBackgroundColor(_ color: UIColor)
+setMaskBackgroundColor(_ color: UIColor)
 
-    setForegroundColor(_ color: UIColor)
+setForegroundColor(_ color: UIColor)
 
-    setBackgroundColor(_ color: UIColor)
+setBackgroundColor(_ color: UIColor)
 
-    setFont(_ font: UIFont)
+setFont(_ font: UIFont)
 
-    setCornerRadius(_ cornerRadius: CGFloat)
+setCornerRadius(_ cornerRadius: CGFloat)
 
-    setAnimationStyle(_ animationStyle : ZKProgressHUDAnimationStyle )
+setAnimationStyle(_ animationStyle : ZKProgressHUDAnimationStyle )
 
-    setHideDelay(_ hideDelay: Int)
+setHideDelay(_ hideDelay: Int)
 ```
 
 ## TODO
