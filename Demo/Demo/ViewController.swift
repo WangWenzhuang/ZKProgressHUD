@@ -28,6 +28,15 @@ class ViewController: UITableViewController {
         
         self.title = "ZKProgressHUD"
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: self.cellIdentifier)
+        
+        // Customization
+        
+//        ZKProgressHUD.setFont(UIFont.systemFont(ofSize: 15))
+//        ZKProgressHUD.setMaskStyle(.hide)
+//        ZKProgressHUD.setBackgroundColor(UIColor(red: 255 / 255.0, green: 255 / 255.0, blue: 255 / 255.0, alpha: 0.7))
+//        ZKProgressHUD.setForegroundColor(UIColor.darkGray)
+        ZKProgressHUD.setAnimationStyle(.chrysanthemum)
+//        ZKProgressHUD.
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
