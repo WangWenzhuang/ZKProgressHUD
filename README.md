@@ -3,7 +3,7 @@
 # ZKProgressHUD
 
 ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)
-![CocoaPods](https://img.shields.io/badge/pod-v0.5-brightgreen.svg)]
+![CocoaPods](https://img.shields.io/badge/pod-v0.5-brightgreen.svg)
 ![platform](https://img.shields.io/badge/platform-iOS-brightgreen.svg)
 ![contact](https://img.shields.io/badge/contact-1020304029%40qq.com-brightgreen.svg)
 
