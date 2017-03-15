@@ -7,9 +7,11 @@
 ![platform](https://img.shields.io/badge/platform-iOS-brightgreen.svg)
 ![contact](https://img.shields.io/badge/contact-1020304029%40qq.com-brightgreen.svg)
 
+> [中文说明](https://github.com/WangWenzhuang/ZKProgressHUD/blob/master/README-Chinese.md)
+
 A easy-to-use HUD for your iOS app.
 
-![demo](https://github.com/WangWenzhuang/ZKProgressHUD/blob/master/demo.gif)
+![demo](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/demo.gif)
 
 ## Requirements
 
@@ -125,7 +127,16 @@ ZKProgressHUD.hide()
 ZKProgressHUD.hide(delay: 3)
 ```
 
-## Customization
+## Customization😏
+
+![style1](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style1.PNG)
+![style2](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style2.PNG)
+![style3](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style3.PNG)
+![style4](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style4.PNG)
+![style5](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style5.PNG)
+![style6](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style6.PNG)
+![style7](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style7.PNG)
+![style8](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style8.PNG)
 
 `ZKProgressHUD` can be customized via the following methods:
 
@@ -147,7 +158,7 @@ setAnimationStyle(_ animationStyle : ZKProgressHUDAnimationStyle )
 setHideDelay(_ hideDelay: Int)
 ```
 
-## TODO
+## TODO💪
 
 * GIF image display
 
