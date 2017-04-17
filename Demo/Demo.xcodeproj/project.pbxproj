@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A063CFDF1E79540C0087C8BF /* ZKGifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A063CFDE1E79540C0087C8BF /* ZKGifView.swift */; };
+		A063CFE11E79612D0087C8BF /* timg.gif in Resources */ = {isa = PBXBuildFile; fileRef = A063CFE01E79612D0087C8BF /* timg.gif */; };
 		A095A8BB1E784EE500261A9B /* ZKProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095A8BA1E784EE500261A9B /* ZKProgressView.swift */; };
 		A0ADABAE1E72B245006C3BD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADABAD1E72B245006C3BD7 /* AppDelegate.swift */; };
 		A0ADABB01E72B245006C3BD7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADABAF1E72B245006C3BD7 /* ViewController.swift */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A063CFDE1E79540C0087C8BF /* ZKGifView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKGifView.swift; sourceTree = "<group>"; };
+		A063CFE01E79612D0087C8BF /* timg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = timg.gif; sourceTree = "<group>"; };
 		A095A8BA1E784EE500261A9B /* ZKProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKProgressView.swift; sourceTree = "<group>"; };
 		A0ADABAA1E72B245006C3BD7 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0ADABAD1E72B245006C3BD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -44,6 +48,7 @@
 		A0ADABA11E72B245006C3BD7 = {
 			isa = PBXGroup;
 			children = (
+				A063CFE01E79612D0087C8BF /* timg.gif */,
 				A0DF4DD71E77B85200D67231 /* image@2x.png */,
 				A0ADABC31E72B49F006C3BD7 /* ZKProgressHUD */,
 				A0ADABAC1E72B245006C3BD7 /* Demo */,
@@ -77,6 +82,7 @@
 				A0ADABC41E72B49F006C3BD7 /* ZKProgressHUD.swift */,
 				A0DF4DD51E773D3800D67231 /* ZKProgressHUD.bundle */,
 				A095A8BA1E784EE500261A9B /* ZKProgressView.swift */,
+				A063CFDE1E79540C0087C8BF /* ZKGifView.swift */,
 			);
 			name = ZKProgressHUD;
 			path = ../ZKProgressHUD;
@@ -144,6 +150,7 @@
 			files = (
 				A0DF4DD81E77B85200D67231 /* image@2x.png in Resources */,
 				A0ADABB81E72B245006C3BD7 /* LaunchScreen.storyboard in Resources */,
+				A063CFE11E79612D0087C8BF /* timg.gif in Resources */,
 				A0ADABB51E72B245006C3BD7 /* Assets.xcassets in Resources */,
 				A0DF4DD61E773D3800D67231 /* ZKProgressHUD.bundle in Resources */,
 			);
@@ -158,6 +165,7 @@
 			files = (
 				A095A8BB1E784EE500261A9B /* ZKProgressView.swift in Sources */,
 				A0ADABC51E72B49F006C3BD7 /* ZKProgressHUD.swift in Sources */,
+				A063CFDF1E79540C0087C8BF /* ZKGifView.swift in Sources */,
 				A0ADABB01E72B245006C3BD7 /* ViewController.swift in Sources */,
 				A0ADABAE1E72B245006C3BD7 /* AppDelegate.swift in Sources */,
 			);

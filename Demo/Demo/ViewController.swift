@@ -18,7 +18,7 @@ class ViewController: UITableViewController {
     
     let cellIdentifier = "cell"
     
-    lazy var actionTexts = ["show", "show with status", "showProgress", "shwoImage", "showImage with status", "showInfo", "showSuccess", "showError", "showMessage"]
+    lazy var actionTexts = ["show", "show with status", "showProgress", "shwoImage", "showImage with status", "showInfo", "showSuccess", "showError", "showMessage", "show"]
     lazy var headerTexts = ["MaskStyle", "AnimationStyle", "actions"]
     
     var progressValue: CGFloat = 0
@@ -29,14 +29,12 @@ class ViewController: UITableViewController {
         self.title = "ZKProgressHUD"
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: self.cellIdentifier)
         
-        // Customization
-        
-//        ZKProgressHUD.setFont(UIFont.systemFont(ofSize: 15))
-//        ZKProgressHUD.setMaskStyle(.hide)
-//        ZKProgressHUD.setBackgroundColor(UIColor(red: 255 / 255.0, green: 255 / 255.0, blue: 255 / 255.0, alpha: 0.7))
-//        ZKProgressHUD.setForegroundColor(UIColor.darkGray)
-        ZKProgressHUD.setAnimationStyle(.chrysanthemum)
-//        ZKProgressHUD.
+        self.tableView.tableHeaderView = {
+            let gifView = ZKGifView()
+            gifView.frame = CGRect.init(x: 0, y: 0, width: self.view.frame.size.width, height: 400)
+            gifView.showGIFImageWithLocalName(name: "timg")
+            return gifView
+        }()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -81,7 +79,11 @@ class ViewController: UITableViewController {
                 ZKProgressHUD.hide(delay: 3)
             } else if indexPath.row == 1 {
                 ZKProgressHUD.show("loading...")
-                ZKProgressHUD.hide(delay: 3)
+                DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(3), execute: {
+                    DispatchQueue.main.async {
+                        ZKProgressHUD.hide()
+                    }
+                })
             } else if indexPath.row == 2 {
                 Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(ViewController.timerHandler(timer:)), userInfo: nil, repeats: true)
             } else if indexPath.row == 3 {

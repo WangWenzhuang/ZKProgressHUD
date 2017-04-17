@@ -253,7 +253,7 @@ public final class ZKProgressHUD {
         get {
             if self._hudCircleView == nil {
                 let arcCenter = CGPoint(x: 15, y: 15)
-                let smoothedPath = UIBezierPath(arcCenter: arcCenter, radius: 30, startAngle: 0, endAngle: (CGFloat)(5 * M_PI / 3), clockwise: true)
+                let smoothedPath = UIBezierPath(arcCenter: arcCenter, radius: 30, startAngle: 0, endAngle: (CGFloat)(5 * Double.pi / 3), clockwise: true)
                 let layer = CAShapeLayer()
                 layer.contentsScale = UIScreen.main.scale
                 layer.frame = CGRect(x: self.margin, y: self.margin, width: arcCenter.x * 2, height: arcCenter.y * 2)
@@ -265,7 +265,7 @@ public final class ZKProgressHUD {
                 layer.path = smoothedPath.cgPath
                 let animation = CABasicAnimation.init(keyPath: "transform.rotation")
                 animation.fromValue = 0
-                animation.toValue = (M_PI * 2)
+                animation.toValue = (Double.pi * 2)
                 animation.duration = 1
                 animation.isRemovedOnCompletion = false
                 animation.repeatCount = Float(Int.max)

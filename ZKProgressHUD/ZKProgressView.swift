@@ -25,8 +25,8 @@ class ZKProgressView: UIView {
         let ctx = UIGraphicsGetCurrentContext()
         let arcCenter = CGPoint(x: self.frame.width / 2, y: self.frame.width / 2)
         let radius = arcCenter.x - 2
-        let startAngle = -M_PI_2
-        let endAngle = -M_PI_2 + M_PI * 2 * self.progress
+        let startAngle = -(Double.pi / 2)
+        let endAngle = startAngle + Double.pi * 2 * self.progress
         let path = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: CGFloat(startAngle), endAngle: CGFloat(endAngle), clockwise: true)
         ctx!.setLineWidth(4)
         self.progressColor?.setStroke()
