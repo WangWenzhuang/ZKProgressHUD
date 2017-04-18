@@ -18,7 +18,7 @@ class ViewController: UITableViewController {
     
     let cellIdentifier = "cell"
     
-    lazy var actionTexts = ["show", "show with status", "showProgress", "shwoImage", "showImage with status", "showInfo", "showSuccess", "showError", "showMessage", "show"]
+    lazy var actionTexts = ["show", "show with status", "showProgress", "shwoImage", "showImage with status", "showInfo", "showSuccess", "showError", "showMessage"]
     lazy var headerTexts = ["MaskStyle", "AnimationStyle", "actions"]
     
     var progressValue: CGFloat = 0
@@ -76,12 +76,13 @@ class ViewController: UITableViewController {
         } else if indexPath.section == 2 {
             if indexPath.row == 0 {
                 ZKProgressHUD.show()
-                ZKProgressHUD.hide(delay: 3)
+                ZKProgressHUD.dismiss(delay: 3)
             } else if indexPath.row == 1 {
                 ZKProgressHUD.show("loading...")
                 DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(3), execute: {
                     DispatchQueue.main.async {
-                        ZKProgressHUD.hide()
+                        ZKProgressHUD.dismiss()
+                        ZKProgressHUD.showInfo("加载成功")
                     }
                 })
             } else if indexPath.row == 2 {
@@ -111,7 +112,7 @@ class ViewController: UITableViewController {
             if timer.isValid {
                 timer.invalidate()
             }
-            ZKProgressHUD.hide()
+            ZKProgressHUD.dismiss()
             self.progressValue = 0
         } else {
             self.progressValue += 1
