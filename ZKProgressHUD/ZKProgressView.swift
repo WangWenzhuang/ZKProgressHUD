@@ -23,7 +23,7 @@ class ZKProgressView: UIView {
     
     override func draw(_ rect: CGRect) {
         let ctx = UIGraphicsGetCurrentContext()
-        let arcCenter = CGPoint(x: self.frame.width / 2, y: self.frame.width / 2)
+        let arcCenter = CGPoint(x: self.width / 2, y: self.width / 2)
         let radius = arcCenter.x - 2
         let startAngle = -(Double.pi / 2)
         let endAngle = startAngle + Double.pi * 2 * self.progress

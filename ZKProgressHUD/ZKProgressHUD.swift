@@ -93,7 +93,7 @@ public class ZKProgressHUD: UIView {
         $0.layer.addSublayer(layer)
         return $0
     }(UIView())
-    
+
     fileprivate lazy var statusLabel: UILabel = {
         $0.textAlignment = .center
         $0.numberOfLines = 0
