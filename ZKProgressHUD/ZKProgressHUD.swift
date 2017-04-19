@@ -59,6 +59,7 @@ public class ZKProgressHUD: UIView {
     fileprivate lazy var systemHUDView: UIActivityIndicatorView = {
         $0.activityIndicatorViewStyle = .whiteLarge
         $0.sizeToFit()
+        $0.startAnimating()
         return $0
     }(UIActivityIndicatorView())
     
@@ -150,7 +151,7 @@ extension ZKProgressHUD {
             self.status = status == "" ? nil : status
             self.image = image
             self.updateView(maskStyle: maskStyle)
-            self.updateFrame()
+            self.updateFrame(maskStyle: maskStyle)
             if let autoDismiss = isAutoDismiss {
                 if autoDismiss {
                     self.autoDismiss(delay: ZKProgressHUDConfig.autoDismissDelay)
@@ -197,7 +198,7 @@ extension ZKProgressHUD {
         }
     }
     /// 更新视图大小坐标
-    fileprivate func updateFrame() {
+    fileprivate func updateFrame(maskStyle: MaskStyle?) {
         if self.hudType! == .progress {
             self.contentView.frame.size = {
                 let width = self.progressView.width + ZKProgressHUDConfig.margin * 2
@@ -296,6 +297,9 @@ extension ZKProgressHUD {
             let y = (self.screenHeight - self.contentView.height) / 2
             return CGPoint(x: x, y: y)
         }()
+        if (maskStyle ?? ZKProgressHUDConfig.maskStyle) == .hide {
+            self.frame = self.contentView.frame
+        }
         UIView.animate(withDuration: 0.4, animations: {
             self.contentView.alpha = 1
         })
@@ -379,8 +383,12 @@ extension ZKProgressHUD {
     public static func showMessage(message: String?, maskStyle: ZKProgressHUDMaskStyle?) {
         shared.show(hudType: .message, status: message, image: nil, isAutoDismiss: true, maskStyle: maskStyle)
     }
+    @available(swift, deprecated: 3.0, message: "请使用 dismiss 方法")
+    public static func hide(delay: Int? = nil) {
+        ZKProgressHUD.dismiss(delay)
+    }
     // 移除
-    public static func dismiss(delay: Int? = nil) {
+    public static func dismiss(_ delay: Int? = nil) {
         DispatchQueue.main.async {
             for subview in (ZKProgressHUD.frontWindow?.subviews)! {
                 if subview.isKind(of: ZKProgressHUD.self) {
