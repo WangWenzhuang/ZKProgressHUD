@@ -7,13 +7,13 @@
 ![platform](https://img.shields.io/badge/platform-iOS-brightgreen.svg)
 ![contact](https://img.shields.io/badge/contact-1020304029%40qq.com-brightgreen.svg)
 
-> [中文说明](https://github.com/WangWenzhuang/ZKProgressHUD/blob/master/README-Chinese.md)
+> [English](https://github.com/WangWenzhuang/ZKProgressHUD/blob/master/README-English.md)
 
-A easy-to-use HUD for your iOS app.
+iOS App 上易于使用的 HUD
 
 ![demo](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/demo.gif)
 
-## Requirements
+## 运行环境
 
 * iOS 8.0 +
 
@@ -21,11 +21,11 @@ A easy-to-use HUD for your iOS app.
 
 * Swift 3.0 +
 
-## Installation
+## 安装
 
 ### CocoaPods
 
-You can use [CocoaPods](http://cocoapods.org/) to install `ZKProgressHUD` by adding it to your `Podfile`:
+你可以使用 [CocoaPods](http://cocoapods.org/) 安装 `ZKProgressHUD`，在你的 `Podfile` 中添加：
 
 ```ogdl
 platform :ios, '8.0'
@@ -35,21 +35,21 @@ target 'MyApp' do
     pod 'ZKProgressHUD'
 end
 ```
-### Manually
+### 手动安装
 
-* Drag the `ZKProgressHUD` folder into your project.
+* 拖动 `ZKProgressHUD` 文件夹到您的项目
 
-* Take care that `ZKProgressHUD.bundle` is added to `Targets->Build Phases->Copy Bundle Resources`.
+* 将 `ZKProgressHUD.bundle` 添加到项目资源中 `Targets->Build Phases->Copy Bundle Resources`
 
-## Usage
+## 使用
 
-### Import library
+### 导入 `ZKProgressHUD`
 
 ```swift
 import ZKProgressHUD
 ```
 
-### show
+### 显示加载
 
 ```swift
 ZKProgressHUD.show()
@@ -61,7 +61,7 @@ DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(3), ex
 })
 ```
 
-### show with status
+### 显示加载和文字
 
 ```swift
 ZKProgressHUD.show("loading")
@@ -73,61 +73,61 @@ DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(3), ex
 })
 ```
 
-### showProgress
+### 显示进度
 
 ```swift
 ZKProgressHUD.showProgress(1 / 10)
 ```
 
-### showImage
+### 显示图片
 
 ```swift
 ZKProgressHUD.showImage(UIImage(named: "image"))
 ```
 
-### showImage with status
+### 显示图片和文字
 
 ```swift
 ZKProgressHUD.showImage(UIImage(named: "image"), status: "Hello world")
 ```
 
-### showInfo
+### 显示信息样式
 
 ```swift
 ZKProgressHUD.showInfo("Hello world")
 ```
 
-### showSuccess
+### 显示成功
 
 ```swift
 ZKProgressHUD.showSuccess("Hello world")
 ```
 
-### showError
+### 显示错误
 
 ```swift
 ZKProgressHUD.showError("Hello world")
 ```
 
-### showMessage
+### 显示消息（无图）
 
 ```swift
 ZKProgressHUD.showMessage("Hello world")
 ```
 
-### hide
+### 隐藏
 
 ```swift
 ZKProgressHUD.hide()
 ```
 
-### hide with delay
+### 延迟隐藏
 
 ```swift
 ZKProgressHUD.hide(delay: 3)
 ```
 
-## Customization😏
+## 自定义😏
 
 ![style1](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style1.PNG)
 ![style2](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style2.PNG)
@@ -138,7 +138,7 @@ ZKProgressHUD.hide(delay: 3)
 ![style7](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style7.PNG)
 ![style8](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style8.PNG)
 
-`ZKProgressHUD` can be customized via the following methods:
+`ZKProgressHUD` 可以通过下面方法进行自定义:
 
 ```swift
 setMaskStyle (_ maskStyle : ZKProgressHUDMaskStyle )
@@ -158,8 +158,8 @@ setAnimationStyle(_ animationStyle : ZKProgressHUDAnimationStyle )
 setHideDelay(_ hideDelay: Int)
 ```
 
-## TODO💪
+## 待实现💪
 
-* GIF image display
+* 显示 Gif 图片
 
-* Code refactoring
+* 重构代码
