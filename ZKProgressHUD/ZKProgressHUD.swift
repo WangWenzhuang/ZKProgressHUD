@@ -56,7 +56,6 @@ public class ZKProgressHUD: UIView {
             return ZKProgressHUDConfig.animationStyle == AnimationStyle.circle ? self.circleHUDView : self.systemHUDView
         }
     }
-    
     fileprivate lazy var systemHUDView: UIActivityIndicatorView = {
         $0.activityIndicatorViewStyle = .whiteLarge
         $0.sizeToFit()
@@ -98,10 +97,55 @@ public class ZKProgressHUD: UIView {
         return $0
     }(UILabel())
 }
+// MARK: - 实例计算属性
+extension ZKProgressHUD {
+    fileprivate var screenWidht: CGFloat {
+        get {
+            return UIScreen.main.bounds.size.width
+        }
+    }
+    
+    fileprivate var screenHeight: CGFloat {
+        get {
+            return UIScreen.main.bounds.size.height
+        }
+    }
+    
+    fileprivate var maxContentViewWidth: CGFloat {
+        get {
+            return self.screenWidht - ZKProgressHUDConfig.margin * 2
+        }
+    }
+    
+    fileprivate var maxContentViewChildWidth: CGFloat {
+        get {
+            return self.screenWidht - ZKProgressHUDConfig.margin * 4
+        }
+    }
+}
+// MARK: - 类计算属性
+extension ZKProgressHUD {
+    fileprivate static var frontWindow: UIWindow? {
+        get {
+            let window = UIApplication.shared.windows.reversed().first(where: {
+                $0.screen == UIScreen.main &&
+                    !$0.isHidden && $0.alpha > 0 &&
+                    $0.windowLevel >= UIWindowLevelNormal
+            })
+            return window
+        }
+    }
+    static var shared: ZKProgressHUD {
+        get {
+            return ZKProgressHUD(frame: UIScreen.main.bounds)
+        }
+    }
+}
 extension ZKProgressHUD {
     /// 显示
     fileprivate func show(hudType: HUDType, status: String? = nil, image: UIImage? = nil, isAutoDismiss: Bool? = nil, maskStyle: MaskStyle? = nil) {
         DispatchQueue.main.async {
+            self.dismissAll()
             self.hudType = hudType
             self.status = status == "" ? nil : status
             self.image = image
@@ -109,12 +153,12 @@ extension ZKProgressHUD {
             self.updateFrame()
             if let autoDismiss = isAutoDismiss {
                 if autoDismiss {
-                    self.dismiss(delay: ZKProgressHUDConfig.autoDismissDelay)
+                    self.autoDismiss(delay: ZKProgressHUDConfig.autoDismissDelay)
                 }
             }
         }
     }
-    fileprivate func showImage(imageType: ImageType, maskStyle: ZKProgressHUDMaskStyle?) {
+    fileprivate func showImage(imageType: ImageType, status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
         var img: UIImage?
         switch imageType {
         case .info:
@@ -128,41 +172,15 @@ extension ZKProgressHUD {
     }
     /// 更新视图
     fileprivate func updateView(maskStyle: MaskStyle?) {
-        self.screenView.backgroundColor = ZKProgressHUDConfig.maskBackgroundColor
-        self.contentView.backgroundColor = self.backgroundColor
-        self.contentView.layer.cornerRadius = ZKProgressHUDConfig.cornerRadius
-        self.statusLabel.textColor = ZKProgressHUDConfig.foregroundColor
-        self.statusLabel.font = ZKProgressHUDConfig.font
-        self.imageView.tintColor = ZKProgressHUDConfig.foregroundColor
-        self.progressView.progressColor = ZKProgressHUDConfig.foregroundColor
-        self.systemHUDView.color = ZKProgressHUDConfig.foregroundColor
-        
-        if (maskStyle ?? ZKProgressHUDConfig.maskStyle) == .hide {
-            if self.screenView.superview != nil {
-                self.screenView.removeFromSuperview()
-            }
-        } else {
-            if self.screenView.superview == nil {
-                self.frontWindow?.addSubview(self.screenView)
-            } else {
-                self.screenView.superview?.bringSubview(toFront: self.screenView)
-            }
+        ZKProgressHUD.frontWindow?.addSubview(self)
+        if (maskStyle ?? ZKProgressHUDConfig.maskStyle) == .visible {
+            self.addSubview(self.screenView)
         }
-        
-        if self.contentView.superview == nil {
-            self.frontWindow?.addSubview(self.contentView)
-        } else {
-            self.contentView.superview?.bringSubview(toFront: contentView)
-        }
-        
-        for subview in self.contentView.subviews {
-            subview.removeFromSuperview()
-        }
-        
+        self.addSubview(self.contentView)
+
         if self.hudType != .progress {
             self.contentView.addSubview(self.statusLabel)
         }
-        
         switch self.hudType! {
         case .gif:
             /// TODO: 添加 gif 视图
@@ -278,28 +296,29 @@ extension ZKProgressHUD {
             let y = (self.screenHeight - self.contentView.height) / 2
             return CGPoint(x: x, y: y)
         }()
-        if self.contentView.alpha == 0 {
-            UIView.animate(withDuration: 0.4, animations: {
-                self.contentView.alpha = 1
-            })
-        }
+        UIView.animate(withDuration: 0.4, animations: {
+            self.contentView.alpha = 1
+        })
     }
     /// 移除
-    fileprivate func dismiss(delay: Int) {
+    fileprivate func autoDismiss(delay: Int) {
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(delay), execute: {
             DispatchQueue.main.async {
                 UIView.animate(withDuration: 0.4, animations: {
                     self.contentView.alpha = 0
                 }, completion: { (finished) in
-                    if self.contentView.superview != nil {
-                        self.contentView.removeFromSuperview()
-                    }
-                    if self.screenView.superview != nil {
-                        self.screenView.removeFromSuperview()
-                    }
+                    self.removeFromSuperview()
                 })
             }
         })
+    }
+    /// 移除所有
+    fileprivate func dismissAll() {
+        for subview in (ZKProgressHUD.frontWindow?.subviews)! {
+            if subview.isKind(of: ZKProgressHUD.self) {
+                subview.removeFromSuperview()
+            }
+        }
     }
 }
 // MARK: - ZKProgressHUD 暴露的接口
@@ -337,21 +356,21 @@ extension ZKProgressHUD {
         ZKProgressHUD.showInfo(status: status, maskStyle: nil)
     }
     public static func showInfo(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.showImage(imageType: .info, maskStyle: maskStyle)
+        shared.showImage(imageType: .info, status: status, maskStyle: maskStyle)
     }
     // 显示成功信息
     public static func showSuccess(_ status: String?) {
         ZKProgressHUD.showSuccess(status: status, maskStyle: nil)
     }
     public static func showSuccess(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.showImage(imageType: .success, maskStyle: maskStyle)
+        shared.showImage(imageType: .success, status: status, maskStyle: maskStyle)
     }
     // 显示失败信息
     public static func showError(_ status: String?) {
         ZKProgressHUD.showError(status: status, maskStyle: nil)
     }
     public static func showError(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.showImage(imageType: .error, maskStyle: maskStyle)
+        shared.showImage(imageType: .error, status: status, maskStyle: maskStyle)
     }
     // 显示消息
     public static func showMessage(_ message: String?) {
@@ -362,7 +381,13 @@ extension ZKProgressHUD {
     }
     // 移除
     public static func dismiss(delay: Int? = nil) {
-        shared.dismiss(delay: delay ?? 0)
+        DispatchQueue.main.async {
+            for subview in (ZKProgressHUD.frontWindow?.subviews)! {
+                if subview.isKind(of: ZKProgressHUD.self) {
+                    (subview as! ZKProgressHUD).autoDismiss(delay: delay ?? 0)
+                }
+            }
+        }
     }
     
     // 设置遮罩样式
@@ -396,49 +421,6 @@ extension ZKProgressHUD {
     // 设置自动隐藏延时秒数
     public static func setAutoDismissDelay(_ autoDismissDelay: Int) {
         ZKProgressHUDConfig.autoDismissDelay = autoDismissDelay
-    }
-}
-// MARK: - 计算属性
-extension ZKProgressHUD {
-    fileprivate var frontWindow: UIWindow? {
-        get {
-            let window = UIApplication.shared.windows.reversed().first(where: {
-                $0.screen == UIScreen.main &&
-                !$0.isHidden && $0.alpha > 0 &&
-                $0.windowLevel >= UIWindowLevelNormal
-            })
-            return window
-        }
-    }
-    
-    fileprivate var screenWidht: CGFloat {
-        get {
-            return UIScreen.main.bounds.size.width
-        }
-    }
-    
-    fileprivate var screenHeight: CGFloat {
-        get {
-            return UIScreen.main.bounds.size.height
-        }
-    }
-    
-    fileprivate var maxContentViewWidth: CGFloat {
-        get {
-            return self.screenWidht - ZKProgressHUDConfig.margin * 2
-        }
-    }
-    
-    fileprivate var maxContentViewChildWidth: CGFloat {
-        get {
-            return self.screenWidht - ZKProgressHUDConfig.margin * 4
-        }
-    }
-    
-    static var shared: ZKProgressHUD {
-        get {
-            return ZKProgressHUD()
-        }
     }
 }
 // MARK: - String，获取字符串尺寸

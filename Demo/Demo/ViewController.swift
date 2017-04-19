@@ -78,11 +78,11 @@ class ViewController: UITableViewController {
                 ZKProgressHUD.show()
                 ZKProgressHUD.dismiss(delay: 3)
             } else if indexPath.row == 1 {
-                ZKProgressHUD.show("loading...")
+                ZKProgressHUD.show("ZKProgressHUD...")
                 DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(3), execute: {
                     DispatchQueue.main.async {
                         ZKProgressHUD.dismiss()
-                        ZKProgressHUD.showInfo("加载成功")
+                        ZKProgressHUD.showInfo("ZKProgressHUD")
                     }
                 })
             } else if indexPath.row == 2 {
@@ -90,15 +90,15 @@ class ViewController: UITableViewController {
             } else if indexPath.row == 3 {
                 ZKProgressHUD.showImage(UIImage(named: "image"))
             } else if indexPath.row == 4 {
-                ZKProgressHUD.showImage(image: UIImage(named: "image"), status: "Hello world")
+                ZKProgressHUD.showImage(image: UIImage(named: "image"), status: "ZKProgressHUD")
             } else if indexPath.row == 5 {
-                ZKProgressHUD.showInfo("Hello world")
+                ZKProgressHUD.showInfo("ZKProgressHUD")
             } else if indexPath.row == 6 {
-                ZKProgressHUD.showSuccess("Hello world")
+                ZKProgressHUD.showSuccess("ZKProgressHUD")
             } else if indexPath.row == 7 {
-                ZKProgressHUD.showError("Hello world")
+                ZKProgressHUD.showError("ZKProgressHUD")
             } else if indexPath.row == 8 {
-                ZKProgressHUD.showMessage("Hello world")
+                ZKProgressHUD.showMessage("ZKProgressHUD")
             }
         }
     }
