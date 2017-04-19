@@ -10,28 +10,19 @@ import UIKit
 import ImageIO
 
 class ZKGifView: UIView {
-
-    var width:CGFloat{return self.frame.size.width}
-    var height:CGFloat{return self.frame.size.height}
-    private var gifurl:NSURL! // 把本地图片转化成URL
-    private var images:Array<CGImage> = [] // 图片数组(存放每一帧的图片)
-    private var delays:Array<NSNumber> = [] // 时间数组(存放每一帧的图片的时间)
-    private var totalDelay:Float = 0 // gif动画时间
-    /**
-     *  加载本地GIF图片
-     */
-    func showGIFImageWithLocalName(name:String) {
-        gifurl = Bundle.main.url(forResource: name, withExtension: "gif") as NSURL!
+    private var gifUrl: URL!
+    private var images: Array<CGImage> = []
+    private var delays: Array<NSNumber> = []
+    private var totalDelay: Float = 0
+    
+    func showGIFImage(gifUrl:URL) {
+        self.gifUrl = gifUrl
         self.creatKeyFrame()
     }
     
-    
-    /**
-     *  获取GIF图片的每一帧 有关的东西  比如：每一帧的图片、每一帧的图片执行的时间
-     */
     private func creatKeyFrame() {
         
-        guard let source = CGImageSourceCreateWithURL(gifurl as CFURL, nil) else {
+        guard let source = CGImageSourceCreateWithURL(self.gifUrl as CFURL, nil) else {
             return
         }
 
@@ -48,7 +39,6 @@ class ZKGifView: UIView {
             delays.append(delay)
             totalDelay += delay.floatValue
             
-            // 获取图片的尺寸 (适应)
             let imageWitdh = cfProperties?[String(kCGImagePropertyPixelWidth)] as! NSNumber
             let imageHeight = cfProperties?[String(kCGImagePropertyPixelHeight)] as! NSNumber
             if imageWitdh.floatValue / imageHeight.floatValue != Float(width / height) {
@@ -88,7 +78,6 @@ class ZKGifView: UIView {
         animation.repeatCount = HUGE
         animation.duration = TimeInterval(totalDelay)
         animation.isRemovedOnCompletion = false
-        self.layer.add(animation, forKey: "MGGifView")
+        self.layer.add(animation, forKey: "ZKGifView")
     }
-
 }

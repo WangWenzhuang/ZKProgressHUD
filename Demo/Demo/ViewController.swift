@@ -39,8 +39,8 @@ class ViewController: UITableViewController {
         
         self.tableView.tableHeaderView = {
             let gifView = ZKGifView()
-            gifView.frame = CGRect.init(x: 0, y: 0, width: self.view.frame.size.width, height: 400)
-            gifView.showGIFImageWithLocalName(name: "timg")
+            gifView.frame = CGRect.init(x: 0, y: 0, width: 100, height: 100)
+            gifView.showGIFImage(gifUrl: Bundle.main.url(forResource: "timg", withExtension: "gif")!)
             return gifView
         }()
     }
