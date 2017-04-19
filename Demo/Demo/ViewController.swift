@@ -18,7 +18,7 @@ class ViewController: UITableViewController {
     
     let cellIdentifier = "cell"
     
-    lazy var actionTexts = ["show", "show with status", "showProgress", "shwoImage", "showImage with status", "showInfo", "showSuccess", "showError", "showMessage"]
+    lazy var actionTexts = ["show", "show with status", "showProgress", "shwoImage", "showImage with status", "showInfo", "showSuccess", "showError", "showMessage", "showGif", "showGif with status"]
     lazy var headerTexts = ["遮罩样式", "加载样式", "方法"]
     
     var progressValue: CGFloat = 0
@@ -36,13 +36,6 @@ class ViewController: UITableViewController {
         self.navigationItem.backBarButtonItem = backBarButtonItem
         self.title = "ZKProgressHUD"
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: self.cellIdentifier)
-        
-        self.tableView.tableHeaderView = {
-            let gifView = ZKGifView()
-            gifView.frame = CGRect.init(x: 0, y: 0, width: 100, height: 100)
-            gifView.showGIFImage(gifUrl: Bundle.main.url(forResource: "timg", withExtension: "gif")!)
-            return gifView
-        }()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -60,6 +53,7 @@ class ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier)
+        cell?.accessoryType = .none
         if indexPath.section == 0 {
             cell?.textLabel?.text = self.maskStyles[currentMaskStyleIndex].text
             cell?.accessoryType = .disclosureIndicator
@@ -84,6 +78,13 @@ class ViewController: UITableViewController {
         } else if indexPath.section == 1 {
             self.pushSelectView(tag: 1, title: "选择加载样式", data: self.animationStyles)
         } else if indexPath.section == 2 {
+            if indexPath.row > 8 {
+                ZKProgressHUD.setBackgroundColor(.white)
+                ZKProgressHUD.setForegroundColor(.black)
+            } else {
+                ZKProgressHUD.setBackgroundColor(UIColor(red: 0 / 255.0, green: 0 / 255.0, blue: 0 / 255.0, alpha: 0.8))
+                ZKProgressHUD.setForegroundColor(.white)
+            }
             if indexPath.row == 0 {
                 ZKProgressHUD.show()
                 ZKProgressHUD.dismiss(3)
@@ -109,6 +110,12 @@ class ViewController: UITableViewController {
                 ZKProgressHUD.showError("出现错误了😢😢😢")
             } else if indexPath.row == 8 {
                 ZKProgressHUD.showMessage("开始使用 ZKProgressHUD 吧")
+            } else if indexPath.row == 9 {
+                ZKProgressHUD.showGif(gifUrl: Bundle.main.url(forResource: "loding", withExtension: "gif"), gifSize: 80)
+                ZKProgressHUD.dismiss(3)
+            } else if indexPath.row == 10 {
+                ZKProgressHUD.showGif(status: "没有找到好的透明图，所以设置背景色为白色😆😆😆", gifUrl: Bundle.main.url(forResource: "loding", withExtension: "gif"), gifSize: 80)
+                ZKProgressHUD.dismiss(3)
             }
         }
     }

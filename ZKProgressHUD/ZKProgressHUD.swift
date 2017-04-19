@@ -14,6 +14,8 @@ public class ZKProgressHUD: UIView {
     fileprivate var hudType: HUDType!
     fileprivate var status: String?
     fileprivate var image: UIImage?
+    fileprivate var gifUrl: URL?
+    fileprivate var gifSize: CGFloat?
     fileprivate var progress: CGFloat?
     
     fileprivate lazy var infoImage: UIImage? = ZKProgressHUDConfig.bundleImage(.info)
@@ -146,12 +148,14 @@ extension ZKProgressHUD {
 }
 extension ZKProgressHUD {
     /// 显示
-    fileprivate func show(hudType: HUDType, status: String? = nil, image: UIImage? = nil, isAutoDismiss: Bool? = nil, maskStyle: MaskStyle? = nil, imageType: ImageType? = nil) {
+    fileprivate func show(hudType: HUDType, status: String? = nil, image: UIImage? = nil, isAutoDismiss: Bool? = nil, maskStyle: MaskStyle? = nil, imageType: ImageType? = nil, gifUrl: URL? = nil, gifSize: CGFloat? = nil) {
         DispatchQueue.main.async {
             self.dismissAll()
             self.hudType = hudType
             self.status = status == "" ? nil : status
             self.image = image
+            self.gifUrl = gifUrl
+            self.gifSize = gifSize
             if let imgType = imageType {
                 switch imgType {
                     case .info:
@@ -184,7 +188,11 @@ extension ZKProgressHUD {
         }
         switch self.hudType! {
         case .gif:
-            self.contentView.addSubview(self.gifView)
+            if let url = self.gifUrl {
+                self.gifView.frame.size = CGSize(width: self.gifSize ?? 100, height: self.gifSize ?? 100)
+                self.gifView.showGIFImage(gifUrl: url)
+                self.contentView.addSubview(self.gifView)
+            }
             break
         case .image:
             self.contentView.addSubview(self.imageView)
@@ -277,7 +285,7 @@ extension ZKProgressHUD {
                 }()
                 self.statusLabel.frame.origin = {
                     let x = (self.contentView.width - self.statusLabel.width) / 2
-                    let y = self.imageView.y + self.imageView.height + ZKProgressHUDConfig.margin
+                    let y = self.gifView.y + self.gifView.height + ZKProgressHUDConfig.margin
                     return CGPoint(x: x, y: y)
                 }()
             case .image:
@@ -347,35 +355,17 @@ extension ZKProgressHUD {
 }
 // MARK: - ZKProgressHUD 暴露的接口
 extension ZKProgressHUD {
-    // 显示加载
-    public static func show() {
-        ZKProgressHUD.show(nil)
+    // 显示gif加载
+    public static func showGif(gifUrl: URL?, gifSize: CGFloat?) {
+        ZKProgressHUD.showGif(status: nil, gifUrl: gifUrl, gifSize: gifSize)
     }
-    public static func show(_ status: String?) {
-        ZKProgressHUD.show(status: status, maskStyle: nil)
+    public static func showGif(status: String?, gifUrl: URL?, gifSize: CGFloat?) {
+        ZKProgressHUD.showGif(status: status, gifUrl: gifUrl, gifSize: gifSize, maskStyle: nil)
     }
-    public static func show(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.show(hudType: .activityIndicator, status: status, image: nil, isAutoDismiss: nil, maskStyle: maskStyle, imageType: nil)
+    public static func showGif(status: String?, gifUrl: URL?, gifSize: CGFloat?, maskStyle: ZKProgressHUDMaskStyle?) {
+        shared.show(hudType: .gif, status: status, maskStyle: maskStyle, gifUrl: gifUrl, gifSize: gifSize)
     }
     
-    // 显示gif加载
-    public static func showGif(_ gifUrl: URL?) {
-        ZKProgressHUD.showGif(gifUrl)
-    }
-    public static func showGif(status: String?, gifUrl: URL?) {
-        ZKProgressHUD.showGif(status: status, gifUrl: gifUrl, maskStyle: nil)
-    }
-    public static func showGif(status: String?, gifUrl: URL?, maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.show(hudType: .activityIndicator, status: status, image: nil, isAutoDismiss: nil, maskStyle: maskStyle)
-    }
-    // 显示进度
-    public static func showProgress(_ progress: CGFloat?) {
-        ZKProgressHUD.showProgress(progress: progress, maskStyle: nil)
-    }
-    public static func showProgress(progress: CGFloat?, maskStyle: ZKProgressHUDMaskStyle?) {
-//        shared.progress = progress
-//        shared.show(hudType: .progress, status: nil, image: nil, isAutoDismiss: nil, maskStyle: maskStyle)
-    }
     // 显示图片
     public static func showImage(_ image: UIImage?) {
         ZKProgressHUD.showImage(image: image, status: nil)
@@ -384,36 +374,59 @@ extension ZKProgressHUD {
         ZKProgressHUD.showImage(image: image, status: status, maskStyle: nil)
     }
     public static func showImage(image: UIImage?, status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.show(hudType: .image, status: status, image: image, isAutoDismiss: true, maskStyle: maskStyle, imageType: nil)
+        shared.show(hudType: .image, status: status, image: image, isAutoDismiss: true, maskStyle: maskStyle)
     }
+    
+    // 显示消息
+    public static func showMessage(_ message: String?) {
+        ZKProgressHUD.showMessage(message: message, maskStyle: nil)
+    }
+    public static func showMessage(message: String?, maskStyle: ZKProgressHUDMaskStyle?) {
+        shared.show(hudType: .message, status: message, isAutoDismiss: true, maskStyle: maskStyle)
+    }
+    
+    // 显示进度
+    public static func showProgress(_ progress: CGFloat?) {
+        ZKProgressHUD.showProgress(progress: progress, maskStyle: nil)
+    }
+    public static func showProgress(progress: CGFloat?, maskStyle: ZKProgressHUDMaskStyle?) {
+        //        shared.progress = progress
+        //        shared.show(hudType: .progress, status: nil, image: nil, isAutoDismiss: nil, maskStyle: maskStyle)
+    }
+    
+    // 显示加载
+    public static func show() {
+        ZKProgressHUD.show(nil)
+    }
+    public static func show(_ status: String?) {
+        ZKProgressHUD.show(status: status, maskStyle: nil)
+    }
+    public static func show(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
+        shared.show(hudType: .activityIndicator, status: status, maskStyle: maskStyle)
+    }
+    
     // 显示普通信息
     public static func showInfo(_ status: String?) {
         ZKProgressHUD.showInfo(status: status, maskStyle: nil)
     }
     public static func showInfo(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.show(hudType: .image, status: status, image: nil, isAutoDismiss: true, maskStyle: maskStyle, imageType: .info)
+        shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .info)
     }
     // 显示成功信息
     public static func showSuccess(_ status: String?) {
         ZKProgressHUD.showSuccess(status: status, maskStyle: nil)
     }
     public static func showSuccess(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.show(hudType: .image, status: status, image: nil, isAutoDismiss: true, maskStyle: maskStyle, imageType: .success)
+        shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .success)
     }
     // 显示失败信息
     public static func showError(_ status: String?) {
         ZKProgressHUD.showError(status: status, maskStyle: nil)
     }
     public static func showError(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.show(hudType: .image, status: status, image: nil, isAutoDismiss: true, maskStyle: maskStyle, imageType: .error)
+        shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .error)
     }
-    // 显示消息
-    public static func showMessage(_ message: String?) {
-        ZKProgressHUD.showMessage(message: message, maskStyle: nil)
-    }
-    public static func showMessage(message: String?, maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.show(hudType: .message, status: message, image: nil, isAutoDismiss: true, maskStyle: maskStyle, imageType: nil)
-    }
+    
     @available(swift, deprecated: 3.0, message: "请使用 dismiss 方法")
     public static func hide(delay: Int? = nil) {
         ZKProgressHUD.dismiss(delay)

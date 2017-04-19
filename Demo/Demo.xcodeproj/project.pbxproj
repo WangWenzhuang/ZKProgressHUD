@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A063CFDF1E79540C0087C8BF /* ZKGifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A063CFDE1E79540C0087C8BF /* ZKGifView.swift */; };
-		A063CFE11E79612D0087C8BF /* timg.gif in Resources */ = {isa = PBXBuildFile; fileRef = A063CFE01E79612D0087C8BF /* timg.gif */; };
 		A0918DC51EA71FB600EFF9EB /* ZKProgressHUDConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0918DC41EA71FB600EFF9EB /* ZKProgressHUDConfig.swift */; };
 		A0918DC71EA7238400EFF9EB /* ZKProgressHUDAnimationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0918DC61EA7238400EFF9EB /* ZKProgressHUDAnimationStyle.swift */; };
 		A0918DC91EA723DA00EFF9EB /* ZKProgressHUDMaskStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0918DC81EA723DA00EFF9EB /* ZKProgressHUDMaskStyle.swift */; };
@@ -16,6 +15,7 @@
 		A0918DCD1EA72DB800EFF9EB /* ZKPrigressHUDImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0918DCC1EA72DB800EFF9EB /* ZKPrigressHUDImageType.swift */; };
 		A0918DCF1EA759B900EFF9EB /* SelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0918DCE1EA759B900EFF9EB /* SelectViewController.swift */; };
 		A0918DD11EA796FC00EFF9EB /* UIView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0918DD01EA796FC00EFF9EB /* UIView-Extension.swift */; };
+		A0918DD31EA7B38700EFF9EB /* loding.gif in Resources */ = {isa = PBXBuildFile; fileRef = A0918DD21EA7B38700EFF9EB /* loding.gif */; };
 		A095A8BB1E784EE500261A9B /* ZKProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095A8BA1E784EE500261A9B /* ZKProgressView.swift */; };
 		A0ADABAE1E72B245006C3BD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADABAD1E72B245006C3BD7 /* AppDelegate.swift */; };
 		A0ADABB01E72B245006C3BD7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADABAF1E72B245006C3BD7 /* ViewController.swift */; };
@@ -28,7 +28,6 @@
 
 /* Begin PBXFileReference section */
 		A063CFDE1E79540C0087C8BF /* ZKGifView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKGifView.swift; sourceTree = "<group>"; };
-		A063CFE01E79612D0087C8BF /* timg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = timg.gif; sourceTree = "<group>"; };
 		A0918DC41EA71FB600EFF9EB /* ZKProgressHUDConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKProgressHUDConfig.swift; sourceTree = "<group>"; };
 		A0918DC61EA7238400EFF9EB /* ZKProgressHUDAnimationStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKProgressHUDAnimationStyle.swift; sourceTree = "<group>"; };
 		A0918DC81EA723DA00EFF9EB /* ZKProgressHUDMaskStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKProgressHUDMaskStyle.swift; sourceTree = "<group>"; };
@@ -36,6 +35,7 @@
 		A0918DCC1EA72DB800EFF9EB /* ZKPrigressHUDImageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKPrigressHUDImageType.swift; sourceTree = "<group>"; };
 		A0918DCE1EA759B900EFF9EB /* SelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectViewController.swift; sourceTree = "<group>"; };
 		A0918DD01EA796FC00EFF9EB /* UIView-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView-Extension.swift"; sourceTree = "<group>"; };
+		A0918DD21EA7B38700EFF9EB /* loding.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loding.gif; sourceTree = "<group>"; };
 		A095A8BA1E784EE500261A9B /* ZKProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKProgressView.swift; sourceTree = "<group>"; };
 		A0ADABAA1E72B245006C3BD7 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0ADABAD1E72B245006C3BD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -62,7 +62,7 @@
 		A0ADABA11E72B245006C3BD7 = {
 			isa = PBXGroup;
 			children = (
-				A063CFE01E79612D0087C8BF /* timg.gif */,
+				A0918DD21EA7B38700EFF9EB /* loding.gif */,
 				A0DF4DD71E77B85200D67231 /* image@2x.png */,
 				A0ADABC31E72B49F006C3BD7 /* ZKProgressHUD */,
 				A0ADABAC1E72B245006C3BD7 /* Demo */,
@@ -171,8 +171,8 @@
 			files = (
 				A0DF4DD81E77B85200D67231 /* image@2x.png in Resources */,
 				A0ADABB81E72B245006C3BD7 /* LaunchScreen.storyboard in Resources */,
-				A063CFE11E79612D0087C8BF /* timg.gif in Resources */,
 				A0ADABB51E72B245006C3BD7 /* Assets.xcassets in Resources */,
+				A0918DD31EA7B38700EFF9EB /* loding.gif in Resources */,
 				A0DF4DD61E773D3800D67231 /* ZKProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
