@@ -13,12 +13,24 @@ iOS App 上易于使用的 HUD
 
 ![demo](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/demo.gif)
 
+## 实现功能
+
+- [x] 等待加载（loading）
+- [x] 等待加载（loading） ➕ 文字 
+- [x] Gif 等待加载(loading）
+- [x] Gif 等待加载(loading） ➕ 文字
+- [x] 进度显示
+- [x] 显示图片
+- [x] 显示图片 ➕ 文字
+- [x] 情景信息显示（info、success、error）
+- [x] tost 显示
+- [x] 遮罩自定义显示
+- [x] 显示自定义（背景色、前景色、字体、自动消失间隔秒、遮罩、动画类型...）
+
 ## 运行环境
 
 * iOS 8.0 +
-
 * Xcode 8 +
-
 * Swift 3.0 +
 
 ## 安装
@@ -38,7 +50,6 @@ end
 ### 手动安装
 
 * 拖动 `ZKProgressHUD` 文件夹到您的项目
-
 * 将 `ZKProgressHUD.bundle` 添加到项目资源中 `Targets->Build Phases->Copy Bundle Resources`
 
 ## 使用
@@ -161,5 +172,4 @@ setHideDelay(_ hideDelay: Int)
 ## 待实现💪
 
 * 显示 Gif 图片
-
 * 重构代码
