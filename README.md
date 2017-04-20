@@ -150,13 +150,13 @@ ZKProgressHUD.showMessage("开始使用 ZKProgressHUD 吧")
 ZKProgressHUD.dismiss()
 ```
 
-### 延迟隐藏
+### 延迟隐藏⏰
 
 ```swift
 ZKProgressHUD.dismiss(delay: 3)
 ```
 
-## 自定义😏
+## 自定义显示样式😏
 
 ![style1](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style1.PNG)
 ![style2](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style2.PNG)
@@ -166,8 +166,6 @@ ZKProgressHUD.dismiss(delay: 3)
 ![style6](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style6.PNG)
 ![style7](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style7.PNG)
 ![style8](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style8.PNG)
-
-`ZKProgressHUD` 可以通过下面方法进行自定义显示样式:
 
 ### 设置是否显示遮罩
 
