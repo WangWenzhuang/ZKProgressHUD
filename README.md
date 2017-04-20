@@ -172,7 +172,7 @@ ZKProgressHUD.dismiss(delay: 3)
 ### 设置是否显示遮罩
 
 ```swift
-setMaskStyle (_ maskStyle : ZKProgressHUDMaskStyle )
+setMaskStyle (_ maskStyle: ZKProgressHUDMaskStyle)
 ```
 
 ### 设置遮罩背景色
@@ -208,7 +208,7 @@ setCornerRadius(_ cornerRadius: CGFloat)
 ### 设置加载动画类型
 
 ```swift
-setAnimationStyle(_ animationStyle : ZKProgressHUDAnimationStyle )
+setAnimationStyle(_ animationStyle: ZKProgressHUDAnimationStyle)
 ```
 
 ### 设置自动隐藏时间（适用于非加载和进度类型显示）

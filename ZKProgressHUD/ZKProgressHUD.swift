@@ -489,7 +489,7 @@ extension ZKProgressHUD {
     }
     
     // 设置遮罩样式
-    public static func setMaskStyle (_ maskStyle : ZKProgressHUDMaskStyle ) {
+    public static func setMaskStyle (_ maskStyle: ZKProgressHUDMaskStyle ) {
         ZKProgressHUDConfig.maskStyle  = maskStyle
     }
     
@@ -519,7 +519,7 @@ extension ZKProgressHUD {
     }
     
     // 设置加载动画样式动画样式
-    public static func setAnimationStyle(_ animationStyle : ZKProgressHUDAnimationStyle ) {
+    public static func setAnimationStyle(_ animationStyle: ZKProgressHUDAnimationStyle ) {
         ZKProgressHUDConfig.animationStyle  = animationStyle
     }
     
