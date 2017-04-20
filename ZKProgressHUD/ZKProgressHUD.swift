@@ -422,6 +422,7 @@ extension ZKProgressHUD {
     public static func showInfo(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
         shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .info)
     }
+    
     // 显示成功信息
     public static func showSuccess(_ status: String?) {
         ZKProgressHUD.showSuccess(status: status, maskStyle: nil)
@@ -429,6 +430,7 @@ extension ZKProgressHUD {
     public static func showSuccess(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
         shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .success)
     }
+    
     // 显示失败信息
     public static func showError(_ status: String?) {
         ZKProgressHUD.showError(status: status, maskStyle: nil)
@@ -437,11 +439,11 @@ extension ZKProgressHUD {
         shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .error)
     }
     
+    // 移除
     @available(swift, deprecated: 3.0, message: "请使用 dismiss 方法")
     public static func hide(delay: Int? = nil) {
         ZKProgressHUD.dismiss(delay)
     }
-    // 移除
     public static func dismiss(_ delay: Int? = nil) {
         DispatchQueue.main.async {
             for subview in (ZKProgressHUD.frontWindow?.subviews)! {
@@ -456,30 +458,37 @@ extension ZKProgressHUD {
     public static func setMaskStyle (_ maskStyle : ZKProgressHUDMaskStyle ) {
         ZKProgressHUDConfig.maskStyle  = maskStyle
     }
+    
     // 设置遮罩背景色
     public static func setMaskBackgroundColor(_ color: UIColor) {
         ZKProgressHUDConfig.maskBackgroundColor = color
     }
+    
     // 设置前景色
     public static func setForegroundColor(_ color: UIColor) {
         ZKProgressHUDConfig.foregroundColor = color
     }
+    
     // 设置背景色
     public static func setBackgroundColor(_ color: UIColor) {
         ZKProgressHUDConfig.backgroundColor = color
     }
+    
     // 设置字体
     public static func setFont(_ font: UIFont) {
         ZKProgressHUDConfig.font = font
     }
+    
     // 设置圆角
     public static func setCornerRadius(_ cornerRadius: CGFloat) {
         ZKProgressHUDConfig.cornerRadius = cornerRadius
     }
+    
     // 设置加载动画样式动画样式
     public static func setAnimationStyle(_ animationStyle : ZKProgressHUDAnimationStyle ) {
         ZKProgressHUDConfig.animationStyle  = animationStyle
     }
+    
     // 设置自动隐藏延时秒数
     public static func setAutoDismissDelay(_ autoDismissDelay: Int) {
         ZKProgressHUDConfig.autoDismissDelay = autoDismissDelay

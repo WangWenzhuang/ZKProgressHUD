@@ -6,7 +6,6 @@
 //  Copyright © 2017年 WangWenzhuang. All rights reserved.
 //
 
-
 // MARK: - 显示类型
 enum ZKProgressHUDType {
     case gif

@@ -97,16 +97,16 @@
 			isa = PBXGroup;
 			children = (
 				A0ADABC41E72B49F006C3BD7 /* ZKProgressHUD.swift */,
-				A06EA1ED1EA858E4007DAEFA /* String-Extension.swift */,
-				A0DF4DD51E773D3800D67231 /* ZKProgressHUD.bundle */,
-				A095A8BA1E784EE500261A9B /* ZKProgressView.swift */,
 				A063CFDE1E79540C0087C8BF /* ZKGifView.swift */,
+				A095A8BA1E784EE500261A9B /* ZKProgressView.swift */,
 				A0918DC41EA71FB600EFF9EB /* ZKProgressHUDConfig.swift */,
-				A0918DC81EA723DA00EFF9EB /* ZKProgressHUDMaskStyle.swift */,
-				A0918DC61EA7238400EFF9EB /* ZKProgressHUDAnimationStyle.swift */,
 				A0918DCA1EA7240600EFF9EB /* ZKProgressHUDType.swift */,
 				A0918DCC1EA72DB800EFF9EB /* ZKPrigressHUDImageType.swift */,
+				A0918DC81EA723DA00EFF9EB /* ZKProgressHUDMaskStyle.swift */,
+				A0918DC61EA7238400EFF9EB /* ZKProgressHUDAnimationStyle.swift */,
+				A06EA1ED1EA858E4007DAEFA /* String-Extension.swift */,
 				A0918DD01EA796FC00EFF9EB /* UIView-Extension.swift */,
+				A0DF4DD51E773D3800D67231 /* ZKProgressHUD.bundle */,
 			);
 			name = ZKProgressHUD;
 			path = ../ZKProgressHUD;
