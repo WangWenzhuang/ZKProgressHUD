@@ -97,7 +97,7 @@ class ViewController: UITableViewController {
                     }
                 })
             } else if indexPath.row == 2 {
-                Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(ViewController.timerHandler(timer:)), userInfo: nil, repeats: true)
+                Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(ViewController.timerHandler(timer:)), userInfo: nil, repeats: true)
             } else if indexPath.row == 3 {
                 ZKProgressHUD.showImage(UIImage(named: "image"))
             } else if indexPath.row == 4 {
@@ -132,7 +132,7 @@ class ViewController: UITableViewController {
             ZKProgressHUD.dismiss()
             self.progressValue = 0
         } else {
-            self.progressValue += 1
+            self.progressValue += 50
             ZKProgressHUD.showProgress(self.progressValue / 100)
         }
     }
