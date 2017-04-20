@@ -6,8 +6,10 @@
 //  Copyright © 2017年 WangWenzhuang. All rights reserved.
 //
 
+
 // MARK: - 情景图片显示类型
 enum ZKPrigressHUDImageType {
+    case mask
     case info
     case error
     case success

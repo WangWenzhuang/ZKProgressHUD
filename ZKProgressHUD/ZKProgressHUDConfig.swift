@@ -26,6 +26,8 @@ final class ZKProgressHUDConfig {
     static func bundleImage(_ imageType: ImageType) -> UIImage? {
         var imageName: String!
         switch imageType {
+        case .mask:
+            imageName = "angle-mask"
         case .info:
             imageName = "info"
         case .error:
@@ -33,6 +35,6 @@ final class ZKProgressHUDConfig {
         case .success:
             imageName = "success"
         }
-        return (UIImage(contentsOfFile: (imageBundle?.path(forResource: imageName, ofType: "png"))!)?.withRenderingMode(.alwaysTemplate))
+        return UIImage(contentsOfFile: (imageBundle?.path(forResource: imageName, ofType: "png"))!)
     }
 }

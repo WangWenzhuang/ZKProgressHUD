@@ -18,9 +18,9 @@ public class ZKProgressHUD: UIView {
     fileprivate var gifSize: CGFloat?
     fileprivate var progress: CGFloat?
     
-    fileprivate lazy var infoImage: UIImage? = ZKProgressHUDConfig.bundleImage(.info)
-    fileprivate lazy var successImage: UIImage? = ZKProgressHUDConfig.bundleImage(.success)
-    fileprivate lazy var errorImage: UIImage? = ZKProgressHUDConfig.bundleImage(.error)
+    fileprivate lazy var infoImage: UIImage? = ZKProgressHUDConfig.bundleImage(.info)?.withRenderingMode(.alwaysTemplate)
+    fileprivate lazy var successImage: UIImage? = ZKProgressHUDConfig.bundleImage(.success)?.withRenderingMode(.alwaysTemplate)
+    fileprivate lazy var errorImage: UIImage? = ZKProgressHUDConfig.bundleImage(.error)?.withRenderingMode(.alwaysTemplate)
     
     // MARK: - UI
     fileprivate lazy var screenView: UIView = {
@@ -56,7 +56,7 @@ public class ZKProgressHUD: UIView {
         $0.progressColor = ZKProgressHUDConfig.foregroundColor
         $0.backgroundColor = .clear
         return $0
-    }(ZKProgressView(frame: CGRect(x: 0, y: 0, width: 100, height: 100)))
+    }(ZKProgressView(frame: CGRect(x: 0, y: 0, width: 85, height: 85)))
     
     /// activityIndicator(ZKProgressHUDType)
     fileprivate var activityIndicatorView: UIView {
@@ -73,18 +73,25 @@ public class ZKProgressHUD: UIView {
     }(UIActivityIndicatorView())
     
     fileprivate lazy var circleHUDView: UIView = {
-        let arcCenter = CGPoint(x: 15, y: 15)
-        let smoothedPath = UIBezierPath(arcCenter: arcCenter, radius: 30, startAngle: 0, endAngle: (CGFloat)(5 * Double.pi / 3), clockwise: true)
+        let lineWidth: CGFloat = 3
+        let lineMargin: CGFloat = lineWidth / 2
+        let arcCenter = CGPoint(x: $0.width / 2 - lineMargin, y: $0.height / 2 - lineMargin)
+        let smoothedPath = UIBezierPath(arcCenter: arcCenter, radius: $0.width / 2 - lineWidth, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true)
         
         let layer = CAShapeLayer()
         layer.contentsScale = UIScreen.main.scale
-        layer.frame = CGRect(x: ZKProgressHUDConfig.margin, y: ZKProgressHUDConfig.margin, width: arcCenter.x * 2, height: arcCenter.y * 2)
+        layer.frame = CGRect(x: lineMargin, y: lineMargin, width: arcCenter.x * 2, height: arcCenter.y * 2)
         layer.fillColor = UIColor.clear.cgColor
         layer.strokeColor = ZKProgressHUDConfig.foregroundColor.cgColor
         layer.lineWidth = 3
         layer.lineCap = kCALineCapRound
         layer.lineJoin = kCALineJoinBevel
         layer.path = smoothedPath.cgPath
+        
+        layer.mask = CALayer()
+        layer.mask?.contents = ZKProgressHUDConfig.bundleImage(.mask)?.cgImage
+        layer.mask?.frame = layer.bounds
+
         let animation = CABasicAnimation(keyPath: "transform.rotation")
         animation.fromValue = 0
         animation.toValue = (Double.pi * 2)
@@ -94,10 +101,9 @@ public class ZKProgressHUD: UIView {
         animation.autoreverses = false
         layer.add(animation, forKey: "rotate")
         
-        $0.frame.size = CGSize(width: 30 + ZKProgressHUDConfig.margin * 2, height: 30 + ZKProgressHUDConfig.margin * 2)
         $0.layer.addSublayer(layer)
         return $0
-    }(UIView())
+    }(UIView(frame: CGRect(x: 0, y: 0, width: 65, height: 65)))
     
     fileprivate lazy var statusLabel: UILabel = {
         $0.textAlignment = .center
@@ -155,12 +161,13 @@ extension ZKProgressHUD {
             self.progress = progress ?? 0
             if let imgType = imageType {
                 switch imgType {
-                    case .info:
+                case .info:
                     self.image = self.infoImage
-                    case .error:
+                case .error:
                     self.image = self.errorImage
-                    case .success:
+                case .success:
                     self.image = self.successImage
+                default: break
                 }
             }
             if self.hudType == .progress {
