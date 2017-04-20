@@ -7,13 +7,11 @@
 ![platform](https://img.shields.io/badge/platform-iOS-brightgreen.svg)
 ![contact](https://img.shields.io/badge/contact-1020304029%40qq.com-brightgreen.svg)
 
-> [English](https://github.com/WangWenzhuang/ZKProgressHUD/blob/master/README-English.md)
-
-iOS App 上极易于使用的 HUD
+iOS App 上极易于使用的 HUD。
 
 ![demo](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/demo.gif)
 
-## 实现功能
+## 实现功能😌
 
 - [x] 显示加载 ➕ 文字 
 - [x] 显示 Gif 加载 ➕ 文字
@@ -23,6 +21,10 @@ iOS App 上极易于使用的 HUD
 - [x] 显示 Tost 样式信息
 - [x] 遮罩自定义显示
 - [x] 自定义（背景色、前景色、字体、自动消失间隔秒、遮罩、动画类型...），满足极大多数场景
+
+## 待实现💪
+
+- [ ] 动画显示类型
 
 ## 运行环境
 
@@ -214,7 +216,3 @@ setAnimationStyle(_ animationStyle : ZKProgressHUDAnimationStyle )
 ```swift
 setAutoDismissDelay(_ delay: Int)
 ```
-
-## 待实现💪
-
-- [ ] 动画显示类型
