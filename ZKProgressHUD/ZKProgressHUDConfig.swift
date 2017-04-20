@@ -17,7 +17,7 @@ final class ZKProgressHUDConfig {
     static var backgroundColor: UIColor = UIColor(red: 0 / 255.0, green: 0 / 255.0, blue: 0 / 255.0, alpha: 0.8)
     static var font: UIFont = UIFont.boldSystemFont(ofSize: 15)
     static var cornerRadius: CGFloat = 6
-    static var animationStyle: AnimationStyle = .system
+    static var animationStyle: AnimationStyle = .circle
     static var autoDismissDelay: Int = 2
     
     static let restorationIdentifier: String = "ZKProgressHUD"
