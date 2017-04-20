@@ -1,10 +1,11 @@
 //
 //  ZKProgressHUDType.swift
-//  Demo
+//  ZKProgressHUD
 //
 //  Created by 王文壮 on 2017/4/19.
 //  Copyright © 2017年 WangWenzhuang. All rights reserved.
 //
+
 
 // MARK: - 显示类型
 enum ZKProgressHUDType {

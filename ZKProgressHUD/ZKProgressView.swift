@@ -1,6 +1,6 @@
 //
 //  ZKProgressView.swift
-//  Demo
+//  ZKProgressHUD
 //
 //  Created by 王文壮 on 2017/3/15.
 //  Copyright © 2017年 WangWenzhuang. All rights reserved.
@@ -8,6 +8,7 @@
 
 import UIKit
 
+// MARK: - 进度
 class ZKProgressView: UIView {
     var progressColor: UIColor?
     private var _progress: Double = 0

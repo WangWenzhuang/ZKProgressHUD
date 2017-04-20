@@ -1,6 +1,6 @@
 //
-//  ZKProgressGifView.swift
-//  Demo
+//  ZKGifView.swift
+//  ZKProgressHUD
 //
 //  Created by 王文壮 on 2017/3/15.
 //  Copyright © 2017年 WangWenzhuang. All rights reserved.
@@ -9,6 +9,7 @@
 import UIKit
 import ImageIO
 
+// MARK: - GifView
 class ZKGifView: UIView {
     private var gifUrl: URL!
     private var images: Array<CGImage> = []

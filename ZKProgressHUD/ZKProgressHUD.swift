@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ZKProgressHUD.swift
 //  ZKProgressHUD
 //
 //  Created by 王文壮 on 2017/3/10.
@@ -40,26 +40,31 @@ public class ZKProgressHUD: UIView {
         $0.alpha = 0
         return $0
     }(UIView())
+    
     /// gif(ZKProgressHUDType)
     fileprivate lazy var gifView: ZKGifView = ZKGifView()
+    
     /// image(ZKProgressHUDType)
     fileprivate lazy var imageView: UIImageView = {
         $0.contentMode = .scaleToFill
         $0.tintColor = ZKProgressHUDConfig.foregroundColor
         return $0
     }(UIImageView())
+    
     /// progress(ZKProgressHUDType)
     fileprivate lazy var progressView: ZKProgressView = {
         $0.progressColor = ZKProgressHUDConfig.foregroundColor
         $0.backgroundColor = .clear
         return $0
     }(ZKProgressView(frame: CGRect(x: 0, y: 0, width: 100, height: 100)))
+    
     /// activityIndicator(ZKProgressHUDType)
     fileprivate var activityIndicatorView: UIView {
         get {
             return ZKProgressHUDConfig.animationStyle == AnimationStyle.circle ? self.circleHUDView : self.systemHUDView
         }
     }
+    
     fileprivate lazy var systemHUDView: UIActivityIndicatorView = {
         $0.activityIndicatorViewStyle = .whiteLarge
         $0.sizeToFit()
@@ -93,7 +98,7 @@ public class ZKProgressHUD: UIView {
         $0.layer.addSublayer(layer)
         return $0
     }(UIView())
-
+    
     fileprivate lazy var statusLabel: UILabel = {
         $0.textAlignment = .center
         $0.numberOfLines = 0
@@ -102,6 +107,7 @@ public class ZKProgressHUD: UIView {
         return $0
     }(UILabel())
 }
+
 // MARK: - 实例计算属性
 extension ZKProgressHUD {
     fileprivate var screenWidht: CGFloat {
@@ -128,24 +134,7 @@ extension ZKProgressHUD {
         }
     }
 }
-// MARK: - 类计算属性
-extension ZKProgressHUD {
-    fileprivate static var frontWindow: UIWindow? {
-        get {
-            let window = UIApplication.shared.windows.reversed().first(where: {
-                $0.screen == UIScreen.main &&
-                    !$0.isHidden && $0.alpha > 0 &&
-                    $0.windowLevel >= UIWindowLevelNormal
-            })
-            return window
-        }
-    }
-    static var shared: ZKProgressHUD {
-        get {
-            return ZKProgressHUD(frame: UIScreen.main.bounds)
-        }
-    }
-}
+
 extension ZKProgressHUD {
     /// 显示
     fileprivate func show(hudType: HUDType, status: String? = nil, image: UIImage? = nil, isAutoDismiss: Bool? = nil, maskStyle: MaskStyle? = nil, imageType: ImageType? = nil, gifUrl: URL? = nil, gifSize: CGFloat? = nil) {
@@ -353,7 +342,28 @@ extension ZKProgressHUD {
         }
     }
 }
-// MARK: - ZKProgressHUD 暴露的接口
+
+// MARK: - 类计算属性
+extension ZKProgressHUD {
+    fileprivate static var frontWindow: UIWindow? {
+        get {
+            let window = UIApplication.shared.windows.reversed().first(where: {
+                $0.screen == UIScreen.main &&
+                    !$0.isHidden && $0.alpha > 0 &&
+                    $0.windowLevel >= UIWindowLevelNormal
+            })
+            return window
+        }
+    }
+    
+    static var shared: ZKProgressHUD {
+        get {
+            return ZKProgressHUD(frame: UIScreen.main.bounds)
+        }
+    }
+}
+
+// MARK: - 类方法
 extension ZKProgressHUD {
     // 显示gif加载
     public static func showGif(gifUrl: URL?, gifSize: CGFloat?) {
@@ -473,13 +483,5 @@ extension ZKProgressHUD {
     // 设置自动隐藏延时秒数
     public static func setAutoDismissDelay(_ autoDismissDelay: Int) {
         ZKProgressHUDConfig.autoDismissDelay = autoDismissDelay
-    }
-}
-// MARK: - String，获取字符串尺寸
-fileprivate extension String {
-    func size(font: UIFont, size: CGSize) -> CGSize {
-        let attribute = [ NSFontAttributeName: font ]
-        let conten = NSString(string: self)
-        return conten.boundingRect(with: CGSize(width: size.width, height: size.height), options: .usesLineFragmentOrigin, attributes: attribute, context: nil).size
     }
 }

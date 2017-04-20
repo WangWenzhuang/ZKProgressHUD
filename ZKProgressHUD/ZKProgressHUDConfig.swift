@@ -1,6 +1,6 @@
 //
 //  ZKProgressHUDConfig.swift
-//  Demo
+//  ZKProgressHUD
 //
 //  Created by 王文壮 on 2017/4/19.
 //  Copyright © 2017年 WangWenzhuang. All rights reserved.
@@ -8,6 +8,7 @@
 
 import UIKit
 
+// MARK: - ZKProgressHUD 全局配置
 final class ZKProgressHUDConfig {
     static let margin: CGFloat = 20
     static var maskStyle : MaskStyle = .visible
