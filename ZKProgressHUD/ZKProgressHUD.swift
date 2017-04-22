@@ -112,6 +112,19 @@ public class ZKProgressHUD: UIView {
         $0.textColor = ZKProgressHUDConfig.foregroundColor
         return $0
     }(UILabel())
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        NotificationCenter.default.addObserver(self, selector: #selector(ZKProgressHUD.observerDismiss), name: ZKProgressHUDConfig.ZKNSNotificationDismiss, object: nil)
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: ZKProgressHUDConfig.ZKNSNotificationDismiss, object: nil)
+    }
 }
 
 // MARK: - 实例计算属性
@@ -178,7 +191,6 @@ extension ZKProgressHUD {
                     self.updateView(maskStyle: maskStyle)
                 }
             } else {
-                self.dismissAll()
                 self.updateView(maskStyle: maskStyle)
             }
             
@@ -199,9 +211,8 @@ extension ZKProgressHUD {
         }
         self.addSubview(self.contentView)
 
-        if self.hudType != .progress {
-            self.contentView.addSubview(self.statusLabel)
-        }
+        self.contentView.addSubview(self.statusLabel)
+        
         switch self.hudType! {
         case .gif:
             if let url = self.gifUrl {
@@ -257,7 +268,7 @@ extension ZKProgressHUD {
             case .message:
                 width = self.statusLabel.width + ZKProgressHUDConfig.margin * 2
             case .progress:
-                width = self.progressView.width + ZKProgressHUDConfig.margin * 2
+                width = (self.statusLabel.isHidden ? self.progressView.width : (self.progressView.width > self.statusLabel.width ? self.progressView.width : self.statusLabel.width)) + ZKProgressHUDConfig.margin * 2
             case .activityIndicator:
                 width = (self.statusLabel.isHidden ? self.activityIndicatorView.width : (self.activityIndicatorView.width > self.statusLabel.width ? self.activityIndicatorView.width : self.statusLabel.width)) + ZKProgressHUDConfig.margin * 2
             }
@@ -271,7 +282,7 @@ extension ZKProgressHUD {
             case .message:
                 height = self.statusLabel.height + ZKProgressHUDConfig.margin * 2
             case .progress:
-                height = self.progressView.height + ZKProgressHUDConfig.margin * 2
+                height = (self.statusLabel.isHidden ? self.progressView.height : (self.progressView.height + ZKProgressHUDConfig.margin + self.statusLabel.height)) + ZKProgressHUDConfig.margin * 2
             case .activityIndicator:
                 height = (self.statusLabel.isHidden ? self.activityIndicatorView.height : (self.activityIndicatorView.height + ZKProgressHUDConfig.margin + self.statusLabel.height)) + ZKProgressHUDConfig.margin * 2
             }
@@ -314,6 +325,11 @@ extension ZKProgressHUD {
                 let y = ZKProgressHUDConfig.margin
                 return CGPoint(x: x, y: y)
             }()
+            self.statusLabel.frame.origin = {
+                let x = (self.contentView.width - self.statusLabel.width) / 2
+                let y = self.progressView.y + self.progressView.height + ZKProgressHUDConfig.margin
+                return CGPoint(x: x, y: y)
+            }()
         case .activityIndicator:
             self.activityIndicatorView.frame.origin = {
                 let x = (self.contentView.width - self.activityIndicatorView.width) / 2
@@ -342,7 +358,17 @@ extension ZKProgressHUD {
             })
         }
     }
-    /// 移除
+    
+    /// 通知移除
+    @objc fileprivate func observerDismiss(notification: Notification){
+        if let userInfo = notification.userInfo {
+            let delay = userInfo["delay"] as! Int
+            self.autoDismiss(delay: delay)
+        } else {
+            self.removeFromSuperview()
+        }
+    }
+    /// 自动移除
     fileprivate func autoDismiss(delay: Int) {
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(delay), execute: {
             DispatchQueue.main.async {
@@ -353,14 +379,6 @@ extension ZKProgressHUD {
                 })
             }
         })
-    }
-    /// 移除所有
-    fileprivate func dismissAll() {
-        for subview in (ZKProgressHUD.frontWindow?.subviews)! {
-            if subview.isKind(of: ZKProgressHUD.self) {
-                subview.removeFromSuperview()
-            }
-        }
     }
 }
 
@@ -418,15 +436,18 @@ extension ZKProgressHUD {
     
     // 显示进度
     public static func showProgress(_ progress: CGFloat?) {
-        ZKProgressHUD.showProgress(progress: progress, maskStyle: nil)
+        ZKProgressHUD.showProgress(progress, status: nil)
     }
-    public static func showProgress(progress: CGFloat?, maskStyle: ZKProgressHUDMaskStyle?) {
+    public static func showProgress(_ progress: CGFloat?, status: String?) {
+        ZKProgressHUD.showProgress(progress: progress, status: status, maskStyle: nil)
+    }
+    public static func showProgress(progress: CGFloat?, status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
         var isShowProgressView = false
         for subview in (ZKProgressHUD.frontWindow?.subviews)! {
             if subview.isKind(of: ZKProgressHUD.self) && subview.restorationIdentifier == ZKProgressHUDConfig.restorationIdentifier {
                 let progressHUD = subview as! ZKProgressHUD
                 if progressHUD.hudType == .progress {
-                    progressHUD.show(hudType: .progress, maskStyle: maskStyle, progress: progress)
+                    progressHUD.show(hudType: .progress, status: status, maskStyle: maskStyle, progress: progress)
                     isShowProgressView = true
                 } else {
                     progressHUD.removeFromSuperview()
@@ -434,7 +455,7 @@ extension ZKProgressHUD {
             }
         }
         if !isShowProgressView {
-            shared.show(hudType: .progress, maskStyle: maskStyle, progress: progress)
+            shared.show(hudType: .progress, status: status, maskStyle: maskStyle, progress: progress)
         }
     }
     
@@ -479,13 +500,7 @@ extension ZKProgressHUD {
         ZKProgressHUD.dismiss(delay)
     }
     public static func dismiss(_ delay: Int? = nil) {
-        DispatchQueue.main.async {
-            for subview in (ZKProgressHUD.frontWindow?.subviews)! {
-                if subview.isKind(of: ZKProgressHUD.self) {
-                    (subview as! ZKProgressHUD).autoDismiss(delay: delay ?? 0)
-                }
-            }
-        }
+        NotificationCenter.default.post(name: ZKProgressHUDConfig.ZKNSNotificationDismiss, object: nil, userInfo: ["delay" : delay ?? 0])
     }
     
     // 设置遮罩样式

@@ -18,7 +18,7 @@ class ViewController: UITableViewController {
     
     let cellIdentifier = "cell"
     
-    lazy var actionTexts = ["show", "show with status", "showProgress", "shwoImage", "showImage with status", "showInfo", "showSuccess", "showError", "showMessage", "showGif", "showGif with status"]
+    lazy var actionTexts = ["show", "show with status", "showProgress", "showProgress with status", "shwoImage", "showImage with status", "showInfo", "showSuccess", "showError", "showMessage", "showGif", "showGif with status"]
     lazy var headerTexts = ["遮罩样式", "加载样式", "方法"]
     
     var progressValue: CGFloat = 0
@@ -93,27 +93,30 @@ class ViewController: UITableViewController {
                 DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(3), execute: {
                     DispatchQueue.main.async {
                         ZKProgressHUD.dismiss()
+                        ZKAlertViewSwift.showAlertView("提示", message: "加载完成", buttonTitle: "确定")
                         ZKProgressHUD.showInfo("加载完成😁😁😁")
                     }
                 })
             } else if indexPath.row == 2 {
-                Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(ViewController.timerHandler(timer:)), userInfo: nil, repeats: true)
+                Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(ViewController.showProgressTimerHandler(timer:)), userInfo: nil, repeats: true)
             } else if indexPath.row == 3 {
-                ZKProgressHUD.showImage(UIImage(named: "image"))
+                Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(ViewController.showProgressTimerHandler(timer:)), userInfo: "上传中...", repeats: true)
             } else if indexPath.row == 4 {
-                ZKProgressHUD.showImage(image: UIImage(named: "image"), status: "图片会自动消失😏😏😏")
+                ZKProgressHUD.showImage(UIImage(named: "image"))
             } else if indexPath.row == 5 {
-                ZKProgressHUD.showInfo("Star 一下吧😙😙😙")
+                ZKProgressHUD.showImage(image: UIImage(named: "image"), status: "图片会自动消失😏😏😏")
             } else if indexPath.row == 6 {
-                ZKProgressHUD.showSuccess("操作成功👏👏👏")
+                ZKProgressHUD.showInfo("Star 一下吧😙😙😙")
             } else if indexPath.row == 7 {
-                ZKProgressHUD.showError("出现错误了😢😢😢")
+                ZKProgressHUD.showSuccess("操作成功👏👏👏")
             } else if indexPath.row == 8 {
-                ZKProgressHUD.showMessage("开始使用 ZKProgressHUD 吧")
+                ZKProgressHUD.showError("出现错误了😢😢😢")
             } else if indexPath.row == 9 {
+                ZKProgressHUD.showMessage("开始使用 ZKProgressHUD 吧")
+            } else if indexPath.row == 10 {
                 ZKProgressHUD.showGif(gifUrl: Bundle.main.url(forResource: "loding", withExtension: "gif"), gifSize: 80)
                 ZKProgressHUD.dismiss(3)
-            } else if indexPath.row == 10 {
+            } else if indexPath.row == 11 {
                 ZKProgressHUD.showGif(status: "没有找到好的透明图，所以设置背景色为白色😆😆😆", gifUrl: Bundle.main.url(forResource: "loding", withExtension: "gif"), gifSize: 80)
                 ZKProgressHUD.dismiss(3)
             }
@@ -124,7 +127,7 @@ class ViewController: UITableViewController {
         return self.headerTexts[section]
     }
     
-    func timerHandler(timer: Timer) {
+    func showProgressTimerHandler(timer: Timer) {
         if self.progressValue >= 100 {
             if timer.isValid {
                 timer.invalidate()
@@ -133,7 +136,12 @@ class ViewController: UITableViewController {
             self.progressValue = 0
         } else {
             self.progressValue += 2
-            ZKProgressHUD.showProgress(self.progressValue / 100)
+            if let status = timer.userInfo {
+                ZKProgressHUD.showProgress(self.progressValue / 100, status: status as? String)
+            } else {
+                ZKProgressHUD.showProgress(self.progressValue / 100)
+            }
+            
         }
     }
     

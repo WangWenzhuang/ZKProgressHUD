@@ -21,6 +21,8 @@ final class ZKProgressHUDConfig {
     static var autoDismissDelay: Int = 2
     
     static let restorationIdentifier: String = "ZKProgressHUD"
+    static let ZKNSNotificationDismiss = NSNotification.Name(rawValue: "ZKNSNotificationDismiss")
+    
     private static let imageBundle = Bundle(url: Bundle(for: ZKProgressHUD.self).url(forResource: "ZKProgressHUD", withExtension: "bundle")!)
     
     static func bundleImage(_ imageType: ImageType) -> UIImage? {
