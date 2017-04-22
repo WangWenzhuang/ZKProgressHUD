@@ -93,7 +93,6 @@ class ViewController: UITableViewController {
                 DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(3), execute: {
                     DispatchQueue.main.async {
                         ZKProgressHUD.dismiss()
-                        ZKAlertViewSwift.showAlertView("提示", message: "加载完成", buttonTitle: "确定")
                         ZKProgressHUD.showInfo("加载完成😁😁😁")
                     }
                 })

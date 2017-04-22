@@ -23,8 +23,6 @@
 		A0ADABB51E72B245006C3BD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0ADABB41E72B245006C3BD7 /* Assets.xcassets */; };
 		A0ADABB81E72B245006C3BD7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0ADABB61E72B245006C3BD7 /* LaunchScreen.storyboard */; };
 		A0ADABC51E72B49F006C3BD7 /* ZKProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADABC41E72B49F006C3BD7 /* ZKProgressHUD.swift */; };
-		A0D3353F1EAB37BB00F22A31 /* ZKAlertViewSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3353D1EAB37BB00F22A31 /* ZKAlertViewSwift.swift */; };
-		A0D335401EAB37BB00F22A31 /* ZKAlertViewSwiftObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3353E1EAB37BB00F22A31 /* ZKAlertViewSwiftObject.swift */; };
 		A0DF4DD61E773D3800D67231 /* ZKProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A0DF4DD51E773D3800D67231 /* ZKProgressHUD.bundle */; };
 		A0DF4DD81E77B85200D67231 /* image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0DF4DD71E77B85200D67231 /* image@2x.png */; };
 /* End PBXBuildFile section */
@@ -48,8 +46,6 @@
 		A0ADABB71E72B245006C3BD7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A0ADABB91E72B245006C3BD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0ADABC41E72B49F006C3BD7 /* ZKProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKProgressHUD.swift; sourceTree = "<group>"; };
-		A0D3353D1EAB37BB00F22A31 /* ZKAlertViewSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKAlertViewSwift.swift; sourceTree = "<group>"; };
-		A0D3353E1EAB37BB00F22A31 /* ZKAlertViewSwiftObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKAlertViewSwiftObject.swift; sourceTree = "<group>"; };
 		A0DF4DD51E773D3800D67231 /* ZKProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZKProgressHUD.bundle; sourceTree = "<group>"; };
 		A0DF4DD71E77B85200D67231 /* image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "image@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -87,7 +83,6 @@
 		A0ADABAC1E72B245006C3BD7 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				A0D3353C1EAB37BB00F22A31 /* ZKAlertViewSwift */,
 				A0ADABAD1E72B245006C3BD7 /* AppDelegate.swift */,
 				A0ADABAF1E72B245006C3BD7 /* ViewController.swift */,
 				A0918DCE1EA759B900EFF9EB /* SelectViewController.swift */,
@@ -115,15 +110,6 @@
 			);
 			name = ZKProgressHUD;
 			path = ../ZKProgressHUD;
-			sourceTree = "<group>";
-		};
-		A0D3353C1EAB37BB00F22A31 /* ZKAlertViewSwift */ = {
-			isa = PBXGroup;
-			children = (
-				A0D3353D1EAB37BB00F22A31 /* ZKAlertViewSwift.swift */,
-				A0D3353E1EAB37BB00F22A31 /* ZKAlertViewSwiftObject.swift */,
-			);
-			path = ZKAlertViewSwift;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,7 +189,6 @@
 			files = (
 				A0918DD11EA796FC00EFF9EB /* UIView-Extension.swift in Sources */,
 				A095A8BB1E784EE500261A9B /* ZKProgressView.swift in Sources */,
-				A0D3353F1EAB37BB00F22A31 /* ZKAlertViewSwift.swift in Sources */,
 				A0918DC51EA71FB600EFF9EB /* ZKProgressHUDConfig.swift in Sources */,
 				A0ADABC51E72B49F006C3BD7 /* ZKProgressHUD.swift in Sources */,
 				A0918DCB1EA7240600EFF9EB /* ZKProgressHUDType.swift in Sources */,
@@ -214,7 +199,6 @@
 				A06EA1EE1EA858E4007DAEFA /* String-Extension.swift in Sources */,
 				A0ADABAE1E72B245006C3BD7 /* AppDelegate.swift in Sources */,
 				A0918DC91EA723DA00EFF9EB /* ZKProgressHUDMaskStyle.swift in Sources */,
-				A0D335401EAB37BB00F22A31 /* ZKAlertViewSwiftObject.swift in Sources */,
 				A0918DCD1EA72DB800EFF9EB /* ZKPrigressHUDImageType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
