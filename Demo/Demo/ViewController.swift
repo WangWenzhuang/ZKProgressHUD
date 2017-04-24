@@ -78,7 +78,7 @@ class ViewController: UITableViewController {
         } else if indexPath.section == 1 {
             self.pushSelectView(tag: 1, title: "选择加载样式", data: self.animationStyles)
         } else if indexPath.section == 2 {
-            if indexPath.row > 8 {
+            if indexPath.row > 9 {
                 ZKProgressHUD.setBackgroundColor(.white)
                 ZKProgressHUD.setForegroundColor(.black)
             } else {
@@ -87,10 +87,10 @@ class ViewController: UITableViewController {
             }
             if indexPath.row == 0 {
                 ZKProgressHUD.show()
-                ZKProgressHUD.dismiss(3)
+                ZKProgressHUD.dismiss(2)
             } else if indexPath.row == 1 {
                 ZKProgressHUD.show("正在拼命的加载中🏃🏃🏃")
-                DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(3), execute: {
+                DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(2), execute: {
                     DispatchQueue.main.async {
                         ZKProgressHUD.dismiss()
                         ZKProgressHUD.showInfo("加载完成😁😁😁")
@@ -114,10 +114,10 @@ class ViewController: UITableViewController {
                 ZKProgressHUD.showMessage("开始使用 ZKProgressHUD 吧")
             } else if indexPath.row == 10 {
                 ZKProgressHUD.showGif(gifUrl: Bundle.main.url(forResource: "loding", withExtension: "gif"), gifSize: 80)
-                ZKProgressHUD.dismiss(3)
+                ZKProgressHUD.dismiss(2)
             } else if indexPath.row == 11 {
                 ZKProgressHUD.showGif(status: "没有找到好的透明图，所以设置背景色为白色😆😆😆", gifUrl: Bundle.main.url(forResource: "loding", withExtension: "gif"), gifSize: 80)
-                ZKProgressHUD.dismiss(3)
+                ZKProgressHUD.dismiss(2)
             }
         }
     }
@@ -134,7 +134,7 @@ class ViewController: UITableViewController {
             ZKProgressHUD.dismiss()
             self.progressValue = 0
         } else {
-            self.progressValue += 2
+            self.progressValue += 5
             if let status = timer.userInfo {
                 ZKProgressHUD.showProgress(self.progressValue / 100, status: status as? String)
             } else {
