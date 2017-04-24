@@ -160,14 +160,12 @@ ZKProgressHUD.dismiss(delay: 3)
 
 ## 自定义显示样式😏
 
-![style1](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style1.PNG)
-![style2](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style2.PNG)
-![style3](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style3.PNG)
-![style4](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style4.PNG)
-![style5](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style5.PNG)
-![style6](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style6.PNG)
-![style7](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style7.PNG)
-![style8](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style8.PNG)
+![style1](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style1.jpeg)
+![style2](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style2.jpeg)
+![style3](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style3.jpeg)
+![style4](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style4.jpeg)
+![style5](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style5.jpeg)
+![style6](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style6.jpeg)
 
 ### 设置是否显示遮罩
 
