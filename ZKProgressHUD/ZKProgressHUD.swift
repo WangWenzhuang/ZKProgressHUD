@@ -67,6 +67,7 @@ public class ZKProgressHUD: UIView {
     
     fileprivate lazy var systemHUDView: UIActivityIndicatorView = {
         $0.activityIndicatorViewStyle = .whiteLarge
+        $0.color = ZKProgressHUDConfig.foregroundColor
         $0.sizeToFit()
         $0.startAnimating()
         return $0
