@@ -19,9 +19,12 @@ class ViewController: UITableViewController {
     let cellIdentifier = "cell"
     
     lazy var actionTexts = ["show", "show with status", "showProgress", "showProgress with status", "shwoImage", "showImage with status", "showInfo", "showSuccess", "showError", "showMessage", "showGif", "showGif with status"]
-    lazy var headerTexts = ["遮罩样式", "加载样式", "方法"]
+    lazy var headerTexts = ["动画显示/隐藏样式","遮罩样式", "加载样式", "方法"]
     
     var progressValue: CGFloat = 0
+    
+    lazy var animationShowStyles = [(text: "fade", animationShowStyle: ZKProgressHUDAnimationShowStyle.fade), (text: "zoom", animationShowStyle: ZKProgressHUDAnimationShowStyle.zoom), (text: "flyInto", animationShowStyle: ZKProgressHUDAnimationShowStyle.flyInto)]
+    var currentAnimationShowStyleIndex = 0
     
     lazy var maskStyles = [(text: "visible", maskStyle: ZKProgressHUDMaskStyle.visible), (text: "hide", maskStyle: ZKProgressHUDMaskStyle.hide)]
     var currentMaskStyleIndex = 0
@@ -39,13 +42,11 @@ class ViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        } else if section == 1 {
+        if section < 3 {
             return 1
         }
         return self.actionTexts.count
@@ -55,9 +56,12 @@ class ViewController: UITableViewController {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier)
         cell?.accessoryType = .none
         if indexPath.section == 0 {
-            cell?.textLabel?.text = self.maskStyles[currentMaskStyleIndex].text
+            cell?.textLabel?.text = self.animationShowStyles[self.currentAnimationShowStyleIndex].text
             cell?.accessoryType = .disclosureIndicator
         } else if indexPath.section == 1 {
+            cell?.textLabel?.text = self.maskStyles[self.currentMaskStyleIndex].text
+            cell?.accessoryType = .disclosureIndicator
+        } else if indexPath.section == 2 {
             cell?.textLabel?.text = self.animationStyles[self.currentAnimationStyleIndex].text
             cell?.accessoryType = .disclosureIndicator
         } else {
@@ -72,12 +76,13 @@ class ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        
         if indexPath.section == 0 {
-            self.pushSelectView(tag: 0, title: "选择遮罩样式", data: self.maskStyles)
+            self.pushSelectView(tag: 0, title: "选择动画显示/隐藏样式", data: self.animationShowStyles)
         } else if indexPath.section == 1 {
-            self.pushSelectView(tag: 1, title: "选择加载样式", data: self.animationStyles)
+            self.pushSelectView(tag: 1, title: "选择遮罩样式", data: self.maskStyles)
         } else if indexPath.section == 2 {
+            self.pushSelectView(tag: 2, title: "选择加载样式", data: self.animationStyles)
+        } else if indexPath.section == 3 {
             if indexPath.row > 9 {
                 ZKProgressHUD.setBackgroundColor(.white)
                 ZKProgressHUD.setForegroundColor(.black)
@@ -157,6 +162,9 @@ class ViewController: UITableViewController {
 extension ViewController: SelectViewControllerDelegate {
     func selected(selectViewController: SelectViewController, selectIndex: Int) {
         if selectViewController.tag == 0 {
+            self.currentAnimationShowStyleIndex = selectIndex
+            ZKProgressHUD.setAnimationShowStyle(self.animationShowStyles[self.currentAnimationShowStyleIndex].animationShowStyle)
+        } else if selectViewController.tag == 1 {
             self.currentMaskStyleIndex = selectIndex
             ZKProgressHUD.setMaskStyle(self.maskStyles[self.currentMaskStyleIndex].maskStyle)
         } else {
@@ -167,6 +175,9 @@ extension ViewController: SelectViewControllerDelegate {
     }
     func tableViewCellValue(selectViewController: SelectViewController, obj: Any) -> (text: String, isCheckmark: Bool) {
         if selectViewController.tag == 0 {
+            let animationShowStyle = obj as! (text: String, animationShowStyle: ZKProgressHUDAnimationShowStyle)
+            return (text: animationShowStyle.text, isCheckmark: animationShowStyle.text == self.animationShowStyles[self.currentAnimationShowStyleIndex].text)
+        } else if selectViewController.tag == 1 {
             let maskStyle = obj as! (text: String, maskStyle: ZKProgressHUDMaskStyle)
             return (text: maskStyle.text, isCheckmark: maskStyle.text == self.maskStyles[self.currentMaskStyleIndex].text)
         } else {

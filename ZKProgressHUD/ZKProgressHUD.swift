@@ -17,6 +17,7 @@ public class ZKProgressHUD: UIView {
     fileprivate var gifUrl: URL?
     fileprivate var gifSize: CGFloat?
     fileprivate var progress: CGFloat?
+    fileprivate var isShow: Bool = false
     
     fileprivate lazy var infoImage: UIImage? = ZKProgressHUDConfig.bundleImage(.info)?.withRenderingMode(.alwaysTemplate)
     fileprivate lazy var successImage: UIImage? = ZKProgressHUDConfig.bundleImage(.success)?.withRenderingMode(.alwaysTemplate)
@@ -353,19 +354,61 @@ extension ZKProgressHUD {
             self.frame = CGRect(x: 0, y: 0, width: self.screenWidht, height: self.screenHeight)
             self.contentView.frame.origin = CGPoint(x: x, y: y)
         }
-        if self.contentView.alpha == 0 {
-            UIView.animate(withDuration: 0.4, animations: {
-                self.contentView.alpha = 1
-            })
+        
+        if !self.isShow {
+            self.animationShow(contentFrame: self.contentView.frame)
         }
     }
-    
+    /// 动画显示
+    func animationShow(contentFrame: CGRect) {
+        self.isShow = true
+        switch ZKProgressHUDConfig.animationShowStyle {
+        case .fade:
+            self.contentView.alpha = 0
+        case .zoom:
+            self.contentView.alpha = 1
+            self.contentView.frame = CGRect(x: self.screenWidht / 2, y: contentFrame.origin.y, width: 0, height: contentFrame.size.height)
+        case .flyInto:
+            self.contentView.alpha = 1
+            self.contentView.frame = CGRect(x: contentFrame.origin.x, y: 0 - contentFrame.size.height, width: contentFrame.size.width, height: contentFrame.size.height)
+            break
+        }
+        UIView.animate(withDuration: 0.3, animations: {
+            switch ZKProgressHUDConfig.animationShowStyle {
+            case .fade:
+                self.contentView.alpha = 1
+            case .zoom:
+                self.contentView.frame = contentFrame
+            case .flyInto:
+                self.contentView.frame = contentFrame
+                break
+            }
+        })
+    }
+    /// 动画移除
+    func animationDsmiss() {
+        UIView.animate(withDuration: 0.3, animations: {
+            switch ZKProgressHUDConfig.animationShowStyle {
+            case .fade:
+                self.contentView.alpha = 0
+            case .zoom:
+                self.contentView.frame = CGRect(x: self.screenWidht / 2, y: self.contentView.y, width: 0, height: self.contentView.height)
+            case .flyInto:
+                self.contentView.frame = CGRect(x: self.contentView.x, y: 0 - self.contentView.height, width: self.contentView.width, height: self.contentView.height)
+                break
+            }
+        }, completion: { (finished) in
+            self.isShow = false
+            self.removeFromSuperview()
+        })
+    }
     /// 通知移除
-    @objc fileprivate func observerDismiss(notification: Notification){
+    @objc fileprivate func observerDismiss(notification: Notification) {
         if let userInfo = notification.userInfo {
             let delay = userInfo["delay"] as! Int
             self.autoDismiss(delay: delay)
         } else {
+            self.isShow = false
             self.removeFromSuperview()
         }
     }
@@ -373,11 +416,7 @@ extension ZKProgressHUD {
     fileprivate func autoDismiss(delay: Int) {
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(delay), execute: {
             DispatchQueue.main.async {
-                UIView.animate(withDuration: 0.4, animations: {
-                    self.contentView.alpha = 0
-                }, completion: { (finished) in
-                    self.removeFromSuperview()
-                })
+                self.animationDsmiss()
             }
         })
     }
@@ -505,8 +544,13 @@ extension ZKProgressHUD {
     }
     
     // 设置遮罩样式
-    public static func setMaskStyle (_ maskStyle: ZKProgressHUDMaskStyle ) {
-        ZKProgressHUDConfig.maskStyle  = maskStyle
+    public static func setMaskStyle (_ maskStyle: ZKProgressHUDMaskStyle) {
+        ZKProgressHUDConfig.maskStyle = maskStyle
+    }
+    
+    // 设置动画显示/隐藏样式
+    public static func setAnimationShowStyle (_ animationShowStyle: ZKProgressHUDAnimationShowStyle) {
+        ZKProgressHUDConfig.animationShowStyle = animationShowStyle
     }
     
     // 设置遮罩背景色
@@ -535,7 +579,7 @@ extension ZKProgressHUD {
     }
     
     // 设置加载动画样式动画样式
-    public static func setAnimationStyle(_ animationStyle: ZKProgressHUDAnimationStyle ) {
+    public static func setAnimationStyle(_ animationStyle: ZKProgressHUDAnimationStyle) {
         ZKProgressHUDConfig.animationStyle  = animationStyle
     }
     

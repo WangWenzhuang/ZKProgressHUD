@@ -20,11 +20,8 @@ iOS App 上极易于使用的 HUD。
 - [x] 显示情景信息（info、success、error）
 - [x] 显示 Tost 样式信息
 - [x] 遮罩自定义显示
+- [x] 显示动画
 - [x] 自定义（背景色、前景色、字体、自动消失间隔秒、遮罩、动画类型...），满足极大多数场景
-
-## 待实现💪
-
-- [ ] 动画显示类型
 
 ## 运行环境
 
@@ -170,7 +167,26 @@ ZKProgressHUD.dismiss(delay: 3)
 ### 设置是否显示遮罩
 
 ```swift
+/// 隐藏
+/// hide
+    
+/// 显示
+/// visible
 setMaskStyle (_ maskStyle: ZKProgressHUDMaskStyle)
+```
+
+### 设置动画显示/隐藏样式
+
+```swift
+/// 淡入/淡出（默认）
+/// fade
+
+/// 缩放
+/// zoom
+
+/// 飞入
+/// flyInto
+setAnimationShowStyle (_ animationShowStyle: ZKProgressHUDAnimationShowStyle)
 ```
 
 ### 设置遮罩背景色
@@ -206,6 +222,11 @@ setCornerRadius(_ cornerRadius: CGFloat)
 ### 设置加载动画类型
 
 ```swift
+/// 圆圈
+/// circle
+
+/// 系统样式（菊花）
+/// system
 setAnimationStyle(_ animationStyle: ZKProgressHUDAnimationStyle)
 ```
 

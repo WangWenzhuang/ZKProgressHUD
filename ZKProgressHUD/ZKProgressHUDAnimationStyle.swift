@@ -10,7 +10,7 @@
 public enum ZKProgressHUDAnimationStyle {
     /// 圆圈
     case circle
-    // 系统样式（菊花）
+    /// 系统样式（菊花）
     case system
 }
 typealias AnimationStyle = ZKProgressHUDAnimationStyle
