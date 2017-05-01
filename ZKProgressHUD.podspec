@@ -3,11 +3,11 @@ Pod::Spec.new do |s|
   s.version = '1.3'
   s.ios.deployment_target = '8.0'
   s.license = { :type => 'MIT', :file => 'LICENSE' }
-  s.summary = 'A easy-to-use HUD for your iOS app.'
+  s.summary = 'iOS App 上极易于使用的 HUD。'
   s.homepage = 'https://github.com/WangWenzhuang/ZKProgressHUD'
   s.authors = { 'WangWenzhuang' => '1020304029@qq.com' }
   s.source = { :git => 'https://github.com/WangWenzhuang/ZKProgressHUD.git', :tag => s.version }
-  s.description = 'ZKProgressHUD is a easy-to-use HUD meant to display the progress of an ongoing task on iOS.'
+  s.description = 'ZKProgressHUD 是一个在 iOS App 上极易于使用的 HUD。主要用于显示加载、进度、情景信息、Tost。'
   s.source_files = 'ZKProgressHUD/*.swift'
   s.resources = 'ZKProgressHUD/ZKProgressHUD.bundle'
   s.requires_arc = true
