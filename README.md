@@ -18,7 +18,7 @@ iOS App 上极易于使用的 HUD。
 - [x] 显示进度
 - [x] 显示图片 ➕ 文字
 - [x] 显示情景信息（info、success、error）
-- [x] 显示 Tost 样式信息
+- [x] 显示 Toast 样式信息
 - [x] 遮罩自定义显示
 - [x] 显示动画
 - [x] 自定义（背景色、前景色、字体、自动消失间隔秒、遮罩、动画类型...），满足极大多数场景
@@ -137,7 +137,7 @@ ZKProgressHUD.showSuccess("操作成功👏👏👏")
 ZKProgressHUD.showError("出现错误了😢😢😢")
 ```
 
-### 显示 Tost 样式信息
+### 显示 Toast 样式信息
 
 ```swift
 ZKProgressHUD.showMessage("开始使用 ZKProgressHUD 吧")
