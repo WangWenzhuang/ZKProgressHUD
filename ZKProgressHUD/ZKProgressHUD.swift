@@ -429,7 +429,7 @@ extension ZKProgressHUD {
             let window = UIApplication.shared.windows.reversed().first(where: {
                 $0.screen == UIScreen.main &&
                     !$0.isHidden && $0.alpha > 0 &&
-                    $0.windowLevel >= UIWindowLevelNormal
+                    $0.windowLevel == UIWindowLevelNormal
             })
             return window
         }
