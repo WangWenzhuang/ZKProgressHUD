@@ -15,11 +15,13 @@ final class ZKProgressHUDConfig {
     static var animationShowStyle: AnimationShowStyle = .fade
     static var maskBackgroundColor: UIColor = .black
     static var foregroundColor: UIColor = .white
+    static var effectStyle: HUDEffectStyle = .dark
+    static var effectAlpha: CGFloat = 1
     static var backgroundColor: UIColor = UIColor(red: 0 / 255.0, green: 0 / 255.0, blue: 0 / 255.0, alpha: 0.8)
     static var font: UIFont = UIFont.boldSystemFont(ofSize: 15)
     static var cornerRadius: CGFloat = 6
     static var animationStyle: AnimationStyle = .circle
-    static var autoDismissDelay: Int = 2
+    static var autoDismissDelay: Double = 2
     
     static let restorationIdentifier: String = "ZKProgressHUD"
     static let ZKNSNotificationDismiss = NSNotification.Name(rawValue: "ZKNSNotificationDismiss")
@@ -41,3 +43,4 @@ final class ZKProgressHUDConfig {
         return UIImage(contentsOfFile: (imageBundle?.path(forResource: imageName, ofType: "png"))!)
     }
 }
+typealias Config = ZKProgressHUDConfig

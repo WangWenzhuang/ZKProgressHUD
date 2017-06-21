@@ -84,15 +84,13 @@ class ViewController: UITableViewController {
             self.pushSelectView(tag: 2, title: "选择加载样式", data: self.animationStyles)
         } else if indexPath.section == 3 {
             if indexPath.row > 9 {
-                ZKProgressHUD.setBackgroundColor(.white)
-                ZKProgressHUD.setForegroundColor(.black)
+                ZKProgressHUD.setEffectStyle(.extraLight)
             } else {
-                ZKProgressHUD.setBackgroundColor(UIColor(red: 0 / 255.0, green: 0 / 255.0, blue: 0 / 255.0, alpha: 0.8))
-                ZKProgressHUD.setForegroundColor(.white)
+                ZKProgressHUD.setEffectStyle(.dark)
             }
             if indexPath.row == 0 {
                 ZKProgressHUD.show()
-                ZKProgressHUD.dismiss(2)
+                ZKProgressHUD.dismiss(2.5)
             } else if indexPath.row == 1 {
                 ZKProgressHUD.show("正在拼命的加载中🏃🏃🏃")
                 DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(2), execute: {

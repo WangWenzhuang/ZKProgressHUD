@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A063CFDF1E79540C0087C8BF /* ZKGifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A063CFDE1E79540C0087C8BF /* ZKGifView.swift */; };
 		A06EA1EE1EA858E4007DAEFA /* String-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06EA1ED1EA858E4007DAEFA /* String-Extension.swift */; };
+		A079D8501EFABD1F00A5A7B0 /* ZKProgressHUDEffectStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079D84F1EFABD1F00A5A7B0 /* ZKProgressHUDEffectStyle.swift */; };
 		A0918DC51EA71FB600EFF9EB /* ZKProgressHUDConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0918DC41EA71FB600EFF9EB /* ZKProgressHUDConfig.swift */; };
 		A0918DC71EA7238400EFF9EB /* ZKProgressHUDAnimationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0918DC61EA7238400EFF9EB /* ZKProgressHUDAnimationStyle.swift */; };
 		A0918DC91EA723DA00EFF9EB /* ZKProgressHUDMaskStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0918DC81EA723DA00EFF9EB /* ZKProgressHUDMaskStyle.swift */; };
@@ -31,6 +32,7 @@
 /* Begin PBXFileReference section */
 		A063CFDE1E79540C0087C8BF /* ZKGifView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKGifView.swift; sourceTree = "<group>"; };
 		A06EA1ED1EA858E4007DAEFA /* String-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String-Extension.swift"; sourceTree = "<group>"; };
+		A079D84F1EFABD1F00A5A7B0 /* ZKProgressHUDEffectStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKProgressHUDEffectStyle.swift; sourceTree = "<group>"; };
 		A0918DC41EA71FB600EFF9EB /* ZKProgressHUDConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKProgressHUDConfig.swift; sourceTree = "<group>"; };
 		A0918DC61EA7238400EFF9EB /* ZKProgressHUDAnimationStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKProgressHUDAnimationStyle.swift; sourceTree = "<group>"; };
 		A0918DC81EA723DA00EFF9EB /* ZKProgressHUDMaskStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKProgressHUDMaskStyle.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				A0918DC41EA71FB600EFF9EB /* ZKProgressHUDConfig.swift */,
 				A0918DCC1EA72DB800EFF9EB /* ZKPrigressHUDImageType.swift */,
 				A0918DC81EA723DA00EFF9EB /* ZKProgressHUDMaskStyle.swift */,
+				A079D84F1EFABD1F00A5A7B0 /* ZKProgressHUDEffectStyle.swift */,
 				A0918DC61EA7238400EFF9EB /* ZKProgressHUDAnimationStyle.swift */,
 				A0C3BC9C1EAEFE170099801F /* ZKProgressHUDAnimationShowStyle.swift */,
 				A0DF4DD51E773D3800D67231 /* ZKProgressHUD.bundle */,
@@ -190,6 +193,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A079D8501EFABD1F00A5A7B0 /* ZKProgressHUDEffectStyle.swift in Sources */,
 				A0918DD11EA796FC00EFF9EB /* UIView-Extension.swift in Sources */,
 				A095A8BB1E784EE500261A9B /* ZKProgressView.swift in Sources */,
 				A0918DC51EA71FB600EFF9EB /* ZKProgressHUDConfig.swift in Sources */,

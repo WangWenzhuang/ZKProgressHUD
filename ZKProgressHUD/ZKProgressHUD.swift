@@ -19,9 +19,9 @@ public class ZKProgressHUD: UIView {
     fileprivate var progress: CGFloat?
     fileprivate var isShow: Bool = false
     
-    fileprivate lazy var infoImage: UIImage? = ZKProgressHUDConfig.bundleImage(.info)?.withRenderingMode(.alwaysTemplate)
-    fileprivate lazy var successImage: UIImage? = ZKProgressHUDConfig.bundleImage(.success)?.withRenderingMode(.alwaysTemplate)
-    fileprivate lazy var errorImage: UIImage? = ZKProgressHUDConfig.bundleImage(.error)?.withRenderingMode(.alwaysTemplate)
+    fileprivate lazy var infoImage: UIImage? = Config.bundleImage(.info)?.withRenderingMode(.alwaysTemplate)
+    fileprivate lazy var successImage: UIImage? = Config.bundleImage(.success)?.withRenderingMode(.alwaysTemplate)
+    fileprivate lazy var errorImage: UIImage? = Config.bundleImage(.error)?.withRenderingMode(.alwaysTemplate)
     
     // MARK: - UI
     fileprivate lazy var screenView: UIView = {
@@ -29,18 +29,41 @@ public class ZKProgressHUD: UIView {
         $0.mask?.alpha = 0.3
         $0.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         $0.alpha = 0.3
-        $0.backgroundColor = ZKProgressHUDConfig.maskBackgroundColor
+        $0.backgroundColor = Config.maskBackgroundColor
         return $0
     }(UIView())
     
     fileprivate lazy var contentView: UIView = {
-        $0.layer.masksToBounds = true
-        $0.autoresizingMask = [.flexibleBottomMargin, .flexibleTopMargin, .flexibleLeftMargin, .flexibleRightMargin]
-        $0.layer.cornerRadius = ZKProgressHUDConfig.cornerRadius
-        $0.backgroundColor = ZKProgressHUDConfig.backgroundColor
-        $0.alpha = 0
-        return $0
-    }(UIView())
+        let view = UIView()
+        view.layer.masksToBounds = true
+        view.autoresizingMask = [.flexibleBottomMargin, .flexibleTopMargin, .flexibleLeftMargin, .flexibleRightMargin]
+        view.layer.cornerRadius = Config.cornerRadius
+        if Config.effectStyle == .none {
+            view.backgroundColor = Config.backgroundColor
+        } else {
+            view.backgroundColor = .clear
+        }
+        view.alpha = 0
+        return view
+    }()
+    
+    fileprivate lazy var contentBlurView: UIVisualEffectView = {
+        var blurEffectStyle: UIBlurEffectStyle!
+        switch Config.effectStyle {
+        case .extraLight:
+            blurEffectStyle = .extraLight
+        case .light:
+            blurEffectStyle = .light
+        default:
+            blurEffectStyle = .dark
+        }
+        let blurEffect = UIBlurEffect(style: blurEffectStyle)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.autoresizingMask = [.flexibleBottomMargin, .flexibleTopMargin, .flexibleLeftMargin, .flexibleRightMargin]
+        blurEffectView.alpha = Config.effectAlpha
+        
+        return blurEffectView
+    }()
     
     /// gif(ZKProgressHUDType)
     fileprivate lazy var gifView: ZKGifView = ZKGifView()
@@ -48,13 +71,13 @@ public class ZKProgressHUD: UIView {
     /// image(ZKProgressHUDType)
     fileprivate lazy var imageView: UIImageView = {
         $0.contentMode = .scaleToFill
-        $0.tintColor = ZKProgressHUDConfig.foregroundColor
+        $0.tintColor = Config.foregroundColor
         return $0
     }(UIImageView())
     
     /// progress(ZKProgressHUDType)
     fileprivate lazy var progressView: ZKProgressView = {
-        $0.progressColor = ZKProgressHUDConfig.foregroundColor
+        $0.progressColor = Config.foregroundColor
         $0.backgroundColor = .clear
         return $0
     }(ZKProgressView(frame: CGRect(x: 0, y: 0, width: 85, height: 85)))
@@ -62,13 +85,13 @@ public class ZKProgressHUD: UIView {
     /// activityIndicator(ZKProgressHUDType)
     fileprivate var activityIndicatorView: UIView {
         get {
-            return ZKProgressHUDConfig.animationStyle == AnimationStyle.circle ? self.circleHUDView : self.systemHUDView
+            return Config.animationStyle == AnimationStyle.circle ? self.circleHUDView : self.systemHUDView
         }
     }
     
     fileprivate lazy var systemHUDView: UIActivityIndicatorView = {
         $0.activityIndicatorViewStyle = .whiteLarge
-        $0.color = ZKProgressHUDConfig.foregroundColor
+        $0.color = Config.foregroundColor
         $0.sizeToFit()
         $0.startAnimating()
         return $0
@@ -84,14 +107,14 @@ public class ZKProgressHUD: UIView {
         layer.contentsScale = UIScreen.main.scale
         layer.frame = CGRect(x: lineMargin, y: lineMargin, width: arcCenter.x * 2, height: arcCenter.y * 2)
         layer.fillColor = UIColor.clear.cgColor
-        layer.strokeColor = ZKProgressHUDConfig.foregroundColor.cgColor
+        layer.strokeColor = Config.foregroundColor.cgColor
         layer.lineWidth = 3
         layer.lineCap = kCALineCapRound
         layer.lineJoin = kCALineJoinBevel
         layer.path = smoothedPath.cgPath
         
         layer.mask = CALayer()
-        layer.mask?.contents = ZKProgressHUDConfig.bundleImage(.mask)?.cgImage
+        layer.mask?.contents = Config.bundleImage(.mask)?.cgImage
         layer.mask?.frame = layer.bounds
 
         let animation = CABasicAnimation(keyPath: "transform.rotation")
@@ -110,14 +133,14 @@ public class ZKProgressHUD: UIView {
     fileprivate lazy var statusLabel: UILabel = {
         $0.textAlignment = .center
         $0.numberOfLines = 0
-        $0.font = ZKProgressHUDConfig.font
-        $0.textColor = ZKProgressHUDConfig.foregroundColor
+        $0.font = Config.font
+        $0.textColor = Config.foregroundColor
         return $0
     }(UILabel())
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        NotificationCenter.default.addObserver(self, selector: #selector(ZKProgressHUD.observerDismiss), name: ZKProgressHUDConfig.ZKNSNotificationDismiss, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ZKProgressHUD.observerDismiss), name: Config.ZKNSNotificationDismiss, object: nil)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -125,7 +148,7 @@ public class ZKProgressHUD: UIView {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: ZKProgressHUDConfig.ZKNSNotificationDismiss, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Config.ZKNSNotificationDismiss, object: nil)
     }
 }
 
@@ -145,13 +168,13 @@ extension ZKProgressHUD {
     
     fileprivate var maxContentViewWidth: CGFloat {
         get {
-            return self.screenWidht - ZKProgressHUDConfig.margin * 2
+            return self.screenWidht - Config.margin * 2
         }
     }
     
     fileprivate var maxContentViewChildWidth: CGFloat {
         get {
-            return self.screenWidht - ZKProgressHUDConfig.margin * 4
+            return self.screenWidht - Config.margin * 4
         }
     }
 }
@@ -189,7 +212,7 @@ extension ZKProgressHUD {
                 if let progressValue = self.progress {
                     self.progressView.progress = Double(progressValue)
                 }
-                if self.restorationIdentifier != ZKProgressHUDConfig.restorationIdentifier {
+                if self.restorationIdentifier != Config.restorationIdentifier {
                     self.updateView(maskStyle: maskStyle)
                 }
             } else {
@@ -199,22 +222,23 @@ extension ZKProgressHUD {
             self.updateFrame(maskStyle: maskStyle)
             if let autoDismiss = isAutoDismiss {
                 if autoDismiss {
-                    self.autoDismiss(delay: ZKProgressHUDConfig.autoDismissDelay)
+                    self.autoDismiss(delay: Config.autoDismissDelay)
                 }
             }
         }
     }
     /// 更新视图
     fileprivate func updateView(maskStyle: MaskStyle?) {
-        self.restorationIdentifier = ZKProgressHUDConfig.restorationIdentifier
+        self.restorationIdentifier = Config.restorationIdentifier
         ZKProgressHUD.frontWindow?.addSubview(self)
-        if (maskStyle ?? ZKProgressHUDConfig.maskStyle) == .visible {
+        if (maskStyle ?? Config.maskStyle) == .visible {
             self.addSubview(self.screenView)
         }
         self.addSubview(self.contentView)
-
+        if Config.effectStyle != .none {
+            self.contentView.addSubview(self.contentBlurView)
+        }
         self.contentView.addSubview(self.statusLabel)
-        
         switch self.hudType! {
         case .gif:
             if let url = self.gifUrl {
@@ -253,7 +277,7 @@ extension ZKProgressHUD {
         if let text = self.status {
             self.statusLabel.isHidden = false
             self.statusLabel.text = text
-            self.statusLabel.frame.size = text.size(font: ZKProgressHUDConfig.font, size: CGSize(width: self.maxContentViewChildWidth, height: 400))
+            self.statusLabel.frame.size = text.size(font: Config.font, size: CGSize(width: self.maxContentViewChildWidth, height: 400))
             self.statusLabel.sizeToFit()
         } else {
             self.statusLabel.frame.size = CGSize.zero
@@ -264,90 +288,91 @@ extension ZKProgressHUD {
             var width: CGFloat = 0
             switch self.hudType! {
             case .gif:
-                width = (self.statusLabel.isHidden ? self.gifView.width : (self.gifView.width > self.statusLabel.width ? self.gifView.width : self.statusLabel.width)) + ZKProgressHUDConfig.margin * 2
+                width = (self.statusLabel.isHidden ? self.gifView.width : (self.gifView.width > self.statusLabel.width ? self.gifView.width : self.statusLabel.width)) + Config.margin * 2
             case .image:
-                width = (self.statusLabel.isHidden ? self.imageView.width : (self.imageView.width > self.statusLabel.width ? self.imageView.width : self.statusLabel.width)) + ZKProgressHUDConfig.margin * 2
+                width = (self.statusLabel.isHidden ? self.imageView.width : (self.imageView.width > self.statusLabel.width ? self.imageView.width : self.statusLabel.width)) + Config.margin * 2
             case .message:
-                width = self.statusLabel.width + ZKProgressHUDConfig.margin * 2
+                width = self.statusLabel.width + Config.margin * 2
             case .progress:
-                width = (self.statusLabel.isHidden ? self.progressView.width : (self.progressView.width > self.statusLabel.width ? self.progressView.width : self.statusLabel.width)) + ZKProgressHUDConfig.margin * 2
+                width = (self.statusLabel.isHidden ? self.progressView.width : (self.progressView.width > self.statusLabel.width ? self.progressView.width : self.statusLabel.width)) + Config.margin * 2
             case .activityIndicator:
-                width = (self.statusLabel.isHidden ? self.activityIndicatorView.width : (self.activityIndicatorView.width > self.statusLabel.width ? self.activityIndicatorView.width : self.statusLabel.width)) + ZKProgressHUDConfig.margin * 2
+                width = (self.statusLabel.isHidden ? self.activityIndicatorView.width : (self.activityIndicatorView.width > self.statusLabel.width ? self.activityIndicatorView.width : self.statusLabel.width)) + Config.margin * 2
             }
             
             var height: CGFloat = 0
             switch self.hudType! {
             case .gif:
-                height = (self.statusLabel.isHidden ? self.gifView.height : (self.gifView.height + ZKProgressHUDConfig.margin + self.statusLabel.height)) + ZKProgressHUDConfig.margin * 2
+                height = (self.statusLabel.isHidden ? self.gifView.height : (self.gifView.height + Config.margin + self.statusLabel.height)) + Config.margin * 2
             case .image:
-                height = (self.statusLabel.isHidden ? self.imageView.height : (self.imageView.height + ZKProgressHUDConfig.margin + self.statusLabel.height)) + ZKProgressHUDConfig.margin * 2
+                height = (self.statusLabel.isHidden ? self.imageView.height : (self.imageView.height + Config.margin + self.statusLabel.height)) + Config.margin * 2
             case .message:
-                height = self.statusLabel.height + ZKProgressHUDConfig.margin * 2
+                height = self.statusLabel.height + Config.margin * 2
             case .progress:
-                height = (self.statusLabel.isHidden ? self.progressView.height : (self.progressView.height + ZKProgressHUDConfig.margin + self.statusLabel.height)) + ZKProgressHUDConfig.margin * 2
+                height = (self.statusLabel.isHidden ? self.progressView.height : (self.progressView.height + Config.margin + self.statusLabel.height)) + Config.margin * 2
             case .activityIndicator:
-                height = (self.statusLabel.isHidden ? self.activityIndicatorView.height : (self.activityIndicatorView.height + ZKProgressHUDConfig.margin + self.statusLabel.height)) + ZKProgressHUDConfig.margin * 2
+                height = (self.statusLabel.isHidden ? self.activityIndicatorView.height : (self.activityIndicatorView.height + Config.margin + self.statusLabel.height)) + Config.margin * 2
             }
             
             return CGSize(width: width, height: height)
         }()
         
+        self.contentBlurView.frame = CGRect(x: 0, y: 0, width: self.contentView.width, height: self.contentView.height)
         switch self.hudType! {
         case .gif:
             self.gifView.frame.origin = {
                 let x = (self.contentView.width - self.gifView.width) / 2
-                let y = ZKProgressHUDConfig.margin
+                let y = Config.margin
                 return CGPoint(x: x, y: y)
             }()
             self.statusLabel.frame.origin = {
                 let x = (self.contentView.width - self.statusLabel.width) / 2
-                let y = self.gifView.y + self.gifView.height + ZKProgressHUDConfig.margin
+                let y = self.gifView.y + self.gifView.height + Config.margin
                 return CGPoint(x: x, y: y)
             }()
         case .image:
             self.imageView.frame.origin = {
                 let x = (self.contentView.width - self.imageView.width) / 2
-                let y = ZKProgressHUDConfig.margin
+                let y = Config.margin
                 return CGPoint(x: x, y: y)
             }()
             self.statusLabel.frame.origin = {
                 let x = (self.contentView.width - self.statusLabel.width) / 2
-                let y = self.imageView.y + self.imageView.height + ZKProgressHUDConfig.margin
+                let y = self.imageView.y + self.imageView.height + Config.margin
                 return CGPoint(x: x, y: y)
             }()
         case .message:
             self.statusLabel.frame.origin = {
                 let x = (self.contentView.width - self.statusLabel.width) / 2
-                let y = ZKProgressHUDConfig.margin
+                let y = Config.margin
                 return CGPoint(x: x, y: y)
             }()
         case .progress:
             self.progressView.frame.origin = {
                 let x = (self.contentView.width - self.progressView.width) / 2
-                let y = ZKProgressHUDConfig.margin
+                let y = Config.margin
                 return CGPoint(x: x, y: y)
             }()
             self.statusLabel.frame.origin = {
                 let x = (self.contentView.width - self.statusLabel.width) / 2
-                let y = self.progressView.y + self.progressView.height + ZKProgressHUDConfig.margin
+                let y = self.progressView.y + self.progressView.height + Config.margin
                 return CGPoint(x: x, y: y)
             }()
         case .activityIndicator:
             self.activityIndicatorView.frame.origin = {
                 let x = (self.contentView.width - self.activityIndicatorView.width) / 2
-                let y = ZKProgressHUDConfig.margin
+                let y = Config.margin
                 return CGPoint(x: x, y: y)
             }()
             self.statusLabel.frame.origin = {
                 let x = (self.contentView.width - self.statusLabel.width) / 2
-                let y = self.activityIndicatorView.y + self.activityIndicatorView.height + ZKProgressHUDConfig.margin
+                let y = self.activityIndicatorView.y + self.activityIndicatorView.height + Config.margin
                 return CGPoint(x: x, y: y)
             }()
         }
         
         let x = (self.screenWidht - self.contentView.width) / 2
         let y = (self.screenHeight - self.contentView.height) / 2
-        if (maskStyle ?? ZKProgressHUDConfig.maskStyle) == .hide {
+        if (maskStyle ?? Config.maskStyle) == .hide {
             self.frame = CGRect(x: x, y: y, width: self.contentView.width, height: self.contentView.height)
             self.contentView.frame.origin = CGPoint(x: 0, y: 0)
         } else {
@@ -362,7 +387,7 @@ extension ZKProgressHUD {
     /// 动画显示
     func animationShow(contentFrame: CGRect) {
         self.isShow = true
-        switch ZKProgressHUDConfig.animationShowStyle {
+        switch Config.animationShowStyle {
         case .fade:
             self.contentView.alpha = 0
         case .zoom:
@@ -374,7 +399,7 @@ extension ZKProgressHUD {
             break
         }
         UIView.animate(withDuration: 0.3, animations: {
-            switch ZKProgressHUDConfig.animationShowStyle {
+            switch Config.animationShowStyle {
             case .fade:
                 self.contentView.alpha = 1
             case .zoom:
@@ -388,7 +413,7 @@ extension ZKProgressHUD {
     /// 动画移除
     func animationDsmiss() {
         UIView.animate(withDuration: 0.3, animations: {
-            switch ZKProgressHUDConfig.animationShowStyle {
+            switch Config.animationShowStyle {
             case .fade:
                 self.contentView.alpha = 0
             case .zoom:
@@ -405,7 +430,7 @@ extension ZKProgressHUD {
     /// 通知移除
     @objc fileprivate func observerDismiss(notification: Notification) {
         if let userInfo = notification.userInfo {
-            let delay = userInfo["delay"] as! Int
+            let delay = userInfo["delay"] as! Double
             self.autoDismiss(delay: delay)
         } else {
             self.isShow = false
@@ -413,8 +438,9 @@ extension ZKProgressHUD {
         }
     }
     /// 自动移除
-    fileprivate func autoDismiss(delay: Int) {
-        DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(delay), execute: {
+    fileprivate func autoDismiss(delay: Double) {
+        let a = Int(delay * 1000 * 1000)
+        DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .microseconds(a), execute: {
             DispatchQueue.main.async {
                 self.animationDsmiss()
             }
@@ -444,7 +470,7 @@ extension ZKProgressHUD {
 
 // MARK: - 类方法
 extension ZKProgressHUD {
-    // 显示gif加载
+    //MARK: 显示gif加载
     public static func showGif(gifUrl: URL?, gifSize: CGFloat?) {
         ZKProgressHUD.showGif(status: nil, gifUrl: gifUrl, gifSize: gifSize)
     }
@@ -455,7 +481,7 @@ extension ZKProgressHUD {
         shared.show(hudType: .gif, status: status, maskStyle: maskStyle, gifUrl: gifUrl, gifSize: gifSize)
     }
     
-    // 显示图片
+    //MARK: 显示图片
     public static func showImage(_ image: UIImage?) {
         ZKProgressHUD.showImage(image: image, status: nil)
     }
@@ -466,7 +492,7 @@ extension ZKProgressHUD {
         shared.show(hudType: .image, status: status, image: image, isAutoDismiss: true, maskStyle: maskStyle)
     }
     
-    // 显示消息
+    //MARK: 显示消息
     public static func showMessage(_ message: String?) {
         ZKProgressHUD.showMessage(message: message, maskStyle: nil)
     }
@@ -474,7 +500,7 @@ extension ZKProgressHUD {
         shared.show(hudType: .message, status: message, isAutoDismiss: true, maskStyle: maskStyle)
     }
     
-    // 显示进度
+    //MARK: 显示进度
     public static func showProgress(_ progress: CGFloat?) {
         ZKProgressHUD.showProgress(progress, status: nil)
     }
@@ -484,7 +510,7 @@ extension ZKProgressHUD {
     public static func showProgress(progress: CGFloat?, status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
         var isShowProgressView = false
         for subview in (ZKProgressHUD.frontWindow?.subviews)! {
-            if subview.isKind(of: ZKProgressHUD.self) && subview.restorationIdentifier == ZKProgressHUDConfig.restorationIdentifier {
+            if subview.isKind(of: ZKProgressHUD.self) && subview.restorationIdentifier == Config.restorationIdentifier {
                 let progressHUD = subview as! ZKProgressHUD
                 if progressHUD.hudType == .progress {
                     progressHUD.show(hudType: .progress, status: status, maskStyle: maskStyle, progress: progress)
@@ -499,7 +525,7 @@ extension ZKProgressHUD {
         }
     }
     
-    // 显示加载
+    //MARK: 显示加载
     public static func show() {
         ZKProgressHUD.show(nil)
     }
@@ -510,7 +536,7 @@ extension ZKProgressHUD {
         shared.show(hudType: .activityIndicator, status: status, maskStyle: maskStyle)
     }
     
-    // 显示普通信息
+    //MARK: 显示普通信息
     public static func showInfo(_ status: String?) {
         ZKProgressHUD.showInfo(status: status, maskStyle: nil)
     }
@@ -518,7 +544,7 @@ extension ZKProgressHUD {
         shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .info)
     }
     
-    // 显示成功信息
+    //MARK: 显示成功信息
     public static func showSuccess(_ status: String?) {
         ZKProgressHUD.showSuccess(status: status, maskStyle: nil)
     }
@@ -526,7 +552,7 @@ extension ZKProgressHUD {
         shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .success)
     }
     
-    // 显示失败信息
+    //MARK: 显示失败信息
     public static func showError(_ status: String?) {
         ZKProgressHUD.showError(status: status, maskStyle: nil)
     }
@@ -534,57 +560,71 @@ extension ZKProgressHUD {
         shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .error)
     }
     
-    // 移除
     @available(swift, deprecated: 3.0, message: "请使用 dismiss 方法")
-    public static func hide(delay: Int? = nil) {
+    public static func hide(delay: Double? = nil) {
         ZKProgressHUD.dismiss(delay)
     }
-    public static func dismiss(_ delay: Int? = nil) {
-        NotificationCenter.default.post(name: ZKProgressHUDConfig.ZKNSNotificationDismiss, object: nil, userInfo: ["delay" : delay ?? 0])
+    //MARK: 移除
+    public static func dismiss(_ delay: Double? = nil) {
+        NotificationCenter.default.post(name: Config.ZKNSNotificationDismiss, object: nil, userInfo: ["delay" : delay ?? 0])
     }
     
-    // 设置遮罩样式
+    //MARK: 设置遮罩样式，默认值：.visible
     public static func setMaskStyle (_ maskStyle: ZKProgressHUDMaskStyle) {
-        ZKProgressHUDConfig.maskStyle = maskStyle
+        Config.maskStyle = maskStyle
     }
     
-    // 设置动画显示/隐藏样式
+    //MARK: 设置动画显示/隐藏样式，默认值：.fade
     public static func setAnimationShowStyle (_ animationShowStyle: ZKProgressHUDAnimationShowStyle) {
-        ZKProgressHUDConfig.animationShowStyle = animationShowStyle
+        Config.animationShowStyle = animationShowStyle
     }
     
-    // 设置遮罩背景色
+    //MARK: 设置遮罩背景色，默认值：.black
     public static func setMaskBackgroundColor(_ color: UIColor) {
-        ZKProgressHUDConfig.maskBackgroundColor = color
+        Config.effectStyle = .none
+        Config.maskBackgroundColor = color
     }
     
-    // 设置前景色
+    //MARK: 设置前景色，默认值：.white（前景色在设置 effectStyle 值时会自动适配，如果要使用自定义前景色，在调用 setEffectStyle 方法后调用 setForegroundColor 方法即可）
     public static func setForegroundColor(_ color: UIColor) {
-        ZKProgressHUDConfig.foregroundColor = color
+        Config.foregroundColor = color
     }
-    
-    // 设置背景色
+    //MARK: 设置 HUD 毛玻璃效果（与 backgroundColor 互斥，如果设置毛玻璃效果不是.none，则根据样式自动设置前景色），默认值：.dark
+    public static func setEffectStyle(_ hudEffectStyle: ZKProgressHUDEffectStyle) {
+        Config.effectStyle = hudEffectStyle
+        if hudEffectStyle == .light || hudEffectStyle == .extraLight {
+            Config.foregroundColor = .black
+        } else if hudEffectStyle == .dark {
+            Config.foregroundColor = .white
+        }
+    }
+    //MARK: 设置 HUD 毛玻璃透明度，默认值：1
+    public static func setEffectAlpha(_ effectAlpha: CGFloat) {
+        Config.effectAlpha = effectAlpha
+    }
+    //MARK: 设置 HUD 背景色（与 effectStyle 互斥，如果设置背景色，effectStyle = .none），默认值：UIColor(red: 0 / 255.0, green: 0 / 255.0, blue: 0 / 255.0, alpha: 0.8)
     public static func setBackgroundColor(_ color: UIColor) {
-        ZKProgressHUDConfig.backgroundColor = color
+        Config.backgroundColor = color
+        Config.effectStyle = .none
     }
     
-    // 设置字体
+    //MARK: 设置字体，默认值：UIFont.boldSystemFont(ofSize: 15)
     public static func setFont(_ font: UIFont) {
-        ZKProgressHUDConfig.font = font
+        Config.font = font
     }
     
-    // 设置圆角
+    //MARK: 设置圆角，默认值：6
     public static func setCornerRadius(_ cornerRadius: CGFloat) {
-        ZKProgressHUDConfig.cornerRadius = cornerRadius
+        Config.cornerRadius = cornerRadius
     }
     
-    // 设置加载动画样式动画样式
+    //MARK: 设置加载动画样式动画样式，默认值：circle
     public static func setAnimationStyle(_ animationStyle: ZKProgressHUDAnimationStyle) {
-        ZKProgressHUDConfig.animationStyle  = animationStyle
+        Config.animationStyle  = animationStyle
     }
     
-    // 设置自动隐藏延时秒数
-    public static func setAutoDismissDelay(_ autoDismissDelay: Int) {
-        ZKProgressHUDConfig.autoDismissDelay = autoDismissDelay
+    //MARK: 设置自动隐藏延时秒数，默认值：2
+    public static func setAutoDismissDelay(_ autoDismissDelay: Double) {
+        Config.autoDismissDelay = autoDismissDelay
     }
 }

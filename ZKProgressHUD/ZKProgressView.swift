@@ -30,8 +30,8 @@ class ZKProgressView: UIView {
         self.textLabel = UILabel()
         self.addSubview(self.textLabel)
         self.textLabel.textAlignment = .center
-        self.textLabel.font = self.progressFont ?? ZKProgressHUDConfig.font
-        self.textLabel.textColor = self.progressColor ?? ZKProgressHUDConfig.foregroundColor
+        self.textLabel.font = self.progressFont ?? Config.font
+        self.textLabel.textColor = self.progressColor ?? Config.foregroundColor
     }
     
     required init?(coder aDecoder: NSCoder) {
