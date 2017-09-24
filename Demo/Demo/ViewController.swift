@@ -129,7 +129,7 @@ class ViewController: UITableViewController {
         return self.headerTexts[section]
     }
     
-    func showProgressTimerHandler(timer: Timer) {
+    @objc func showProgressTimerHandler(timer: Timer) {
         if self.progressValue >= 100 {
             if timer.isValid {
                 timer.invalidate()
