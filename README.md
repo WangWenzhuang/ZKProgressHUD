@@ -2,9 +2,9 @@
 
 # ZKProgressHUD
 
+![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)
 ![build](https://travis-ci.org/WangWenzhuang/ZKProgressHUD.svg?branch=master)
 ![CocoaPods](https://img.shields.io/badge/pod-v1.6-brightgreen.svg)
-![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)
 ![platform](https://img.shields.io/badge/platform-iOS-brightgreen.svg)
 
 iOS App 上极易于使用的 HUD。
