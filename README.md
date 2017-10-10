@@ -44,7 +44,7 @@ target 'MyApp' do
 end
 ```
 
-如果使用 Swift 3.2 请使用*1.1*版本
+如果使用 Swift 3.2 请使用*1.5*版本
 
 ```ogdl
 pod 'ZKProgressHUD', '~> 1.5'
