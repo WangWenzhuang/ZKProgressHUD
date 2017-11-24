@@ -8,6 +8,8 @@
 
 import UIKit
 
+public typealias ZKCompletion = (() -> Void)
+
 // MARK: - ZKProgressHUD
 public class ZKProgressHUD: UIView {
     /// 全局中间变量
@@ -18,6 +20,7 @@ public class ZKProgressHUD: UIView {
     fileprivate var gifSize: CGFloat?
     fileprivate var progress: CGFloat?
     fileprivate var isShow: Bool = false
+    fileprivate var completion: ZKCompletion?
     
     fileprivate lazy var infoImage: UIImage? = Config.bundleImage(.info)?.withRenderingMode(.alwaysTemplate)
     fileprivate lazy var successImage: UIImage? = Config.bundleImage(.success)?.withRenderingMode(.alwaysTemplate)
@@ -189,7 +192,8 @@ extension ZKProgressHUD {
                           imageType: ImageType? = nil,
                           gifUrl: URL? = nil,
                           gifSize: CGFloat? = nil,
-                          progress: CGFloat? = nil) {
+                          progress: CGFloat? = nil,
+                          completion: ZKCompletion? = nil) {
         DispatchQueue.main.async {
             self.hudType = hudType
             self.status = status == "" ? nil : status
@@ -197,6 +201,7 @@ extension ZKProgressHUD {
             self.gifUrl = gifUrl
             self.gifSize = gifSize
             self.progress = progress ?? 0
+            self.completion = completion
             if let imgType = imageType {
                 switch imgType {
                 case .info:
@@ -425,6 +430,7 @@ extension ZKProgressHUD {
         }, completion: { (finished) in
             self.isShow = false
             self.removeFromSuperview()
+            self.completion?()
         })
     }
     /// 通知移除
@@ -482,22 +488,23 @@ extension ZKProgressHUD {
     }
     
     //MARK: 显示图片
-    public static func showImage(_ image: UIImage?) {
-        ZKProgressHUD.showImage(image: image, status: nil)
+    public static func showImage(_ image: UIImage?, completion: ZKCompletion? = nil) {
+        ZKProgressHUD.showImage(image: image, status: nil, completion: completion)
     }
-    public static func showImage(image: UIImage?, status: String?) {
-        ZKProgressHUD.showImage(image: image, status: status, maskStyle: nil)
+    public static func showImage(image: UIImage?, status: String?, completion: ZKCompletion? = nil) {
+        ZKProgressHUD.showImage(image: image, status: status, maskStyle: nil, completion: completion)
     }
-    public static func showImage(image: UIImage?, status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.show(hudType: .image, status: status, image: image, isAutoDismiss: true, maskStyle: maskStyle)
+    public static func showImage(image: UIImage?, status: String?, maskStyle: ZKProgressHUDMaskStyle?, completion: ZKCompletion? = nil) {
+        shared.show(hudType: .image, status: status, image: image, isAutoDismiss: true, maskStyle: maskStyle, completion: completion)
     }
     
     //MARK: 显示消息
-    public static func showMessage(_ message: String?) {
-        ZKProgressHUD.showMessage(message: message, maskStyle: nil)
+    public static func showMessage(_ message: String?, completion: ZKCompletion? = nil) {
+//        ZKProgressHUD.showimn
+        ZKProgressHUD.showMessage(message: message, maskStyle: nil, completion: completion)
     }
-    public static func showMessage(message: String?, maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.show(hudType: .message, status: message, isAutoDismiss: true, maskStyle: maskStyle)
+    public static func showMessage(message: String?, maskStyle: ZKProgressHUDMaskStyle?, completion: ZKCompletion? = nil) {
+        shared.show(hudType: .message, status: message, isAutoDismiss: true, maskStyle: maskStyle, completion: completion)
     }
     
     //MARK: 显示进度
@@ -537,27 +544,27 @@ extension ZKProgressHUD {
     }
     
     //MARK: 显示普通信息
-    public static func showInfo(_ status: String?) {
-        ZKProgressHUD.showInfo(status: status, maskStyle: nil)
+    public static func showInfo(_ status: String?, completion: ZKCompletion? = nil) {
+        ZKProgressHUD.showInfo(status: status, maskStyle: nil, completion: completion)
     }
-    public static func showInfo(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .info)
+    public static func showInfo(status: String?, maskStyle: ZKProgressHUDMaskStyle?, completion: ZKCompletion? = nil) {
+        shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .info, completion: completion)
     }
     
     //MARK: 显示成功信息
-    public static func showSuccess(_ status: String?) {
-        ZKProgressHUD.showSuccess(status: status, maskStyle: nil)
+    public static func showSuccess(_ status: String?, completion: ZKCompletion? = nil) {
+        ZKProgressHUD.showSuccess(status: status, maskStyle: nil, completion: completion)
     }
-    public static func showSuccess(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .success)
+    public static func showSuccess(status: String?, maskStyle: ZKProgressHUDMaskStyle?, completion: ZKCompletion? = nil) {
+        shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .success, completion: completion)
     }
     
     //MARK: 显示失败信息
-    public static func showError(_ status: String?) {
-        ZKProgressHUD.showError(status: status, maskStyle: nil)
+    public static func showError(_ status: String?, completion: ZKCompletion? = nil) {
+        ZKProgressHUD.showError(status: status, maskStyle: nil, completion: completion)
     }
-    public static func showError(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .error)
+    public static func showError(status: String?, maskStyle: ZKProgressHUDMaskStyle?, completion: ZKCompletion? = nil) {
+        shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .error, completion: completion)
     }
     
     @available(swift, deprecated: 3.0, message: "请使用 dismiss 方法")

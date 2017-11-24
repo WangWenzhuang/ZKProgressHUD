@@ -22,6 +22,7 @@ iOS App 上极易于使用的 HUD。
 - [x] 遮罩自定义显示
 - [x] 显示动画
 - [x] 自定义（背景色、前景色、字体、自动消失间隔秒、遮罩、动画类型、毛玻璃效果...），满足极大多数场景
+- [x] 显示完成回调（新增）
 
 ## 运行环境
 
@@ -62,6 +63,22 @@ pod 'ZKProgressHUD', '1.5'
 ```swift
 import ZKProgressHUD
 ```
+
+### 显示完成回调*（新增）*
+
+```swift
+ZKProgressHUD.showMessage("开始使用 ZKProgressHUD 吧", completion: {
+    // 输入代码
+})
+```
+
+回调支持的函数有：
+
+* showImage
+* showMessage
+* showInfo
+* showSuccess
+* showError
 
 ### 显示加载
 
