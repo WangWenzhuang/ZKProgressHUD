@@ -64,7 +64,7 @@ pod 'ZKProgressHUD', '1.5'
 import ZKProgressHUD
 ```
 
-### 显示完成回调*（新增）*
+### 显示完成回调（新增）
 
 ```swift
 ZKProgressHUD.showMessage("开始使用 ZKProgressHUD 吧", completion: {
