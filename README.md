@@ -11,18 +11,18 @@ iOS App 上极易于使用的 HUD。
 
 ![demo](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/demo.gif)
 
-## 实现功能😌
+## 实现功能
 
-- [x] 显示加载 ➕ 文字 
-- [x] 显示 Gif 加载 ➕ 文字
+- [x] 显示加载和文字信息
+- [x] 显示 Gif 加载和文字信息
 - [x] 显示进度
-- [x] 显示图片 ➕ 文字
+- [x] 显示图片和文字信息
 - [x] 显示情景信息（info、success、error）
 - [x] 显示 Toast 样式信息
 - [x] 遮罩自定义显示
 - [x] 显示动画
 - [x] 自定义（背景色、前景色、字体、自动消失间隔秒、遮罩、动画类型、毛玻璃效果...），满足极大多数场景
-- [x] 显示完成回调（新增）
+- [x] 显示完成回调
 
 ## 运行环境
 
@@ -103,7 +103,7 @@ DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(3), ex
 })
 ```
 
-### 🆕显示 Gif 加载
+### 显示 Gif 加载
 
 ```swift
 ZKProgressHUD.showGif(gifUrl: Bundle.main.url(forResource: "loding", withExtension: "gif"), gifSize: 80)
@@ -114,7 +114,7 @@ DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(3), ex
 })
 ```
 
-### 🆕显示 Gif 和文字加载
+### 显示 Gif 和文字加载
 
 ```swift
 ZKProgressHUD.showGif(status: "正在拼命的加载中🏃🏃🏃", gifUrl: Bundle.main.url(forResource: "loding", withExtension: "gif"), gifSize: 80)
@@ -173,13 +173,13 @@ ZKProgressHUD.showMessage("开始使用 ZKProgressHUD 吧")
 ZKProgressHUD.dismiss()
 ```
 
-### 延迟隐藏⏰
+### 延迟隐藏
 
 ```swift
 ZKProgressHUD.dismiss(delay: 3)
 ```
 
-## 自定义显示样式😏
+## 自定义显示样式
 
 ![style1](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style1.jpeg)
 ![style2](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style2.jpeg)
