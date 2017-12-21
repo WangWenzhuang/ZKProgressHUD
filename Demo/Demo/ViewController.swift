@@ -19,7 +19,7 @@ class ViewController: UITableViewController {
     let cellIdentifier = "cell"
     
     lazy var actionTexts = ["show", "show with status", "showProgress", "showProgress with status", "shwoImage", "showImage with status", "showInfo", "showSuccess", "showError", "showMessage", "showGif", "showGif with status"]
-    lazy var headerTexts = ["动画显示/隐藏样式","遮罩样式", "加载样式", "方法"]
+    lazy var headerTexts = ["动画显示/隐藏样式","遮罩样式", "加载样式", "方法", "其它"]
     
     var progressValue: CGFloat = 0
     
@@ -42,14 +42,18 @@ class ViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return self.headerTexts.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section < 3 {
+        switch section {
+        case 3:
+            return self.actionTexts.count
+        case 4:
+            return 1
+        default:
             return 1
         }
-        return self.actionTexts.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -64,8 +68,10 @@ class ViewController: UITableViewController {
         } else if indexPath.section == 2 {
             cell?.textLabel?.text = self.animationStyles[self.currentAnimationStyleIndex].text
             cell?.accessoryType = .disclosureIndicator
-        } else {
+        } else if indexPath.section == 3 {
             cell?.textLabel?.text = self.actionTexts[indexPath.row]
+        } else {
+            cell?.textLabel?.text = "临时使用一次字体"
         }
         return cell!
     }
@@ -122,6 +128,8 @@ class ViewController: UITableViewController {
                 ZKProgressHUD.showGif(status: "没有找到好的透明图，所以设置背景色为白色😆😆😆", gifUrl: Bundle.main.url(forResource: "loding", withExtension: "gif"), gifSize: 80)
                 ZKProgressHUD.dismiss(2)
             }
+        } else if indexPath.section == 4 {
+            ZKProgressHUD.showMessage("临时使用一次字体", onlyOnceFont: UIFont.boldSystemFont(ofSize: 20))
         }
     }
     

@@ -136,7 +136,6 @@ public class ZKProgressHUD: UIView {
     fileprivate lazy var statusLabel: UILabel = {
         $0.textAlignment = .center
         $0.numberOfLines = 0
-        $0.font = Config.font
         $0.textColor = Config.foregroundColor
         return $0
     }(UILabel())
@@ -193,7 +192,8 @@ extension ZKProgressHUD {
                           gifUrl: URL? = nil,
                           gifSize: CGFloat? = nil,
                           progress: CGFloat? = nil,
-                          completion: ZKCompletion? = nil) {
+                          completion: ZKCompletion? = nil,
+                          onlyOnceFont: UIFont? = nil) {
         DispatchQueue.main.async {
             self.hudType = hudType
             self.status = status == "" ? nil : status
@@ -224,7 +224,7 @@ extension ZKProgressHUD {
                 self.updateView(maskStyle: maskStyle)
             }
             
-            self.updateFrame(maskStyle: maskStyle)
+            self.updateFrame(maskStyle: maskStyle, statusFont: onlyOnceFont ?? Config.font)
             if let autoDismiss = isAutoDismiss {
                 if autoDismiss {
                     self.autoDismiss(delay: Config.autoDismissDelay)
@@ -264,7 +264,7 @@ extension ZKProgressHUD {
         }
     }
     /// 更新视图大小坐标
-    fileprivate func updateFrame(maskStyle: MaskStyle?) {
+    fileprivate func updateFrame(maskStyle: MaskStyle?, statusFont: UIFont) {
         if self.hudType! == .gif {
             if self.gifView.width > self.maxContentViewChildWidth {
                 self.gifView.frame.size = CGSize(width: self.maxContentViewChildWidth, height: self.maxContentViewChildWidth)
@@ -282,8 +282,8 @@ extension ZKProgressHUD {
         if let text = self.status {
             self.statusLabel.isHidden = false
             self.statusLabel.text = text
-            self.statusLabel.frame.size = text.size(font: Config.font, size: CGSize(width: self.maxContentViewChildWidth, height: 400))
-            self.statusLabel.sizeToFit()
+            self.statusLabel.font = statusFont
+            self.statusLabel.frame.size = text.size(font: statusFont, size: CGSize(width: self.maxContentViewChildWidth, height: 400))
         } else {
             self.statusLabel.frame.size = CGSize.zero
             self.statusLabel.isHidden = true
@@ -478,13 +478,13 @@ extension ZKProgressHUD {
 extension ZKProgressHUD {
     //MARK: 显示gif加载
     public static func showGif(gifUrl: URL?, gifSize: CGFloat?) {
-        ZKProgressHUD.showGif(status: nil, gifUrl: gifUrl, gifSize: gifSize)
+        ZKProgressHUD.showGif(status: nil, gifUrl: gifUrl, gifSize: gifSize, onlyOnceFont: nil)
     }
-    public static func showGif(status: String?, gifUrl: URL?, gifSize: CGFloat?) {
-        ZKProgressHUD.showGif(status: status, gifUrl: gifUrl, gifSize: gifSize, maskStyle: nil)
+    public static func showGif(status: String?, gifUrl: URL?, gifSize: CGFloat?, onlyOnceFont: UIFont? = nil) {
+        ZKProgressHUD.showGif(status: status, gifUrl: gifUrl, gifSize: gifSize, maskStyle: nil, onlyOnceFont: onlyOnceFont)
     }
-    public static func showGif(status: String?, gifUrl: URL?, gifSize: CGFloat?, maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.show(hudType: .gif, status: status, maskStyle: maskStyle, gifUrl: gifUrl, gifSize: gifSize)
+    public static func showGif(status: String?, gifUrl: URL?, gifSize: CGFloat?, maskStyle: ZKProgressHUDMaskStyle?, onlyOnceFont: UIFont? = nil) {
+        shared.show(hudType: .gif, status: status, maskStyle: maskStyle, gifUrl: gifUrl, gifSize: gifSize, onlyOnceFont: onlyOnceFont)
     }
     
     //MARK: 显示图片
@@ -492,35 +492,46 @@ extension ZKProgressHUD {
         ZKProgressHUD.showImage(image: image, status: nil, completion: completion)
     }
     public static func showImage(image: UIImage?, status: String?, completion: ZKCompletion? = nil) {
-        ZKProgressHUD.showImage(image: image, status: status, maskStyle: nil, completion: completion)
+        ZKProgressHUD.showImage(image: image, status: status, onlyOnceFont: nil, completion: completion)
+    }
+    public static func showImage(image: UIImage?, status: String?, onlyOnceFont: UIFont?, completion: ZKCompletion? = nil) {
+        ZKProgressHUD.showImage(image: image, status: status, maskStyle: nil, onlyOnceFont: onlyOnceFont, completion: completion)
     }
     public static func showImage(image: UIImage?, status: String?, maskStyle: ZKProgressHUDMaskStyle?, completion: ZKCompletion? = nil) {
-        shared.show(hudType: .image, status: status, image: image, isAutoDismiss: true, maskStyle: maskStyle, completion: completion)
+        ZKProgressHUD.showImage(image: image, status: status, maskStyle: maskStyle, onlyOnceFont: nil, completion: completion)
+    }
+    public static func showImage(image: UIImage?, status: String?, maskStyle: ZKProgressHUDMaskStyle?, onlyOnceFont: UIFont?, completion: ZKCompletion? = nil) {
+        shared.show(hudType: .image, status: status, image: image, isAutoDismiss: true, maskStyle: maskStyle, completion: completion, onlyOnceFont: onlyOnceFont)
     }
     
     //MARK: 显示消息
     public static func showMessage(_ message: String?, completion: ZKCompletion? = nil) {
-//        ZKProgressHUD.showimn
-        ZKProgressHUD.showMessage(message: message, maskStyle: nil, completion: completion)
+        ZKProgressHUD.showMessage(message, onlyOnceFont: nil, completion: completion)
+    }
+    public static func showMessage(_ message: String?, onlyOnceFont: UIFont?, completion: ZKCompletion? = nil) {
+        ZKProgressHUD.showMessage(message: message, maskStyle: nil, onlyOnceFont: onlyOnceFont, completion: completion)
     }
     public static func showMessage(message: String?, maskStyle: ZKProgressHUDMaskStyle?, completion: ZKCompletion? = nil) {
-        shared.show(hudType: .message, status: message, isAutoDismiss: true, maskStyle: maskStyle, completion: completion)
+        ZKProgressHUD.showMessage(message: message, maskStyle: maskStyle, onlyOnceFont: nil, completion: completion)
+    }
+    public static func showMessage(message: String?, maskStyle: ZKProgressHUDMaskStyle?, onlyOnceFont: UIFont?, completion: ZKCompletion? = nil) {
+        shared.show(hudType: .message, status: message, isAutoDismiss: true, maskStyle: maskStyle, completion: completion, onlyOnceFont: onlyOnceFont)
     }
     
     //MARK: 显示进度
     public static func showProgress(_ progress: CGFloat?) {
         ZKProgressHUD.showProgress(progress, status: nil)
     }
-    public static func showProgress(_ progress: CGFloat?, status: String?) {
-        ZKProgressHUD.showProgress(progress: progress, status: status, maskStyle: nil)
+    public static func showProgress(_ progress: CGFloat?, status: String?, onlyOnceFont: UIFont? = nil) {
+        ZKProgressHUD.showProgress(progress: progress, status: status, maskStyle: nil, onlyOnceFont: onlyOnceFont)
     }
-    public static func showProgress(progress: CGFloat?, status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
+    public static func showProgress(progress: CGFloat?, status: String?, maskStyle: ZKProgressHUDMaskStyle?, onlyOnceFont: UIFont? = nil) {
         var isShowProgressView = false
         for subview in (ZKProgressHUD.frontWindow?.subviews)! {
             if subview.isKind(of: ZKProgressHUD.self) && subview.restorationIdentifier == Config.restorationIdentifier {
                 let progressHUD = subview as! ZKProgressHUD
                 if progressHUD.hudType == .progress {
-                    progressHUD.show(hudType: .progress, status: status, maskStyle: maskStyle, progress: progress)
+                    progressHUD.show(hudType: .progress, status: status, maskStyle: maskStyle, progress: progress, onlyOnceFont: onlyOnceFont)
                     isShowProgressView = true
                 } else {
                     progressHUD.removeFromSuperview()
@@ -528,7 +539,7 @@ extension ZKProgressHUD {
             }
         }
         if !isShowProgressView {
-            shared.show(hudType: .progress, status: status, maskStyle: maskStyle, progress: progress)
+            shared.show(hudType: .progress, status: status, maskStyle: maskStyle, progress: progress, onlyOnceFont: onlyOnceFont)
         }
     }
     
@@ -536,35 +547,53 @@ extension ZKProgressHUD {
     public static func show() {
         ZKProgressHUD.show(nil)
     }
-    public static func show(_ status: String?) {
-        ZKProgressHUD.show(status: status, maskStyle: nil)
+    public static func show(_ status: String?, onlyOnceFont: UIFont? = nil) {
+        ZKProgressHUD.show(status: status, maskStyle: nil, onlyOnceFont: onlyOnceFont)
     }
-    public static func show(status: String?, maskStyle: ZKProgressHUDMaskStyle?) {
-        shared.show(hudType: .activityIndicator, status: status, maskStyle: maskStyle)
+    public static func show(status: String?, maskStyle: ZKProgressHUDMaskStyle?, onlyOnceFont: UIFont? = nil) {
+        shared.show(hudType: .activityIndicator, status: status, maskStyle: maskStyle, onlyOnceFont: onlyOnceFont)
     }
     
     //MARK: 显示普通信息
     public static func showInfo(_ status: String?, completion: ZKCompletion? = nil) {
-        ZKProgressHUD.showInfo(status: status, maskStyle: nil, completion: completion)
+        ZKProgressHUD.showInfo(status, onlyOnceFont: nil, completion: completion)
+    }
+    public static func showInfo(_ status: String?, onlyOnceFont: UIFont?, completion: ZKCompletion? = nil) {
+        ZKProgressHUD.showInfo(status: status, maskStyle: nil, onlyOnceFont: onlyOnceFont, completion: completion)
     }
     public static func showInfo(status: String?, maskStyle: ZKProgressHUDMaskStyle?, completion: ZKCompletion? = nil) {
-        shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .info, completion: completion)
+        ZKProgressHUD.showInfo(status: status, maskStyle: maskStyle, onlyOnceFont: nil, completion: completion)
+    }
+    public static func showInfo(status: String?, maskStyle: ZKProgressHUDMaskStyle?, onlyOnceFont: UIFont?, completion: ZKCompletion? = nil) {
+        shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .info, completion: completion, onlyOnceFont: onlyOnceFont)
     }
     
     //MARK: 显示成功信息
     public static func showSuccess(_ status: String?, completion: ZKCompletion? = nil) {
-        ZKProgressHUD.showSuccess(status: status, maskStyle: nil, completion: completion)
+        ZKProgressHUD.showSuccess(status, onlyOnceFont: nil, completion: completion)
+    }
+    public static func showSuccess(_ status: String?, onlyOnceFont: UIFont?, completion: ZKCompletion? = nil) {
+        ZKProgressHUD.showSuccess(status: status, maskStyle: nil, onlyOnceFont: onlyOnceFont, completion: completion)
     }
     public static func showSuccess(status: String?, maskStyle: ZKProgressHUDMaskStyle?, completion: ZKCompletion? = nil) {
-        shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .success, completion: completion)
+        ZKProgressHUD.showSuccess(status: status, maskStyle: maskStyle, onlyOnceFont: nil, completion: completion)
+    }
+    public static func showSuccess(status: String?, maskStyle: ZKProgressHUDMaskStyle?, onlyOnceFont: UIFont?, completion: ZKCompletion? = nil) {
+        shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .success, completion: completion, onlyOnceFont: onlyOnceFont)
     }
     
     //MARK: 显示失败信息
     public static func showError(_ status: String?, completion: ZKCompletion? = nil) {
-        ZKProgressHUD.showError(status: status, maskStyle: nil, completion: completion)
+        ZKProgressHUD.showError(status, onlyOnceFont: nil, completion: completion)
+    }
+    public static func showError(_ status: String?, onlyOnceFont: UIFont?, completion: ZKCompletion? = nil) {
+        ZKProgressHUD.showError(status: status, maskStyle: nil, onlyOnceFont: onlyOnceFont, completion: completion)
     }
     public static func showError(status: String?, maskStyle: ZKProgressHUDMaskStyle?, completion: ZKCompletion? = nil) {
-        shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .error, completion: completion)
+        ZKProgressHUD.showError(status: status, maskStyle: maskStyle, onlyOnceFont: nil, completion: completion)
+    }
+    public static func showError(status: String?, maskStyle: ZKProgressHUDMaskStyle?, onlyOnceFont: UIFont?, completion: ZKCompletion? = nil) {
+        shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .error, completion: completion, onlyOnceFont: onlyOnceFont)
     }
     
     @available(swift, deprecated: 3.0, message: "请使用 dismiss 方法")

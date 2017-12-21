@@ -4,12 +4,16 @@
 
 ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)
 ![build](https://travis-ci.org/WangWenzhuang/ZKProgressHUD.svg?branch=master)
-![CocoaPods](https://img.shields.io/badge/pod-v2.0-brightgreen.svg)
+![CocoaPods](https://img.shields.io/badge/pod-v2.1-brightgreen.svg)
 ![platform](https://img.shields.io/badge/platform-iOS-brightgreen.svg)
 
 iOS App 上极易于使用的 HUD。
 
 ![demo](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/demo.gif)
+
+## 近期更新
+
+-> 增加 **onlyOnceFont** 参数，用于临时显示一次的字体，不影响全局默认字体
 
 ## 实现功能
 
@@ -23,6 +27,7 @@ iOS App 上极易于使用的 HUD。
 - [x] 显示动画
 - [x] 自定义（背景色、前景色、字体、自动消失间隔秒、遮罩、动画类型、毛玻璃效果...），满足极大多数场景
 - [x] 显示完成回调
+- [x] 增加临时显示字体
 
 ## 运行环境
 
