@@ -50,7 +50,7 @@ class ViewController: UITableViewController {
         case 3:
             return self.actionTexts.count
         case 4:
-            return 1
+            return 2
         default:
             return 1
         }
@@ -71,7 +71,11 @@ class ViewController: UITableViewController {
         } else if indexPath.section == 3 {
             cell?.textLabel?.text = self.actionTexts[indexPath.row]
         } else {
-            cell?.textLabel?.text = "临时使用一次字体"
+            if indexPath.row == 0 {
+                cell?.textLabel?.text = "临时使用一次字体"
+            } else {
+                cell?.textLabel?.text = "临时使用一次自动消失时间"
+            }
         }
         return cell!
     }
@@ -112,7 +116,7 @@ class ViewController: UITableViewController {
             } else if indexPath.row == 4 {
                 ZKProgressHUD.showImage(UIImage(named: "image"))
             } else if indexPath.row == 5 {
-                ZKProgressHUD.showImage(image: UIImage(named: "image"), status: "图片会自动消失😏😏😏")
+                ZKProgressHUD.showImage(UIImage(named: "image"), status: "图片会自动消失😏😏😏")
             } else if indexPath.row == 6 {
                 ZKProgressHUD.showInfo("Star 一下吧😙😙😙")
             } else if indexPath.row == 7 {
@@ -125,11 +129,15 @@ class ViewController: UITableViewController {
                 ZKProgressHUD.showGif(gifUrl: Bundle.main.url(forResource: "loding", withExtension: "gif"), gifSize: 80)
                 ZKProgressHUD.dismiss(2)
             } else if indexPath.row == 11 {
-                ZKProgressHUD.showGif(status: "没有找到好的透明图，所以设置背景色为白色😆😆😆", gifUrl: Bundle.main.url(forResource: "loding", withExtension: "gif"), gifSize: 80)
+                ZKProgressHUD.showGif(gifUrl: Bundle.main.url(forResource: "loding", withExtension: "gif"), gifSize: 80, status: "正在拼命的加载中🏃🏃🏃")
                 ZKProgressHUD.dismiss(2)
             }
         } else if indexPath.section == 4 {
-            ZKProgressHUD.showMessage("临时使用一次字体", onlyOnceFont: UIFont.boldSystemFont(ofSize: 20))
+            if indexPath.row == 0 {
+                ZKProgressHUD.showMessage("临时使用一次字体", onlyOnceFont: UIFont.boldSystemFont(ofSize: 20))
+            } else {
+                ZKProgressHUD.showMessage("临时使用一次自动消失时间：10秒",  autoDismissDelay: 10)
+            }
         }
     }
     
