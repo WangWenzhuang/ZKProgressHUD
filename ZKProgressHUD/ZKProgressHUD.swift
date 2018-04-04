@@ -122,11 +122,17 @@ public class ZKProgressHUD: UIView {
         y: 0,
         width: 65,
         height: 65
-    )).then {
+    )).then({ view in
         let lineWidth: CGFloat = 3
         let lineMargin: CGFloat = lineWidth / 2
-        let arcCenter = CGPoint(x: $0.width / 2 - lineMargin, y: $0.height / 2 - lineMargin)
-        let smoothedPath = UIBezierPath(arcCenter: arcCenter, radius: $0.width / 2 - lineWidth, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true)
+        let arcCenter = CGPoint(x: view.width / 2 - lineMargin, y: view.height / 2 - lineMargin)
+        let smoothedPath = UIBezierPath(
+            arcCenter: arcCenter,
+            radius: view.width / 2 - lineWidth,
+            startAngle: 0,
+            endAngle: CGFloat(Double.pi * 2),
+            clockwise: true
+        )
         
         let layer = CAShapeLayer().then {
             $0.contentsScale = UIScreen.main.scale
@@ -153,8 +159,8 @@ public class ZKProgressHUD: UIView {
         
         layer.add(animation, forKey: "rotate")
         
-        $0.layer.addSublayer(layer)
-    }
+        view.layer.addSublayer(layer)
+    })
     
     fileprivate lazy var statusLabel = UILabel().then {
         $0.textAlignment = .center
