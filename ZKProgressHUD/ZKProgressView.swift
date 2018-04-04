@@ -45,15 +45,16 @@ class ZKProgressView: UIView {
         self.textLabel.frame.origin = CGPoint(x: (self.width - self.textLabel.width) / 2, y: (self.height - self.textLabel.height) / 2)
     }
     override func draw(_ rect: CGRect) {
-        let ctx = UIGraphicsGetCurrentContext()
-        let arcCenter = CGPoint(x: self.width / 2, y: self.width / 2)
-        let radius = arcCenter.x - 2
-        let startAngle = -(Double.pi / 2)
-        let endAngle = startAngle + Double.pi * 2 * self.progress
-        let path = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: CGFloat(startAngle), endAngle: CGFloat(endAngle), clockwise: true)
-        ctx!.setLineWidth(4)
-        self.progressColor?.setStroke()
-        ctx!.addPath(path.cgPath)
-        ctx!.strokePath()
+        if let ctx = UIGraphicsGetCurrentContext() {
+            let arcCenter = CGPoint(x: self.width / 2, y: self.width / 2)
+            let radius = arcCenter.x - 2
+            let startAngle = -(Double.pi / 2)
+            let endAngle = startAngle + Double.pi * 2 * self.progress
+            let path = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: CGFloat(startAngle), endAngle: CGFloat(endAngle), clockwise: true)
+            ctx.setLineWidth(4)
+            self.progressColor?.setStroke()
+            ctx.addPath(path.cgPath)
+            ctx.strokePath()
+        }
     }
 }

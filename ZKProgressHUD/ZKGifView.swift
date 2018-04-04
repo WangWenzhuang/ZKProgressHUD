@@ -34,8 +34,8 @@ class ZKGifView: UIView {
                 images.append(image)
             }
             
-            let cfProperties = CGImageSourceCopyPropertiesAtIndex(source, i, nil) as NSDictionary!
-            let gifProperties = cfProperties?[String(kCGImagePropertyGIFDictionary)] as! NSDictionary!
+            let cfProperties = CGImageSourceCopyPropertiesAtIndex(source, i, nil) as NSDictionary?
+            let gifProperties = cfProperties?[String(kCGImagePropertyGIFDictionary)] as! NSDictionary?
             let delay = gifProperties![String(kCGImagePropertyGIFUnclampedDelayTime)] as! NSNumber
             delays.append(delay)
             totalDelay += delay.floatValue
