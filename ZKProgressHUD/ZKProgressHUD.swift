@@ -59,7 +59,7 @@ public class ZKProgressHUD: UIView {
     }
     
     
-    fileprivate var blurEffectStyle: UIBlurEffectStyle {
+    fileprivate var blurEffectStyle: UIBlurEffect.Style {
         get {
             switch Config.effectStyle {
             case .extraLight:
@@ -111,7 +111,7 @@ public class ZKProgressHUD: UIView {
     }
     
     fileprivate lazy var systemHUDView = UIActivityIndicatorView().then {
-        $0.activityIndicatorViewStyle = .whiteLarge
+        $0.style = .whiteLarge
         $0.color = Config.foregroundColor
         $0.sizeToFit()
         $0.startAnimating()
@@ -140,8 +140,8 @@ public class ZKProgressHUD: UIView {
             $0.fillColor = UIColor.clear.cgColor
             $0.strokeColor = Config.foregroundColor.cgColor
             $0.lineWidth = 3
-            $0.lineCap = kCALineCapRound
-            $0.lineJoin = kCALineJoinBevel
+            $0.lineCap = CAShapeLayerLineCap.round
+            $0.lineJoin = CAShapeLayerLineJoin.bevel
             $0.path = smoothedPath.cgPath
             $0.mask = CALayer()
             $0.mask?.contents = Config.bundleImage(.mask)?.cgImage
@@ -515,7 +515,7 @@ extension ZKProgressHUD {
             let window = UIApplication.shared.windows.reversed().first(where: {
                 $0.screen == UIScreen.main &&
                 !$0.isHidden && $0.alpha > 0 &&
-                $0.windowLevel == UIWindowLevelNormal
+                $0.windowLevel == UIWindow.Level.normal
             })
             return window
         }
