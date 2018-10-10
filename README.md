@@ -11,9 +11,6 @@ iOS App 上极易于使用的 HUD。
 
 ![demo](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/demo.gif)
 
-## 注意
-> 3.0 版本重构了部分代码，如果升级到 3.0 版本需要手动修改部分代码，请谨慎升级，如果不希望使用 3.0 版本，可以使用稳定版本 2.1
-
 ## 近期更新
 
 > * 适配 Swift 4.2
