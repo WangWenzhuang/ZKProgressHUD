@@ -18,6 +18,7 @@
 		A0918DCF1EA759B900EFF9EB /* SelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0918DCE1EA759B900EFF9EB /* SelectViewController.swift */; };
 		A0918DD11EA796FC00EFF9EB /* UIView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0918DD01EA796FC00EFF9EB /* UIView-Extension.swift */; };
 		A0918DD31EA7B38700EFF9EB /* loding.gif in Resources */ = {isa = PBXBuildFile; fileRef = A0918DD21EA7B38700EFF9EB /* loding.gif */; };
+		A092B9352248C04200F56714 /* UIWindow-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A092B9342248C04200F56714 /* UIWindow-Extension.swift */; };
 		A095A8BB1E784EE500261A9B /* ZKProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095A8BA1E784EE500261A9B /* ZKProgressView.swift */; };
 		A0ADABAE1E72B245006C3BD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADABAD1E72B245006C3BD7 /* AppDelegate.swift */; };
 		A0ADABB01E72B245006C3BD7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADABAF1E72B245006C3BD7 /* ViewController.swift */; };
@@ -43,6 +44,7 @@
 		A0918DCE1EA759B900EFF9EB /* SelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectViewController.swift; sourceTree = "<group>"; };
 		A0918DD01EA796FC00EFF9EB /* UIView-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView-Extension.swift"; sourceTree = "<group>"; };
 		A0918DD21EA7B38700EFF9EB /* loding.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loding.gif; sourceTree = "<group>"; };
+		A092B9342248C04200F56714 /* UIWindow-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow-Extension.swift"; sourceTree = "<group>"; };
 		A095A8BA1E784EE500261A9B /* ZKProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZKProgressView.swift; sourceTree = "<group>"; };
 		A0ADABAA1E72B245006C3BD7 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0ADABAD1E72B245006C3BD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				A0ADABC41E72B49F006C3BD7 /* ZKProgressHUD.swift */,
 				A06EA1ED1EA858E4007DAEFA /* String-Extension.swift */,
 				A0918DD01EA796FC00EFF9EB /* UIView-Extension.swift */,
+				A092B9342248C04200F56714 /* UIWindow-Extension.swift */,
 				A0918DCA1EA7240600EFF9EB /* ZKProgressHUDType.swift */,
 				A0918DC41EA71FB600EFF9EB /* ZKProgressHUDConfig.swift */,
 				A0918DCC1EA72DB800EFF9EB /* ZKPrigressHUDImageType.swift */,
@@ -176,7 +179,7 @@
 				TargetAttributes = {
 					A0ADABA91E72B245006C3BD7 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 6JC6FUR8YE;
+						DevelopmentTeam = XE3RSUL266;
 						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
@@ -222,7 +225,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Demo/Pods-Demo-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Demo/Pods-Demo-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Then/Then.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -231,7 +234,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Demo/Pods-Demo-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Demo/Pods-Demo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4FD57D6D7E55AA4A467B1C9A /* [CP] Check Pods Manifest.lock */ = {
@@ -262,6 +265,7 @@
 				A079D8501EFABD1F00A5A7B0 /* ZKProgressHUDEffectStyle.swift in Sources */,
 				A0918DD11EA796FC00EFF9EB /* UIView-Extension.swift in Sources */,
 				A095A8BB1E784EE500261A9B /* ZKProgressView.swift in Sources */,
+				A092B9352248C04200F56714 /* UIWindow-Extension.swift in Sources */,
 				A0918DC51EA71FB600EFF9EB /* ZKProgressHUDConfig.swift in Sources */,
 				A0ADABC51E72B49F006C3BD7 /* ZKProgressHUD.swift in Sources */,
 				A0918DCB1EA7240600EFF9EB /* ZKProgressHUDType.swift in Sources */,
@@ -405,7 +409,7 @@
 			baseConfigurationReference = 4EDC94F8DB9BD0BDA50B5859 /* Pods-Demo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 6JC6FUR8YE;
+				DEVELOPMENT_TEAM = XE3RSUL266;
 				INFOPLIST_FILE = Demo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -420,7 +424,7 @@
 			baseConfigurationReference = F22331952992B3737AF7FF7C /* Pods-Demo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 6JC6FUR8YE;
+				DEVELOPMENT_TEAM = XE3RSUL266;
 				INFOPLIST_FILE = Demo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

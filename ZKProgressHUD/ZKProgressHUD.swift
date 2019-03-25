@@ -191,7 +191,16 @@ public class ZKProgressHUD: UIView {
 extension ZKProgressHUD {
     fileprivate var screenWidht: CGFloat {
         get {
-            return UIScreen.main.bounds.size.width
+            if let viewController = UIWindow.visibleViewController {
+                if viewController.supportedInterfaceOrientations == .landscape {
+                    return UIScreen.main.bounds.size.width < UIScreen.main.bounds.size.height ? UIScreen.main.bounds.size.height : UIScreen.main.bounds.size.width
+                } else {
+                    return UIScreen.main.bounds.size.width < UIScreen.main.bounds.size.height ? UIScreen.main.bounds.size.width : UIScreen.main.bounds.size.height
+                }
+            } else {
+                return UIScreen.main.bounds.size.width
+            }
+            
         }
     }
     

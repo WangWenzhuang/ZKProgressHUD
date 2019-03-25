@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'ZKProgressHUD'
-  s.version = '3.2'
+  s.version = '3.3'
   s.ios.deployment_target = '8.0'
   s.license = { :type => 'MIT', :file => 'LICENSE' }
   s.summary = 'iOS App 上极易于使用的 HUD。'
