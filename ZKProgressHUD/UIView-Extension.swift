@@ -11,23 +11,15 @@ import UIKit
 /// UIView，便捷获取 frame 值
 extension UIView {
     var width: CGFloat {
-        get {
-            return self.frame.size.width
-        }
+        return self.frame.size.width
     }
     var height: CGFloat {
-        get {
-            return self.frame.size.height
-        }
+        return self.frame.size.height
     }
     var x: CGFloat {
-        get {
-            return self.frame.origin.x
-        }
+        return self.frame.origin.x
     }
     var y: CGFloat {
-        get {
-            return self.frame.origin.y
-        }
+        return self.frame.origin.y
     }
 }

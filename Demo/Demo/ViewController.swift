@@ -11,9 +11,7 @@ import UIKit
 class ViewController: UITableViewController {
 
     var screenWidth: CGFloat {
-        get {
-            return UIScreen.main.bounds.size.width
-        }
+        return UIScreen.main.bounds.size.width
     }
     
     let cellIdentifier = "cell"

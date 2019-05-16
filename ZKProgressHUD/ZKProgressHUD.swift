@@ -6,7 +6,6 @@
 //  Copyright © 2017年 WangWenzhuang. All rights reserved.
 //
 
-import Then
 import UIKit
 
 public typealias ZKCompletion = (() -> Void)
@@ -28,7 +27,7 @@ public class ZKProgressHUD: UIView {
     fileprivate lazy var errorImage: UIImage? = Config.bundleImage(.error)?.withRenderingMode(.alwaysTemplate)
     
     /// UI
-    fileprivate lazy var screenView = UIView().then {
+    fileprivate lazy var screenView: UIView = {
         $0.frame = CGRect(
             x: 0,
             y: 0,
@@ -39,9 +38,11 @@ public class ZKProgressHUD: UIView {
         $0.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         $0.alpha = 0.3
         $0.backgroundColor = Config.maskBackgroundColor
-    }
+        return $0
+        
+    }(UIView())
     
-    fileprivate lazy var contentView = UIView().then {
+    fileprivate lazy var contentView: UIView = {
         $0.layer.masksToBounds = true
         $0.autoresizingMask = [
             .flexibleBottomMargin,
@@ -56,7 +57,8 @@ public class ZKProgressHUD: UIView {
             $0.backgroundColor = .clear
         }
         $0.alpha = 0
-    }
+        return $0
+    }(UIView())
     
     
     fileprivate var blurEffectStyle: UIBlurEffect.Style {
@@ -72,8 +74,7 @@ public class ZKProgressHUD: UIView {
         }
     }
     
-    fileprivate lazy var contentBlurView = UIVisualEffectView(
-        effect: UIBlurEffect(style: self.blurEffectStyle)).then {
+    fileprivate lazy var contentBlurView: UIVisualEffectView = {
         $0.autoresizingMask = [
             .flexibleBottomMargin,
             .flexibleTopMargin,
@@ -81,48 +82,46 @@ public class ZKProgressHUD: UIView {
             .flexibleRightMargin
         ]
         $0.alpha = Config.effectAlpha
-    }
+        return $0
+    }(UIVisualEffectView(effect: UIBlurEffect(style: self.blurEffectStyle)))
     
     /// gif(ZKProgressHUDType)
     fileprivate lazy var gifView: ZKGifView = ZKGifView()
     
     /// image(ZKProgressHUDType)
-    fileprivate lazy var imageView = UIImageView().then {
+    fileprivate lazy var imageView: UIImageView = {
         $0.contentMode = .scaleToFill
         $0.tintColor = Config.foregroundColor
-    }
+        return $0
+    }(UIImageView())
     
     /// progress(ZKProgressHUDType)
-    fileprivate lazy var progressView = ZKProgressView(frame: CGRect(
-        x: 0,
-        y: 0,
-        width: 85,
-        height: 85
-    )).then {
+    fileprivate lazy var progressView: ZKProgressView = {
         $0.progressColor = Config.foregroundColor
         $0.backgroundColor = .clear
-    }
+        return $0
+    }(ZKProgressView(frame: CGRect(x: 0, y: 0, width: 85, height: 85)))
     
     /// activityIndicator(ZKProgressHUDType)
     fileprivate var activityIndicatorView: UIView {
-        get {
-            return Config.animationStyle == AnimationStyle.circle ? self.circleHUDView : self.systemHUDView
-        }
+        return Config.animationStyle == AnimationStyle.circle ? self.circleHUDView : self.systemHUDView
     }
     
-    fileprivate lazy var systemHUDView = UIActivityIndicatorView().then {
+    fileprivate lazy var systemHUDView: UIActivityIndicatorView = {
         $0.style = .whiteLarge
         $0.color = Config.foregroundColor
         $0.sizeToFit()
         $0.startAnimating()
-    }
+        return $0
+    }(UIActivityIndicatorView())
     
-    fileprivate lazy var circleHUDView = UIView(frame: CGRect(
-        x: 0,
-        y: 0,
-        width: 65,
-        height: 65
-    )).then({ view in
+    fileprivate lazy var circleHUDView: UIView = { view in
+        view.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: 65,
+            height: 65
+        )
         let lineWidth: CGFloat = 3
         let lineMargin: CGFloat = lineWidth / 2
         let arcCenter = CGPoint(x: view.width / 2 - lineMargin, y: view.height / 2 - lineMargin)
@@ -134,7 +133,7 @@ public class ZKProgressHUD: UIView {
             clockwise: true
         )
         
-        let layer = CAShapeLayer().then {
+        let layer: CAShapeLayer = {
             $0.contentsScale = UIScreen.main.scale
             $0.frame = CGRect(x: lineMargin, y: lineMargin, width: arcCenter.x * 2, height: arcCenter.y * 2)
             $0.fillColor = UIColor.clear.cgColor
@@ -146,27 +145,31 @@ public class ZKProgressHUD: UIView {
             $0.mask = CALayer()
             $0.mask?.contents = Config.bundleImage(.mask)?.cgImage
             $0.mask?.frame = $0.bounds
-        }
+            return $0
+        }(CAShapeLayer())
         
-        let animation = CABasicAnimation(keyPath: "transform.rotation").then {
+        let animation: CABasicAnimation = {
             $0.fromValue = 0
             $0.toValue = (Double.pi * 2)
             $0.duration = 1
             $0.isRemovedOnCompletion = false
             $0.repeatCount = Float(Int.max)
             $0.autoreverses = false
-        }
+            return $0
+        }(CABasicAnimation(keyPath: "transform.rotation"))
         
         layer.add(animation, forKey: "rotate")
         
         view.layer.addSublayer(layer)
-    })
+        return view
+    }(UIView())
     
-    fileprivate lazy var statusLabel = UILabel().then {
+    fileprivate lazy var statusLabel: UILabel = {
         $0.textAlignment = .center
         $0.numberOfLines = 0
         $0.textColor = Config.foregroundColor
-    }
+        return $0
+    }(UILabel())
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -190,36 +193,19 @@ public class ZKProgressHUD: UIView {
 // MARK: - 实例计算属性
 extension ZKProgressHUD {
     fileprivate var screenWidht: CGFloat {
-        get {
-            if let viewController = UIWindow.visibleViewController {
-                if viewController.supportedInterfaceOrientations == .landscape {
-                    return UIScreen.main.bounds.size.width < UIScreen.main.bounds.size.height ? UIScreen.main.bounds.size.height : UIScreen.main.bounds.size.width
-                } else {
-                    return UIScreen.main.bounds.size.width < UIScreen.main.bounds.size.height ? UIScreen.main.bounds.size.width : UIScreen.main.bounds.size.height
-                }
-            } else {
-                return UIScreen.main.bounds.size.width
-            }
-            
-        }
+        return UIScreen.main.bounds.size.width
     }
     
     fileprivate var screenHeight: CGFloat {
-        get {
-            return UIScreen.main.bounds.size.height
-        }
+        return UIScreen.main.bounds.size.height
     }
     
     fileprivate var maxContentViewWidth: CGFloat {
-        get {
-            return self.screenWidht - Config.margin * 2
-        }
+        return self.screenWidht - Config.margin * 2
     }
     
     fileprivate var maxContentViewChildWidth: CGFloat {
-        get {
-            return self.screenWidht - Config.margin * 4
-        }
+        return self.screenWidht - Config.margin * 4
     }
 }
 
@@ -278,7 +264,7 @@ extension ZKProgressHUD {
     /// 更新视图
     fileprivate func updateView(maskStyle: MaskStyle?) {
         self.restorationIdentifier = Config.restorationIdentifier
-        ZKProgressHUD.frontWindow?.addSubview(self)
+        UIWindow.frontWindow?.addSubview(self)
         if (maskStyle ?? Config.maskStyle) == .visible {
             self.addSubview(self.screenView)
         }
@@ -519,21 +505,8 @@ extension ZKProgressHUD {
 
 // MARK: - 类计算属性
 extension ZKProgressHUD {
-    fileprivate static var frontWindow: UIWindow? {
-        get {
-            let window = UIApplication.shared.windows.reversed().first(where: {
-                $0.screen == UIScreen.main &&
-                !$0.isHidden && $0.alpha > 0 &&
-                $0.windowLevel == UIWindow.Level.normal
-            })
-            return window
-        }
-    }
-    
     static var shared: ZKProgressHUD {
-        get {
-            return ZKProgressHUD(frame: UIScreen.main.bounds)
-        }
+        return ZKProgressHUD(frame: UIScreen.main.bounds)
     }
 }
 
@@ -558,7 +531,7 @@ extension ZKProgressHUD {
     /// 显示进度
     public static func showProgress(_ progress: CGFloat?, status: String? = nil, maskStyle: ZKProgressHUDMaskStyle? = nil, onlyOnceFont: UIFont? = nil) {
         var isShowProgressView = false
-        for subview in (ZKProgressHUD.frontWindow?.subviews)! {
+        for subview in (UIWindow.frontWindow?.subviews)! {
             if subview.isKind(of: ZKProgressHUD.self) && subview.restorationIdentifier == Config.restorationIdentifier {
                 let progressHUD = subview as! ZKProgressHUD
                 if progressHUD.hudType == .progress {
