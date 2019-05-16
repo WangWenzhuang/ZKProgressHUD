@@ -20,6 +20,8 @@ public class ZKProgressHUD: UIView {
     fileprivate var gifSize: CGFloat?
     fileprivate var progress: CGFloat?
     fileprivate var isShow: Bool = false
+    fileprivate var statusFont: UIFont?
+    fileprivate var maskStyle: MaskStyle?
     fileprivate var completion: ZKCompletion?
     
     fileprivate lazy var infoImage: UIImage? = Config.bundleImage(.info)?.withRenderingMode(.alwaysTemplate)
@@ -28,14 +30,7 @@ public class ZKProgressHUD: UIView {
     
     /// UI
     fileprivate lazy var screenView: UIView = {
-        $0.frame = CGRect(
-            x: 0,
-            y: 0,
-            width: self.screenWidht,
-            height: self.screenHeight
-        )
         $0.mask?.alpha = 0.3
-        $0.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         $0.alpha = 0.3
         $0.backgroundColor = Config.maskBackgroundColor
         return $0
@@ -44,12 +39,6 @@ public class ZKProgressHUD: UIView {
     
     fileprivate lazy var contentView: UIView = {
         $0.layer.masksToBounds = true
-        $0.autoresizingMask = [
-            .flexibleBottomMargin,
-            .flexibleTopMargin,
-            .flexibleLeftMargin,
-            .flexibleRightMargin
-        ]
         $0.layer.cornerRadius = Config.cornerRadius
         if Config.effectStyle == .none {
             $0.backgroundColor = Config.backgroundColor
@@ -75,12 +64,6 @@ public class ZKProgressHUD: UIView {
     }
     
     fileprivate lazy var contentBlurView: UIVisualEffectView = {
-        $0.autoresizingMask = [
-            .flexibleBottomMargin,
-            .flexibleTopMargin,
-            .flexibleLeftMargin,
-            .flexibleRightMargin
-        ]
         $0.alpha = Config.effectAlpha
         return $0
     }(UIVisualEffectView(effect: UIBlurEffect(style: self.blurEffectStyle)))
@@ -230,6 +213,8 @@ extension ZKProgressHUD {
             self.gifUrl = gifUrl
             self.gifSize = gifSize
             self.progress = progress ?? 0
+            self.statusFont = onlyOnceFont
+            self.maskStyle = maskStyle
             self.completion = completion
             if let imgType = imageType {
                 switch imgType {
@@ -247,13 +232,16 @@ extension ZKProgressHUD {
                     self.progressView.progress = Double(progressValue)
                 }
                 if self.restorationIdentifier != Config.restorationIdentifier {
-                    self.updateView(maskStyle: maskStyle)
+                    self.updateView()
                 }
             } else {
-                self.updateView(maskStyle: maskStyle)
+                self.updateView()
             }
             
-            self.updateFrame(maskStyle: maskStyle, statusFont: onlyOnceFont ?? Config.font)
+            self.updateFrame()
+            if !self.isShow {
+                self.animationShow(contentFrame: self.contentView.frame)
+            }
             if let autoDismiss = isAutoDismiss {
                 if autoDismiss {
                     self.autoDismiss(delay: autoDismissDelay ?? Config.autoDismissDelay)
@@ -262,10 +250,10 @@ extension ZKProgressHUD {
         }
     }
     /// 更新视图
-    fileprivate func updateView(maskStyle: MaskStyle?) {
+    fileprivate func updateView() {
         self.restorationIdentifier = Config.restorationIdentifier
         UIWindow.frontWindow?.addSubview(self)
-        if (maskStyle ?? Config.maskStyle) == .visible {
+        if (self.maskStyle ?? Config.maskStyle) == .visible {
             self.addSubview(self.screenView)
         }
         self.addSubview(self.contentView)
@@ -292,8 +280,12 @@ extension ZKProgressHUD {
         default: break
         }
     }
+    public override func layoutSubviews() {
+        updateFrame()
+    }
     /// 更新视图大小坐标
-    fileprivate func updateFrame(maskStyle: MaskStyle?, statusFont: UIFont) {
+    fileprivate func updateFrame() {
+        screenView.frame.size = CGSize(width: self.screenWidht, height: self.screenHeight)
         if self.hudType! == .gif {
             if self.gifView.width > self.maxContentViewChildWidth {
                 self.gifView.frame.size = CGSize(width: self.maxContentViewChildWidth, height: self.maxContentViewChildWidth)
@@ -312,7 +304,7 @@ extension ZKProgressHUD {
             self.statusLabel.isHidden = false
             self.statusLabel.text = text
             self.statusLabel.font = statusFont
-            self.statusLabel.frame.size = text.size(font: statusFont, size: CGSize(width: self.maxContentViewChildWidth, height: 400))
+            self.statusLabel.frame.size = text.size(font: self.statusFont ?? Config.font, size: CGSize(width: self.maxContentViewChildWidth, height: 400))
         } else {
             self.statusLabel.frame.size = CGSize.zero
             self.statusLabel.isHidden = true
@@ -406,16 +398,12 @@ extension ZKProgressHUD {
         
         let x = (self.screenWidht - self.contentView.width) / 2
         let y = (self.screenHeight - self.contentView.height) / 2
-        if (maskStyle ?? Config.maskStyle) == .hide {
+        if (self.maskStyle ?? Config.maskStyle) == .hide {
             self.frame = CGRect(x: x, y: y, width: self.contentView.width, height: self.contentView.height)
             self.contentView.frame.origin = CGPoint(x: 0, y: 0)
         } else {
             self.frame = CGRect(x: 0, y: 0, width: self.screenWidht, height: self.screenHeight)
             self.contentView.frame.origin = CGPoint(x: x, y: y)
-        }
-        
-        if !self.isShow {
-            self.animationShow(contentFrame: self.contentView.frame)
         }
     }
     /// 动画显示
