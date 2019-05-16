@@ -8,7 +8,7 @@
 
 import UIKit
 
-// MARK: - ZKProgressHUD 全局配置
+/// ZKProgressHUD 全局配置
 final class ZKProgressHUDConfig {
     static let margin: CGFloat = 20
     static var maskStyle: MaskStyle = .visible

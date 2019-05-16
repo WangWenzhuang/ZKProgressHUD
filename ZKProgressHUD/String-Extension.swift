@@ -8,7 +8,7 @@
 
 import UIKit
 
-// MARK: - String，获取字符串尺寸
+/// String，获取字符串尺寸
 extension String {
     func size(font: UIFont, size: CGSize) -> CGSize {
         let attribute = [ NSAttributedString.Key.font: font ]

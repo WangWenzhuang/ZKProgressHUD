@@ -6,7 +6,7 @@
 //  Copyright © 2017年 WangWenzhuang. All rights reserved.
 //
 
-// MARK: - 加载动画样式
+/// 加载动画样式
 public enum ZKProgressHUDAnimationStyle {
     /// 圆圈
     case circle

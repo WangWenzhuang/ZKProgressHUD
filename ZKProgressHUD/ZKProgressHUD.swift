@@ -27,7 +27,7 @@ public class ZKProgressHUD: UIView {
     fileprivate lazy var successImage: UIImage? = Config.bundleImage(.success)?.withRenderingMode(.alwaysTemplate)
     fileprivate lazy var errorImage: UIImage? = Config.bundleImage(.error)?.withRenderingMode(.alwaysTemplate)
     
-    // MARK: - UI
+    /// UI
     fileprivate lazy var screenView = UIView().then {
         $0.frame = CGRect(
             x: 0,
@@ -539,23 +539,23 @@ extension ZKProgressHUD {
 
 // MARK: - 类方法
 extension ZKProgressHUD {
-    //MARK: 显示gif加载
+    /// 显示gif加载
     public static func showGif(
         gifUrl: URL?, gifSize: CGFloat?, status: String? = nil, maskStyle: ZKProgressHUDMaskStyle? = nil, onlyOnceFont: UIFont? = nil) {
         shared.show(hudType: .gif, status: status, maskStyle: maskStyle, gifUrl: gifUrl, gifSize: gifSize, onlyOnceFont: onlyOnceFont)
     }
     
-    //MARK: 显示图片
+    /// 显示图片
     public static func showImage(_ image: UIImage?, status: String? = nil, maskStyle: ZKProgressHUDMaskStyle? = nil, onlyOnceFont: UIFont? = nil, autoDismissDelay: Double? = nil, completion: ZKCompletion? = nil) {
         shared.show(hudType: .image, status: status, image: image, isAutoDismiss: true, maskStyle: maskStyle, completion: completion, onlyOnceFont: onlyOnceFont, autoDismissDelay: autoDismissDelay)
     }
     
-    //MARK: 显示消息
+    /// 显示消息
     public static func showMessage(_ message: String?, maskStyle: ZKProgressHUDMaskStyle? = nil, onlyOnceFont: UIFont? = nil, autoDismissDelay: Double? = nil, completion: ZKCompletion? = nil) {
         shared.show(hudType: .message, status: message, isAutoDismiss: true, maskStyle: maskStyle, completion: completion, onlyOnceFont: onlyOnceFont, autoDismissDelay: autoDismissDelay)
     }
     
-    //MARK: 显示进度
+    /// 显示进度
     public static func showProgress(_ progress: CGFloat?, status: String? = nil, maskStyle: ZKProgressHUDMaskStyle? = nil, onlyOnceFont: UIFont? = nil) {
         var isShowProgressView = false
         for subview in (ZKProgressHUD.frontWindow?.subviews)! {
@@ -574,22 +574,22 @@ extension ZKProgressHUD {
         }
     }
     
-    //MARK: 显示加载
+    /// 显示加载
     public static func show(_ status: String? = nil, maskStyle: ZKProgressHUDMaskStyle? = nil, onlyOnceFont: UIFont? = nil) {
         shared.show(hudType: .activityIndicator, status: status, maskStyle: maskStyle, onlyOnceFont: onlyOnceFont)
     }
     
-    //MARK: 显示普通信息
+    /// 显示普通信息
     public static func showInfo(_ status: String? = nil, maskStyle: ZKProgressHUDMaskStyle? = nil, onlyOnceFont: UIFont? = nil, autoDismissDelay: Double? = nil, completion: ZKCompletion? = nil) {
         shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .info, completion: completion, onlyOnceFont: onlyOnceFont, autoDismissDelay: autoDismissDelay)
     }
     
-    //MARK: 显示成功信息
+    /// 显示成功信息
     public static func showSuccess(_ status: String? = nil, maskStyle: ZKProgressHUDMaskStyle? = nil, onlyOnceFont: UIFont? = nil, autoDismissDelay: Double? = nil, completion: ZKCompletion? = nil) {
         shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .success, completion: completion, onlyOnceFont: onlyOnceFont, autoDismissDelay: autoDismissDelay)
     }
     
-    //MARK: 显示失败信息
+    /// 显示失败信息
     public static func showError(_ status: String?, maskStyle: ZKProgressHUDMaskStyle? = nil, onlyOnceFont: UIFont? = nil, autoDismissDelay: Double? = nil, completion: ZKCompletion? = nil) {
         shared.show(hudType: .image, status: status, isAutoDismiss: true, maskStyle: maskStyle, imageType: .error, completion: completion, onlyOnceFont: onlyOnceFont, autoDismissDelay: autoDismissDelay)
     }
@@ -598,32 +598,32 @@ extension ZKProgressHUD {
     public static func hide(delay: Double? = nil) {
         ZKProgressHUD.dismiss(delay)
     }
-    //MARK: 移除
+    /// 移除
     public static func dismiss(_ delay: Double? = nil) {
         NotificationCenter.default.post(name: Config.ZKNSNotificationDismiss, object: nil, userInfo: ["delay" : delay ?? 0])
     }
     
-    //MARK: 设置遮罩样式，默认值：.visible
+    /// 设置遮罩样式，默认值：.visible
     public static func setMaskStyle (_ maskStyle: ZKProgressHUDMaskStyle) {
         Config.maskStyle = maskStyle
     }
     
-    //MARK: 设置动画显示/隐藏样式，默认值：.fade
+    /// 设置动画显示/隐藏样式，默认值：.fade
     public static func setAnimationShowStyle (_ animationShowStyle: ZKProgressHUDAnimationShowStyle) {
         Config.animationShowStyle = animationShowStyle
     }
     
-    //MARK: 设置遮罩背景色，默认值：.black
+    /// 设置遮罩背景色，默认值：.black
     public static func setMaskBackgroundColor(_ color: UIColor) {
         Config.effectStyle = .none
         Config.maskBackgroundColor = color
     }
     
-    //MARK: 设置前景色，默认值：.white（前景色在设置 effectStyle 值时会自动适配，如果要使用自定义前景色，在调用 setEffectStyle 方法后调用 setForegroundColor 方法即可）
+    /// 设置前景色，默认值：.white（前景色在设置 effectStyle 值时会自动适配，如果要使用自定义前景色，在调用 setEffectStyle 方法后调用 setForegroundColor 方法即可）
     public static func setForegroundColor(_ color: UIColor) {
         Config.foregroundColor = color
     }
-    //MARK: 设置 HUD 毛玻璃效果（与 backgroundColor 互斥，如果设置毛玻璃效果不是.none，则根据样式自动设置前景色），默认值：.dark
+    /// 设置 HUD 毛玻璃效果（与 backgroundColor 互斥，如果设置毛玻璃效果不是.none，则根据样式自动设置前景色），默认值：.dark
     public static func setEffectStyle(_ hudEffectStyle: ZKProgressHUDEffectStyle) {
         Config.effectStyle = hudEffectStyle
         if hudEffectStyle == .light || hudEffectStyle == .extraLight {
@@ -632,32 +632,32 @@ extension ZKProgressHUD {
             Config.foregroundColor = .white
         }
     }
-    //MARK: 设置 HUD 毛玻璃透明度，默认值：1
+    /// 设置 HUD 毛玻璃透明度，默认值：1
     public static func setEffectAlpha(_ effectAlpha: CGFloat) {
         Config.effectAlpha = effectAlpha
     }
-    //MARK: 设置 HUD 背景色（与 effectStyle 互斥，如果设置背景色，effectStyle = .none），默认值：UIColor(red: 0 / 255.0, green: 0 / 255.0, blue: 0 / 255.0, alpha: 0.8)
+    /// 设置 HUD 背景色（与 effectStyle 互斥，如果设置背景色，effectStyle = .none），默认值：UIColor(red: 0 / 255.0, green: 0 / 255.0, blue: 0 / 255.0, alpha: 0.8)
     public static func setBackgroundColor(_ color: UIColor) {
         Config.backgroundColor = color
         Config.effectStyle = .none
     }
     
-    //MARK: 设置字体，默认值：UIFont.boldSystemFont(ofSize: 15)
+    /// 设置字体，默认值：UIFont.boldSystemFont(ofSize: 15)
     public static func setFont(_ font: UIFont) {
         Config.font = font
     }
     
-    //MARK: 设置圆角，默认值：6
+    /// 设置圆角，默认值：6
     public static func setCornerRadius(_ cornerRadius: CGFloat) {
         Config.cornerRadius = cornerRadius
     }
     
-    //MARK: 设置加载动画样式动画样式，默认值：circle
+    /// 设置加载动画样式动画样式，默认值：circle
     public static func setAnimationStyle(_ animationStyle: ZKProgressHUDAnimationStyle) {
         Config.animationStyle  = animationStyle
     }
     
-    //MARK: 设置自动隐藏延时秒数，默认值：2
+    /// 设置自动隐藏延时秒数，默认值：2
     public static func setAutoDismissDelay(_ autoDismissDelay: Double) {
         Config.autoDismissDelay = autoDismissDelay
     }

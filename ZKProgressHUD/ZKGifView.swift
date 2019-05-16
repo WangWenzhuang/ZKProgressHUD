@@ -9,7 +9,7 @@
 import UIKit
 import ImageIO
 
-// MARK: - GifView
+/// GifView
 class ZKGifView: UIView {
     private var gifUrl: URL!
     private var images: Array<CGImage> = []

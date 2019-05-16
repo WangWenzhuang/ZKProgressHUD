@@ -6,14 +6,14 @@
 //  Copyright © 2017年 WangWenzhuang. All rights reserved.
 //
 
-// MARK: - HUD 毛玻璃样式
+/// HUD 毛玻璃样式
 public enum ZKProgressHUDEffectStyle {
     case none
-    // 高亮
+    /// 高亮
     case extraLight
-    // 亮
+    /// 亮
     case light
-    // 暗
+    /// 暗
     case dark
 }
 typealias HUDEffectStyle = ZKProgressHUDEffectStyle

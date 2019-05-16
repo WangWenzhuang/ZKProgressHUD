@@ -8,7 +8,7 @@
 
 import UIKit
 
-// MARK: - 加载动画样式
+/// 加载动画样式
 public enum ZKProgressHUDAnimationShowStyle {
     /// 淡入/淡出（默认）
     case fade

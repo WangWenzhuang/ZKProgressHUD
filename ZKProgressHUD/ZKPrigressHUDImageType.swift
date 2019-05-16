@@ -7,7 +7,7 @@
 //
 
 
-// MARK: - 情景图片显示类型
+/// 情景图片显示类型
 enum ZKPrigressHUDImageType {
     case mask
     case info
