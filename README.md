@@ -4,7 +4,7 @@
 
 ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)
 ![build](https://travis-ci.org/WangWenzhuang/ZKProgressHUD.svg?branch=master)
-![CocoaPods](https://img.shields.io/badge/pod-v3.3-brightgreen.svg)
+![CocoaPods](https://img.shields.io/badge/pod-v5.0-brightgreen.svg)
 ![platform](https://img.shields.io/badge/platform-iOS-brightgreen.svg)
 
 iOS App 上极易于使用的 HUD。
@@ -13,7 +13,7 @@ iOS App 上极易于使用的 HUD。
 
 ## 近期更新
 
-> * 适配 Swift 4.2
+> * 适配 Swift 5
 > * 增加 **onlyOnceFont** 参数，用于临时显示一次的字体，不影响全局默认字体；
 > * 增加 **autoDismissDelay** 参数，用于临时使用自动消失时间，不影响全局默认自动消失时间；
 
@@ -53,10 +53,16 @@ target 'MyApp' do
 end
 ```
 
-如果使用 Swift 4.2 请使用最新版*3.2*
+如果使用 Swift 5 请使用最新版*5.0*
 
 ```ogdl
-pod 'ZKProgressHUD', '3.2'
+pod 'ZKProgressHUD', '5.0'
+```
+
+如果使用 Swift 4.2 请使用*3.4*
+
+```ogdl
+pod 'ZKProgressHUD', '3.4'
 ```
 
 如果使用 Swift 4.0 请使用*3.1*版本
