@@ -303,7 +303,7 @@ extension ZKProgressHUD {
         if let text = self.status {
             self.statusLabel.isHidden = false
             self.statusLabel.text = text
-            self.statusLabel.font = statusFont
+            self.statusLabel.font = self.statusFont ?? Config.font
             self.statusLabel.frame.size = text.size(font: self.statusFont ?? Config.font, size: CGSize(width: self.maxContentViewChildWidth, height: 400))
         } else {
             self.statusLabel.frame.size = CGSize.zero
