@@ -53,6 +53,12 @@ target 'MyApp' do
 end
 ```
 
+如果使用 Swift 5 请使用最新版*5.0.1*
+
+```ogdl
+pod 'ZKProgressHUD', '5.0.1'
+```
+
 如果使用 Swift 4.2 请使用最新版*3.5*版本
 
 ```ogdl
