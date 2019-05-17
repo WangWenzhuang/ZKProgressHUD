@@ -59,7 +59,7 @@ end
 pod 'ZKProgressHUD', '5.0'
 ```
 
-如果使用 Swift 4.2 请使用*3.4*
+如果使用 Swift 4.2 请使用*3.4*版本
 
 ```ogdl
 pod 'ZKProgressHUD', '3.4'
