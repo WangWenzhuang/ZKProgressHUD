@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'ZKProgressHUD'
-  s.version = '5.0.1'
+  s.version = '5.1'
   s.swift_version = '5.0'
   s.ios.deployment_target = '8.0'
   s.license = { :type => 'MIT', :file => 'LICENSE' }

@@ -5,7 +5,7 @@ QQ 交流群：570590309，欢迎进群交流！
 # ZKProgressHUD
 
 ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)
-![CocoaPods](https://img.shields.io/badge/pod-v5.0-brightgreen.svg)
+![CocoaPods](https://img.shields.io/badge/pod-v5.1-brightgreen.svg)
 ![platform](https://img.shields.io/badge/platform-iOS-brightgreen.svg)
 
 iOS App 上极易于使用的 HUD。
@@ -15,6 +15,7 @@ iOS App 上极易于使用的 HUD。
 ## 近期更新
 
 > * 适配 Swift 5
+> * 增加 **isShowing** 属性，用于判断是否已经显示
 > * 增加 **onlyOnceFont** 参数，用于临时显示一次的字体，不影响全局默认字体；
 > * 增加 **autoDismissDelay** 参数，用于临时使用自动消失时间，不影响全局默认自动消失时间；
 

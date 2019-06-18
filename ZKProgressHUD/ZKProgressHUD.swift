@@ -206,6 +206,7 @@ extension ZKProgressHUD {
                           completion: ZKCompletion? = nil,
                           onlyOnceFont: UIFont? = nil,
                           autoDismissDelay: Double? = nil) {
+        ZKProgressHUD._isShowing = true
         DispatchQueue.main.async {
             self.hudType = hudType
             self.status = status == "" ? nil : status
@@ -466,6 +467,7 @@ extension ZKProgressHUD {
             }
         }, completion: { (finished) in
             self.isShow = false
+            ZKProgressHUD._isShowing = false
             self.removeFromSuperview()
             self.completion?()
         })
@@ -477,6 +479,7 @@ extension ZKProgressHUD {
             self.autoDismiss(delay: delay)
         } else {
             self.isShow = false
+            ZKProgressHUD._isShowing = false
             self.removeFromSuperview()
         }
     }
@@ -496,10 +499,20 @@ extension ZKProgressHUD {
     static var shared: ZKProgressHUD {
         return ZKProgressHUD(frame: UIScreen.main.bounds)
     }
+    static var first: ZKProgressHUD? {
+        return UIWindow.frontWindow?.subviews.first(where: {
+                $0.isKind(of: ZKProgressHUD.self) && $0.restorationIdentifier == Config.restorationIdentifier
+            }) as? ZKProgressHUD
+    }
 }
 
 // MARK: - 类方法
 extension ZKProgressHUD {
+    /// 是否显示中
+    public static var isShowing: Bool {
+        return _isShowing
+    }
+    static var _isShowing: Bool = false
     /// 显示gif加载
     public static func showGif(
         gifUrl: URL?, gifSize: CGFloat?, status: String? = nil, maskStyle: ZKProgressHUDMaskStyle? = nil, onlyOnceFont: UIFont? = nil) {
