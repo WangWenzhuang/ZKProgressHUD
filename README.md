@@ -1,3 +1,5 @@
+QQ 交流群：570590309，欢迎进群交流！
+
 ![(logo)](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/Demo/image%402x.png)
 
 # ZKProgressHUD
