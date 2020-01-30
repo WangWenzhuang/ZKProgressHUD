@@ -577,6 +577,11 @@ extension ZKProgressHUD {
         NotificationCenter.default.post(name: Config.ZKNSNotificationDismiss, object: nil, userInfo: ["delay" : delay ?? 0])
     }
     
+    /// 设置内容间距，默认值：20
+    public static func setMargin (_ margin: CGFloat) {
+        Config.margin = margin
+    }
+    
     /// 设置遮罩样式，默认值：.visible
     public static func setMaskStyle (_ maskStyle: ZKProgressHUDMaskStyle) {
         Config.maskStyle = maskStyle

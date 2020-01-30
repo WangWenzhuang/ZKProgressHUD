@@ -5,7 +5,7 @@ QQ 交流群：570590309，欢迎进群交流！
 # ZKProgressHUD
 
 ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)
-![CocoaPods](https://img.shields.io/badge/pod-v5.1-brightgreen.svg)
+![CocoaPods](https://img.shields.io/badge/pod-v5.1.1-brightgreen.svg)
 ![platform](https://img.shields.io/badge/platform-iOS-brightgreen.svg)
 
 iOS App 上极易于使用的 HUD。
@@ -14,6 +14,7 @@ iOS App 上极易于使用的 HUD。
 
 ## 近期更新
 
+> * 增加 **setMargin** 方法，用于自定义内容间距；
 > * 适配 Swift 5
 > * 增加 **isShowing** 属性，用于判断是否已经显示
 > * 增加 **onlyOnceFont** 参数，用于临时显示一次的字体，不影响全局默认字体；
@@ -194,6 +195,12 @@ ZKProgressHUD.dismiss(delay: 3)
 ![style4](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style4.jpeg)
 ![style5](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style5.jpeg)
 ![style6](https://raw.githubusercontent.com/WangWenzhuang/ZKProgressHUD/master/image/style6.jpeg)
+
+### 设置内容间距，默认值：20
+
+```swift
+setMargin (_ margin: CGFloat)
+```
 
 ### 设置遮罩样式，默认值：.visible
 
