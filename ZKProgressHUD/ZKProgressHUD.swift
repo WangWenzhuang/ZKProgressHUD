@@ -31,7 +31,7 @@ public class ZKProgressHUD: UIView {
     /// UI
     fileprivate lazy var screenView: UIView = {
         $0.mask?.alpha = 0.3
-        $0.alpha = 0.3
+        $0.alpha = Config.maskBackgroundAlpha
         $0.backgroundColor = Config.maskBackgroundColor
         return $0
         
@@ -596,6 +596,11 @@ extension ZKProgressHUD {
     public static func setMaskBackgroundColor(_ color: UIColor) {
         Config.effectStyle = .none
         Config.maskBackgroundColor = color
+    }
+    
+    /// 设置遮罩的不透明度，默认值：0.3
+    public static func setMaskBackgroundAlpha(_ alpha: CGFloat) {
+        Config.maskBackgroundAlpha = alpha
     }
     
     /// 设置前景色，默认值：.white（前景色在设置 effectStyle 值时会自动适配，如果要使用自定义前景色，在调用 setEffectStyle 方法后调用 setForegroundColor 方法即可）
