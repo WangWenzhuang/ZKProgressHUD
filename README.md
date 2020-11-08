@@ -14,6 +14,7 @@ iOS App 上极易于使用的 HUD。
 
 ## 近期更新
 
+> * 增加 **setMaskBackgroundAlpha** 方法, 自定义背景的不透明度；
 > * 增加 **setMargin** 方法，用于自定义内容间距；
 > * 适配 Swift 5
 > * 增加 **isShowing** 属性，用于判断是否已经显示
@@ -231,6 +232,12 @@ setAnimationShowStyle (_ animationShowStyle: ZKProgressHUDAnimationShowStyle)
 
 ```swift
 setMaskBackgroundColor(_ color: UIColor)
+```
+
+### 设置遮罩的不透明度，默认值：0.3
+
+```swift
+setMaskBackgroundAlpha(_ alpha: CGFloat)
 ```
 
 ### 设置前景色，默认值：.white（前景色在设置 effectStyle 值时会自动适配，如果要使用自定义前景色，在调用 setEffectStyle 方法后调用 setForegroundColor 方法即可）

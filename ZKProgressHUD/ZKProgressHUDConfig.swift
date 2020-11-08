@@ -14,6 +14,7 @@ final class ZKProgressHUDConfig {
     static var maskStyle: MaskStyle = .visible
     static var animationShowStyle: AnimationShowStyle = .fade
     static var maskBackgroundColor: UIColor = .black
+    static var maskBackgroundAlpha: CGFloat = 0.3
     static var foregroundColor: UIColor = .white
     static var effectStyle: HUDEffectStyle = .dark
     static var effectAlpha: CGFloat = 1
