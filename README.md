@@ -5,7 +5,7 @@ QQ 交流群：570590309，欢迎进群交流！
 # ZKProgressHUD
 
 ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)
-![CocoaPods](https://img.shields.io/badge/pod-v5.1.1-brightgreen.svg)
+![CocoaPods](https://img.shields.io/badge/pod-v5.1.2-brightgreen.svg)
 ![platform](https://img.shields.io/badge/platform-iOS-brightgreen.svg)
 
 iOS App 上极易于使用的 HUD。
