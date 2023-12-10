@@ -42,6 +42,10 @@ iOS App 上极易于使用的 HUD。
 
 ## 安装
 
+### Swift Package Manager
+
+https://github.com/WangWenzhuang/ZKProgressHUD.git
+
 ### CocoaPods
 
 你可以使用 [CocoaPods](http://cocoapods.org/) 安装 `ZKProgressHUD`，在你的 `Podfile` 中添加：
